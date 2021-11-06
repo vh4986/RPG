@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+
 
 namespace MapEditor
 {
@@ -22,16 +26,15 @@ namespace MapEditor
     {
         class Tile
         {
-            public int TileSize { get; set; }
             public int X { get; set; }
             public int Y { get; set; }
-            public TileTypes Type;
+            public TileTypes Type { get; set; }
 
-            public Tile(int x, int y, int tileSize)
+            public Tile(int x, int y, TileTypes type)
             {
                 X = x;
                 Y = y;
-                TileSize = tileSize;
+                Type = type;
             }
         }
         Bitmap canvas;
@@ -293,15 +296,15 @@ namespace MapEditor
 
             for(int y = 0; y < Grid.GetLength(0); y++)
             {
-                for(int x = 0; x < Grid.GetLength(1); x++)
+                for (int x = 0; x < Grid.GetLength(1); x++)
                 {
-                    tiles.Add(new Tile(x,y, tileSize));
+                    tiles.Add(new Tile(x, y, imageToTileTypes[Grid[y, x].Image]));
                 }
-
             }
 
-            //string textFormat = Jon.
-            // ?? - string fileContents = File.ReadAllText
+            string textFormat = JsonConvert.SerializeObject(tiles);
+
+            File.WriteAllText("tiles.txt", textFormat);
         }
     }
 }

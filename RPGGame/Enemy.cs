@@ -34,7 +34,7 @@ namespace RPGGame
         TimeSpan intervalTime;
         public int currentFrameIndex;
         Vector2 Speed;
-        int xDirection = 1;
+        //int xDirection = 1;
         List<Frames> idleRightFrames = new List<Frames>();
         List<Frames> idleLeftFrames = new List<Frames>();
         List<Frames> idleDownFrames = new List<Frames>();

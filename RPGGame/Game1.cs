@@ -5,6 +5,8 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace RPGGame
 {
@@ -38,18 +40,43 @@ namespace RPGGame
         Random newRandom;
         Color selectedColor;
         int filledPixels = 0;
-        
+
 
         HashSet<TwoDArrayIndex> Spots = new HashSet<TwoDArrayIndex>();
         Texture2D pixel;
         SpriteFont font;
         Vector2 scale = new Vector2(0.1f, 0.1f);
         int tileSize;
+
+        List<Tile> tiles;
+
+        Texture2D waterTile;
+        Texture2D grassTile;
+        Texture2D stoneTile;
+        public enum TileTypes
+        {
+            waterTile,
+            grassTile,
+            stoneTile,
+        };
+        class Tile
+        {
+            public int X { get; set; }
+            public int Y { get; set; }
+            public TileTypes Type;
+
+            public Tile(int x, int y, TileTypes type)
+            {
+                X = x;
+                Y = y;
+                Type = type;
+            }
+        }
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            
+
         }
 
         /// <summary>
@@ -68,7 +95,7 @@ namespace RPGGame
             graphics.PreferredBackBufferHeight = 405;
             graphics.ApplyChanges();
 
-            
+
 
             base.Initialize();
         }
@@ -82,9 +109,6 @@ namespace RPGGame
         public void floodFill()
         {
             selectedColor = Color.DarkGreen;
-            
-
-
 
             for (int y = 0; y < Grid.GetLength(0); y++)
             {
@@ -141,13 +165,35 @@ namespace RPGGame
             }
 
         }
-
+        public void Deserialize()
+        {
+            string fileContents = File.ReadAllText("tiles.txt");
+            tiles = JsonConvert.DeserializeObject<List<Tile>>(fileContents);
+        }
+        Dictionary<TileTypes, Texture2D> tileTypesToImage;
         protected override void LoadContent()
         {
-            tileSize = (int)(255 * scale.X);
+            //tileSize = (int)(255 * scale.X);
             Grid = new Sprite[GraphicsDevice.Viewport.Height / tileSize + 1, GraphicsDevice.Viewport.Width / tileSize + 1];
 
+            Deserialize();
+            tileTypesToImage = new Dictionary<TileTypes, Texture2D>
+            {
+                {TileTypes.grassTile, grassTile},
+                {TileTypes.waterTile, waterTile},
+                {TileTypes.stoneTile, stoneTile},
+            };
 
+            int tileIndex = 0;
+            for (int y = 0; y < Grid.GetLength(0); y++)
+            {
+                for(int x = 0; x < Grid.GetLength(1); x++)
+                {
+                    Tile currTile = tiles[tileIndex];
+                    Grid[y, x] = new Sprite(tileTypesToImage[currTile.Type], new Vector2(currTile.X, currTile.Y), Color.White, Vector2.Zero, Vector2.One, SpriteEffects.None, null);
+                    tileIndex++;
+                }
+            }
             // Create a new SpriteBatch, which can be used to draw textures.
             random = new Random(42);
             newRandom = new Random();
@@ -156,45 +202,45 @@ namespace RPGGame
             pixel.SetData(new Color[] { Color.White });
             //floodFill();
 
-            Texture2D waterTile = Content.Load<Texture2D>("waterTile");
-            Texture2D grassTile = Content.Load<Texture2D>("grassTile");
+            waterTile = Content.Load<Texture2D>("waterTile");
+            grassTile = Content.Load<Texture2D>("grassTile");
+            stoneTile = Content.Load<Texture2D>("stoneTile2");
             
-            
 
-            for (int y = 0; y < Grid.GetLength(0); y++)
-            {
-                for (int x = 0; x < Grid.GetLength(1); x++)
-                {
-                    Sprite currentSprite = new Sprite(null, new Vector2(x * tileSize, y * tileSize), Color.White, new Vector2(0, 0), scale, SpriteEffects.None); 
-                    Grid[y, x] = currentSprite;
+            //for (int y = 0; y < Grid.GetLength(0); y++)
+            //{
+            //    for (int x = 0; x < Grid.GetLength(1); x++)
+            //    {
+            //        Sprite currentSprite = new Sprite(null, new Vector2(x * tileSize, y * tileSize), Color.White, new Vector2(0, 0), scale, SpriteEffects.None); 
+            //        Grid[y, x] = currentSprite;
 
-                    Spots.Add(new TwoDArrayIndex(y, x));
-                }
-            }
+            //        Spots.Add(new TwoDArrayIndex(y, x));
+            //    }
+            //}
 
-            int floodx = random.Next(0, GraphicsDevice.Viewport.Width / tileSize);
-            int floody = random.Next(0, GraphicsDevice.Viewport.Height / tileSize);
+            //int floodx = random.Next(0, GraphicsDevice.Viewport.Width / tileSize);
+            //int floody = random.Next(0, GraphicsDevice.Viewport.Height / tileSize);
 
-            List<Texture2D> randomTextures = new List<Texture2D>
-            {
-                waterTile,
-                grassTile,
-            };
-            int index = random.Next(randomTextures.Count);
-            PartialFloodFill(floodx, floody, randomTextures[index]);
+            //List<Texture2D> randomTextures = new List<Texture2D>
+            //{
+            //    waterTile,
+            //    grassTile,
+            //};
+            //int index = random.Next(randomTextures.Count);
+            //PartialFloodFill(floodx, floody, randomTextures[index]);
 
-            for (int i = 0; i < 4; i++)
-            {
-                int tempX = random.Next(0, GraphicsDevice.Viewport.Width / tileSize);
-                int tempY = random.Next(0, GraphicsDevice.Viewport.Height / tileSize);
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    int tempX = random.Next(0, GraphicsDevice.Viewport.Width / tileSize);
+            //    int tempY = random.Next(0, GraphicsDevice.Viewport.Height / tileSize);
 
-                if (Grid[tempY, tempX].Image == null)
-                {
-                    PartialFloodFill(tempY, tempX, randomTextures[random.Next(randomTextures.Count)]);
-                }
-            }
+            //    if (Grid[tempY, tempX].Image == null)
+            //    {
+            //        PartialFloodFill(tempY, tempX, randomTextures[random.Next(randomTextures.Count)]);
+            //    }
+            //}
 
-            fillingSpots();
+            //fillingSpots();
 
             //for (int y = 1; y < Grid.GetLength(0) - 1; y++)
             //{
