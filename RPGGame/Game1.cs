@@ -46,7 +46,7 @@ namespace RPGGame
         Texture2D pixel;
         SpriteFont font;
         Vector2 scale = new Vector2(0.1f, 0.1f);
-        int tileSize;
+        int tileSize = 50;
 
         List<Tile> tiles;
 
@@ -174,7 +174,8 @@ namespace RPGGame
         protected override void LoadContent()
         {
             //tileSize = (int)(255 * scale.X);
-            Grid = new Sprite[GraphicsDevice.Viewport.Height / tileSize + 1, GraphicsDevice.Viewport.Width / tileSize + 1];
+            //Grid = new Sprite[GraphicsDevice.Viewport.Height / tileSize + 1, GraphicsDevice.Viewport.Width / tileSize + 1];
+            Grid = new Sprite[20, 30];
 
             Deserialize();
             tileTypesToImage = new Dictionary<TileTypes, Texture2D>

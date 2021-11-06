@@ -54,10 +54,15 @@ namespace MapEditor
             {Properties.Resources.stoneTile2, TileTypes.stoneTile},
         };
 
- 
+        Image grassImage;
+        Image waterImage;
+        Image stoneImage;
 
         public Form1()
         {
+            grassImage = Properties.Resources.grassTile;
+            waterImage = Properties.Resources.waterTile;
+            stoneImage = Properties.Resources.stoneTile2;
             InitializeComponent();
 
             totalWidth = map.Width;
