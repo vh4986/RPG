@@ -44,6 +44,8 @@
             this.map = new System.Windows.Forms.PictureBox();
             this.FillToggleLabel = new System.Windows.Forms.Label();
             this.Save = new System.Windows.Forms.Button();
+            this.namingFileTextBox = new System.Windows.Forms.TextBox();
+            this.NameOfFile = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.widthBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tileSizeBox)).BeginInit();
@@ -172,6 +174,7 @@
             this.stoneTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.stoneTile.TabIndex = 12;
             this.stoneTile.TabStop = false;
+            this.stoneTile.Tag = "StoneTile";
             this.stoneTile.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // grassTile
@@ -183,6 +186,7 @@
             this.grassTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.grassTile.TabIndex = 1;
             this.grassTile.TabStop = false;
+            this.grassTile.Tag = "GrassTile";
             // 
             // waterTile
             // 
@@ -193,12 +197,13 @@
             this.waterTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.waterTile.TabIndex = 0;
             this.waterTile.TabStop = false;
+            this.waterTile.Tag = "WaterTile";
             this.waterTile.Click += new System.EventHandler(this.waterTile_Click);
             // 
             // ToggleLabel
             // 
             this.ToggleLabel.AutoSize = true;
-            this.ToggleLabel.Location = new System.Drawing.Point(849, 9);
+            this.ToggleLabel.Location = new System.Drawing.Point(836, 9);
             this.ToggleLabel.Name = "ToggleLabel";
             this.ToggleLabel.Size = new System.Drawing.Size(100, 13);
             this.ToggleLabel.TabIndex = 11;
@@ -216,7 +221,7 @@
             // FillToggleLabel
             // 
             this.FillToggleLabel.AutoSize = true;
-            this.FillToggleLabel.Location = new System.Drawing.Point(852, 56);
+            this.FillToggleLabel.Location = new System.Drawing.Point(836, 62);
             this.FillToggleLabel.Name = "FillToggleLabel";
             this.FillToggleLabel.Size = new System.Drawing.Size(77, 13);
             this.FillToggleLabel.TabIndex = 12;
@@ -224,7 +229,7 @@
             // 
             // Save
             // 
-            this.Save.Location = new System.Drawing.Point(852, 102);
+            this.Save.Location = new System.Drawing.Point(839, 102);
             this.Save.Name = "Save";
             this.Save.Size = new System.Drawing.Size(75, 23);
             this.Save.TabIndex = 13;
@@ -232,11 +237,29 @@
             this.Save.UseVisualStyleBackColor = true;
             this.Save.Click += new System.EventHandler(this.Save_Click);
             // 
+            // namingFileTextBox
+            // 
+            this.namingFileTextBox.Location = new System.Drawing.Point(910, 146);
+            this.namingFileTextBox.Name = "namingFileTextBox";
+            this.namingFileTextBox.Size = new System.Drawing.Size(100, 20);
+            this.namingFileTextBox.TabIndex = 14;
+            // 
+            // NameOfFile
+            // 
+            this.NameOfFile.AutoSize = true;
+            this.NameOfFile.Location = new System.Drawing.Point(836, 149);
+            this.NameOfFile.Name = "NameOfFile";
+            this.NameOfFile.Size = new System.Drawing.Size(71, 13);
+            this.NameOfFile.TabIndex = 15;
+            this.NameOfFile.Text = "Name Of File:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1033, 517);
+            this.Controls.Add(this.NameOfFile);
+            this.Controls.Add(this.namingFileTextBox);
             this.Controls.Add(this.Save);
             this.Controls.Add(this.FillToggleLabel);
             this.Controls.Add(this.ToggleLabel);
@@ -279,6 +302,8 @@
         private System.Windows.Forms.PictureBox stoneTile;
         private System.Windows.Forms.Label FillToggleLabel;
         private System.Windows.Forms.Button Save;
+        private System.Windows.Forms.TextBox namingFileTextBox;
+        private System.Windows.Forms.Label NameOfFile;
     }
 }
 

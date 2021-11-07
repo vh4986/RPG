@@ -76,7 +76,6 @@ namespace RPGGame
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
         }
 
         /// <summary>
@@ -94,8 +93,6 @@ namespace RPGGame
             graphics.PreferredBackBufferWidth = 789;
             graphics.PreferredBackBufferHeight = 405;
             graphics.ApplyChanges();
-
-
 
             base.Initialize();
         }
@@ -167,7 +164,7 @@ namespace RPGGame
         }
         public void Deserialize()
         {
-            string fileContents = File.ReadAllText("tiles.txt");
+            string fileContents = File.ReadAllText("tiles.json");
             tiles = JsonConvert.DeserializeObject<List<Tile>>(fileContents);
         }
         Dictionary<TileTypes, Texture2D> tileTypesToImage;
@@ -551,7 +548,7 @@ namespace RPGGame
             Texture2D closedTreasureImage = Content.Load<Texture2D>("closedtreasure");
             Texture2D openTreasureImage = Content.Load<Texture2D>("opentreasure");
             treasure = new Treasure(closedTreasureImage, openTreasureImage, new Vector2(500, 100), Color.White, new Vector2(0, 0), new Vector2(0.26f, 0.26f), SpriteEffects.None);
-            //                     400, 150, 300, 300       
+            // 400, 150, 300, 300       
             int boundarySize = 300;
             boundary = new Rectangle((int)treasure.Position.X - 100, (int)treasure.Position.Y + 80, boundarySize, boundarySize);
 

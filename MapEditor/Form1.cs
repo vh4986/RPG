@@ -47,17 +47,18 @@ namespace MapEditor
 
         PictureBox[,] Grid;
 
-        Dictionary<Image, TileTypes> imageToTileTypes = new Dictionary<Image, TileTypes>()
-        {
-            {Properties.Resources.grassTile, TileTypes.grassTile},
-            {Properties.Resources.waterTile, TileTypes.waterTile},
-            {Properties.Resources.stoneTile2, TileTypes.stoneTile},
-        };
-
         Image grassImage;
         Image waterImage;
         Image stoneImage;
 
+        TileTypes selectedTileType;
+
+        Dictionary<string, TileTypes> tileTypeMapping = new Dictionary<string, TileTypes>()
+        {
+            ["WaterTile"] = TileTypes.waterTile,
+            ["GrassTile"] = TileTypes.grassTile,
+            ["StoneTile"] = TileTypes.stoneTile,
+        };
         public Form1()
         {
             grassImage = Properties.Resources.grassTile;
@@ -73,6 +74,7 @@ namespace MapEditor
             tileSizeBox.Value = tileSize;
 
             Grid = new PictureBox[totalHeight / tileSize, totalWidth / tileSize];
+           
 
             this.KeyPreview = true;
 
@@ -127,6 +129,7 @@ namespace MapEditor
         private void Tile_Click(object sender, EventArgs e)
         {
             selectedImage = ((PictureBox)sender).Image;
+            selectedTileType = tileTypeMapping[(string)((PictureBox)sender).Tag];
         }
 
         private void Cell_Click(object sender, EventArgs e)
@@ -135,6 +138,7 @@ namespace MapEditor
             if (shouldFillIn == true)
             {
                 ((PictureBox)sender).Image = selectedImage;
+                ((PictureBox)sender).Tag = selectedTileType;
             }
             if(floodFillIn == true)
             {
@@ -194,30 +198,35 @@ namespace MapEditor
             List<Point> fillBoxes = new List<Point>();
             fillBoxes.Add(new Point(x, y));
             Grid[y, x].Image = selectedImage;
+            Grid[y, x].Tag = selectedTileType;
 
             while (fillBoxes.Count > 0)
             {
                 Point current = fillBoxes[0];
                 fillBoxes.Remove(current);
-                if (checkValidtile(current.X + 1, current.Y) && Grid[current.Y, current.X + 1].Image != selectedImage)
-                {
+                if (checkValidtile(current.X + 1, current.Y) && (Grid[current.Y, current.X + 1].Tag == null || (TileTypes)Grid[current.Y, current.X + 1].Tag != selectedTileType))
+                { 
                     fillBoxes.Add(new Point(current.X + 1, current.Y));
                     Grid[current.Y, current.X + 1].Image = selectedImage;
+                    Grid[current.Y, current.X + 1].Tag = selectedTileType;
                 }
-                if (checkValidtile(current.X - 1, current.Y) && Grid[current.Y, current.X - 1].Image != selectedImage)
+                if (checkValidtile(current.X - 1, current.Y) && (Grid[current.Y, current.X - 1].Tag == null || (TileTypes)Grid[current.Y, current.X - 1].Tag != selectedTileType))
                 {
                     fillBoxes.Add(new Point(current.X - 1, current.Y));
                     Grid[current.Y, current.X - 1].Image = selectedImage;
+                    Grid[current.Y, current.X - 1].Tag = selectedTileType;
                 }
-                if (checkValidtile(current.X, current.Y + 1) && Grid[current.Y + 1, current.X].Image != selectedImage)
+                if (checkValidtile(current.X, current.Y + 1) && (Grid[current.Y + 1, current.X].Tag == null || (TileTypes)Grid[current.Y + 1, current.X].Tag != selectedTileType))
                 {
                     fillBoxes.Add(new Point(current.X, current.Y + 1));
                     Grid[current.Y + 1, current.X].Image = selectedImage;
+                    Grid[current.Y + 1, current.X].Tag = selectedTileType;
                 }
-                if (checkValidtile(current.X, current.Y - 1) && Grid[current.Y - 1, current.X].Image != selectedImage)
+                if (checkValidtile(current.X, current.Y - 1) && (Grid[current.Y - 1, current.X].Tag == null || (TileTypes)Grid[current.Y - 1, current.X].Tag != selectedTileType))
                 {
                     fillBoxes.Add(new Point(current.X, current.Y - 1 ));
                     Grid[current.Y - 1, current.X].Image = selectedImage;
+                    Grid[current.Y - 1, current.X].Tag = selectedTileType;
                 }
             }
 
@@ -303,13 +312,15 @@ namespace MapEditor
             {
                 for (int x = 0; x < Grid.GetLength(1); x++)
                 {
-                    tiles.Add(new Tile(x, y, imageToTileTypes[Grid[y, x].Image]));
+                    tiles.Add(new Tile(x, y, (TileTypes)Grid[y, x].Tag));
                 }
             }
 
+            MessageBox.Show("Saved!");
+
             string textFormat = JsonConvert.SerializeObject(tiles);
 
-            File.WriteAllText("tiles.txt", textFormat);
+            File.WriteAllText($"{namingFileTextBox.Text}.json", textFormat);
         }
     }
 }
