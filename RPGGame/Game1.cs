@@ -31,7 +31,7 @@ namespace RPGGame
         Popup popUp;
         Boat boat;
         Paddle paddle;
-        Sprite[,] Grid;
+        TileFromSprite[,] Grid;
         Inventory inventory;
         Rectangle boundary;
         List<Sprite> rocks = new List<Sprite>();
@@ -72,6 +72,16 @@ namespace RPGGame
                 Type = type;
             }
         }
+        class TileFromSprite : Sprite
+        {
+            public TileTypes tileType;
+
+            public TileFromSprite(TileTypes type, Texture2D image, Vector2 position, Color tint, Vector2 origin, Vector2 scale, SpriteEffects effect)
+                : base(image, position, tint, origin, scale, effect)
+            {
+                tileType = type;
+            }
+        }
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -90,9 +100,7 @@ namespace RPGGame
 
             IsMouseVisible = true;
 
-            graphics.PreferredBackBufferWidth = 789;
-            graphics.PreferredBackBufferHeight = 405;
-            graphics.ApplyChanges();
+            
 
             base.Initialize();
         }
@@ -113,7 +121,7 @@ namespace RPGGame
                 {
                     Sprite currentSprite = new Sprite(null, new Vector2(x * tileSize, y * tileSize), Color.White, new Vector2(0, 0), new Vector2(tileSize, tileSize), SpriteEffects.None);
 
-                    Grid[y, x] = currentSprite;
+                    //Grid[y, x] = currentSprite;
 
                     Spots.Add(new TwoDArrayIndex(y, x));
                 }
@@ -164,7 +172,7 @@ namespace RPGGame
         }
         public void Deserialize()
         {
-            string fileContents = File.ReadAllText("tiles.json");
+            string fileContents = File.ReadAllText(@"C:\Users\Veda.Hingarh\Documents\GitHub\RPG\MapEditor\bin\Debug\tiles.json");
             tiles = JsonConvert.DeserializeObject<List<Tile>>(fileContents);
         }
         Dictionary<TileTypes, Texture2D> tileTypesToImage;
@@ -172,9 +180,13 @@ namespace RPGGame
         {
             //tileSize = (int)(255 * scale.X);
             //Grid = new Sprite[GraphicsDevice.Viewport.Height / tileSize + 1, GraphicsDevice.Viewport.Width / tileSize + 1];
-            Grid = new Sprite[20, 30];
+            Grid = new TileFromSprite[20, 30];
 
             Deserialize();
+
+            waterTile = Content.Load<Texture2D>("waterTile");
+            grassTile = Content.Load<Texture2D>("grassTile");
+            stoneTile = Content.Load<Texture2D>("stoneTile2");
             tileTypesToImage = new Dictionary<TileTypes, Texture2D>
             {
                 {TileTypes.grassTile, grassTile},
@@ -182,13 +194,16 @@ namespace RPGGame
                 {TileTypes.stoneTile, stoneTile},
             };
 
+            
             int tileIndex = 0;
+            float tileScale = 0.08f;
+            int tileSize = (int)(255 * tileScale);
             for (int y = 0; y < Grid.GetLength(0); y++)
             {
                 for(int x = 0; x < Grid.GetLength(1); x++)
                 {
                     Tile currTile = tiles[tileIndex];
-                    Grid[y, x] = new Sprite(tileTypesToImage[currTile.Type], new Vector2(currTile.X, currTile.Y), Color.White, Vector2.Zero, Vector2.One, SpriteEffects.None, null);
+                    Grid[y, x] = new TileFromSprite(currTile.Type,tileTypesToImage[currTile.Type], new Vector2(currTile.X *tileSize, currTile.Y*tileSize), Color.White, Vector2.Zero, new Vector2(tileScale, tileScale), SpriteEffects.None);
                     tileIndex++;
                 }
             }
@@ -200,10 +215,6 @@ namespace RPGGame
             pixel.SetData(new Color[] { Color.White });
             //floodFill();
 
-            waterTile = Content.Load<Texture2D>("waterTile");
-            grassTile = Content.Load<Texture2D>("grassTile");
-            stoneTile = Content.Load<Texture2D>("stoneTile2");
-            
 
             //for (int y = 0; y < Grid.GetLength(0); y++)
             //{
@@ -240,22 +251,27 @@ namespace RPGGame
 
             //fillingSpots();
 
-            //for (int y = 1; y < Grid.GetLength(0) - 1; y++)
-            //{
-            //    for (int x = 1; x < Grid.GetLength(1) - 1; x++)
-            //    {
-            //        if (Grid[y, x].Tint != Color.DarkGreen)
-            //        {
-            //            continue;
-            //        }
-            //        if (Grid[y - 1, x].Tint == Color.DeepSkyBlue || Grid[y + 1, x].Tint == Color.DeepSkyBlue || Grid[y, x + 1].Tint == Color.DeepSkyBlue ||
-            //            Grid[y, x - 1].Tint == Color.DeepSkyBlue || Grid[y + 1, x + 1].Tint == Color.DeepSkyBlue || Grid[y + 1, x - 1].Tint == Color.DeepSkyBlue ||
-            //            Grid[y - 1, x - 1].Tint == Color.DeepSkyBlue || Grid[y - 1, x + 1].Tint == Color.DeepSkyBlue)
-            //        {
-            //            edges.Add(Grid[y, x].Position);
-            //        }
-            //    }
-            //}
+            for (int y = 1; y < Grid.GetLength(0) - 1; y++)
+            {
+                for (int x = 1; x < Grid.GetLength(1) - 1; x++)
+                {
+                    Tile currentTile = tiles[tileIndex];
+                    if (currentTile.Type != TileTypes.grassTile)
+                    {
+                        continue;
+                    }
+                    //fix
+                    if (Grid[y - 1, x].tileType == TileTypes.waterTile || Grid[y + 1, x].tileType == TileTypes.waterTile || Grid[y, x + 1].tileType == TileTypes.waterTile ||
+                        Grid[y, x - 1].Tint == Color.DeepSkyBlue || Grid[y + 1, x + 1].Tint == Color.DeepSkyBlue || Grid[y + 1, x - 1].Tint == Color.DeepSkyBlue ||
+                        Grid[y - 1, x - 1].Tint == Color.DeepSkyBlue || Grid[y - 1, x + 1].Tint == Color.DeepSkyBlue)
+                    {
+                        edges.Add(Grid[y, x].Position);
+                    }
+                }
+            }
+            graphics.PreferredBackBufferWidth = 20 * Grid.GetLength(1);
+            graphics.PreferredBackBufferHeight = 20 * Grid.GetLength(0);
+            graphics.ApplyChanges();
             OriginType originType = OriginType.BottomCenter;
 
             #region define frames
@@ -605,6 +621,8 @@ namespace RPGGame
             popUp = new Popup(board, Color.White, new Vector2(0, 0), new Vector2(0.30f, 0.30f), font);
 
             // TODO: use this.Content to load your game content here
+
+         
         }
 
         public void PartialFloodFill(int x, int y, Texture2D texture)

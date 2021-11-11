@@ -93,6 +93,16 @@ namespace MapEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap stoneTile21 {
+            get {
+                object obj = ResourceManager.GetObject("stoneTile21", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap stoneTileFromPaint {
             get {
                 object obj = ResourceManager.GetObject("stoneTileFromPaint", resourceCulture);

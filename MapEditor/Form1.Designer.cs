@@ -37,15 +37,15 @@
             this.Changes = new System.Windows.Forms.Button();
             this.ControlPanel = new System.Windows.Forms.Panel();
             this.TilesPanel = new System.Windows.Forms.Panel();
-            this.stoneTile = new System.Windows.Forms.PictureBox();
-            this.grassTile = new System.Windows.Forms.PictureBox();
-            this.waterTile = new System.Windows.Forms.PictureBox();
             this.ToggleLabel = new System.Windows.Forms.Label();
-            this.map = new System.Windows.Forms.PictureBox();
             this.FillToggleLabel = new System.Windows.Forms.Label();
             this.Save = new System.Windows.Forms.Button();
             this.namingFileTextBox = new System.Windows.Forms.TextBox();
             this.NameOfFile = new System.Windows.Forms.Label();
+            this.stoneTile = new System.Windows.Forms.PictureBox();
+            this.grassTile = new System.Windows.Forms.PictureBox();
+            this.waterTile = new System.Windows.Forms.PictureBox();
+            this.map = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.widthBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tileSizeBox)).BeginInit();
@@ -165,41 +165,6 @@
             this.TilesPanel.Size = new System.Drawing.Size(249, 201);
             this.TilesPanel.TabIndex = 10;
             // 
-            // stoneTile
-            // 
-            this.stoneTile.Image = global::MapEditor.Properties.Resources.stoneTile2;
-            this.stoneTile.Location = new System.Drawing.Point(16, 108);
-            this.stoneTile.Name = "stoneTile";
-            this.stoneTile.Size = new System.Drawing.Size(100, 82);
-            this.stoneTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.stoneTile.TabIndex = 12;
-            this.stoneTile.TabStop = false;
-            this.stoneTile.Tag = "StoneTile";
-            this.stoneTile.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
-            // grassTile
-            // 
-            this.grassTile.Image = global::MapEditor.Properties.Resources.grassTile;
-            this.grassTile.Location = new System.Drawing.Point(134, 20);
-            this.grassTile.Name = "grassTile";
-            this.grassTile.Size = new System.Drawing.Size(100, 82);
-            this.grassTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.grassTile.TabIndex = 1;
-            this.grassTile.TabStop = false;
-            this.grassTile.Tag = "GrassTile";
-            // 
-            // waterTile
-            // 
-            this.waterTile.Image = global::MapEditor.Properties.Resources.waterTile;
-            this.waterTile.Location = new System.Drawing.Point(16, 20);
-            this.waterTile.Name = "waterTile";
-            this.waterTile.Size = new System.Drawing.Size(100, 82);
-            this.waterTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.waterTile.TabIndex = 0;
-            this.waterTile.TabStop = false;
-            this.waterTile.Tag = "WaterTile";
-            this.waterTile.Click += new System.EventHandler(this.waterTile_Click);
-            // 
             // ToggleLabel
             // 
             this.ToggleLabel.AutoSize = true;
@@ -208,15 +173,6 @@
             this.ToggleLabel.Size = new System.Drawing.Size(100, 13);
             this.ToggleLabel.TabIndex = 11;
             this.ToggleLabel.Text = "Toggle: Off (key: H)";
-            // 
-            // map
-            // 
-            this.map.BackColor = System.Drawing.SystemColors.Desktop;
-            this.map.Location = new System.Drawing.Point(-1, 0);
-            this.map.Name = "map";
-            this.map.Size = new System.Drawing.Size(600, 400);
-            this.map.TabIndex = 0;
-            this.map.TabStop = false;
             // 
             // FillToggleLabel
             // 
@@ -252,6 +208,50 @@
             this.NameOfFile.Size = new System.Drawing.Size(71, 13);
             this.NameOfFile.TabIndex = 15;
             this.NameOfFile.Text = "Name Of File:";
+            // 
+            // stoneTile
+            // 
+            this.stoneTile.Image = global::MapEditor.Properties.Resources.stoneTile21;
+            this.stoneTile.Location = new System.Drawing.Point(16, 108);
+            this.stoneTile.Name = "stoneTile";
+            this.stoneTile.Size = new System.Drawing.Size(100, 82);
+            this.stoneTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.stoneTile.TabIndex = 12;
+            this.stoneTile.TabStop = false;
+            this.stoneTile.Tag = "StoneTile";
+            this.stoneTile.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
+            // grassTile
+            // 
+            this.grassTile.Image = global::MapEditor.Properties.Resources.grassTile;
+            this.grassTile.Location = new System.Drawing.Point(134, 20);
+            this.grassTile.Name = "grassTile";
+            this.grassTile.Size = new System.Drawing.Size(100, 82);
+            this.grassTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.grassTile.TabIndex = 1;
+            this.grassTile.TabStop = false;
+            this.grassTile.Tag = "GrassTile";
+            // 
+            // waterTile
+            // 
+            this.waterTile.Image = global::MapEditor.Properties.Resources.waterTile;
+            this.waterTile.Location = new System.Drawing.Point(16, 20);
+            this.waterTile.Name = "waterTile";
+            this.waterTile.Size = new System.Drawing.Size(100, 82);
+            this.waterTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.waterTile.TabIndex = 0;
+            this.waterTile.TabStop = false;
+            this.waterTile.Tag = "WaterTile";
+            this.waterTile.Click += new System.EventHandler(this.waterTile_Click);
+            // 
+            // map
+            // 
+            this.map.BackColor = System.Drawing.SystemColors.Desktop;
+            this.map.Location = new System.Drawing.Point(-1, 0);
+            this.map.Name = "map";
+            this.map.Size = new System.Drawing.Size(600, 400);
+            this.map.TabIndex = 0;
+            this.map.TabStop = false;
             // 
             // Form1
             // 

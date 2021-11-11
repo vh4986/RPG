@@ -43,7 +43,7 @@ namespace MapEditor
 
         int totalWidth = 600;
         int totalHeight = 400;
-        int tileSize = 20;
+        int tileSize =  20;
 
         PictureBox[,] Grid;
 
@@ -63,7 +63,7 @@ namespace MapEditor
         {
             grassImage = Properties.Resources.grassTile;
             waterImage = Properties.Resources.waterTile;
-            stoneImage = Properties.Resources.stoneTile2;
+            stoneImage = Properties.Resources.stoneTile21;
             InitializeComponent();
 
             totalWidth = map.Width;
