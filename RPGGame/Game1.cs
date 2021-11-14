@@ -250,23 +250,51 @@ namespace RPGGame
             //}
 
             //fillingSpots();
-
-            for (int y = 1; y < Grid.GetLength(0) - 1; y++)
+            
+            for (int y = 0; y < Grid.GetLength(0); y++)
             {
-                for (int x = 1; x < Grid.GetLength(1) - 1; x++)
+                for (int x = 0; x < Grid.GetLength(1); x++)
                 {
-                    Tile currentTile = tiles[tileIndex];
-                    if (currentTile.Type != TileTypes.grassTile)
+                    TileTypes currentTile = Grid[y, x].tileType;
+                    if (currentTile != TileTypes.waterTile)
                     {
                         continue;
                     }
-                    //fix
-                    if (Grid[y - 1, x].tileType == TileTypes.waterTile || Grid[y + 1, x].tileType == TileTypes.waterTile || Grid[y, x + 1].tileType == TileTypes.waterTile ||
-                        Grid[y, x - 1].Tint == Color.DeepSkyBlue || Grid[y + 1, x + 1].Tint == Color.DeepSkyBlue || Grid[y + 1, x - 1].Tint == Color.DeepSkyBlue ||
-                        Grid[y - 1, x - 1].Tint == Color.DeepSkyBlue || Grid[y - 1, x + 1].Tint == Color.DeepSkyBlue)
+
+                    List<bool> surroundedByWater = new List<bool>();
+                    //is left in boundary, if it is, check the tileType
+                    if(x - 1 >= 0)
+                    {
+                        surroundedByWater.Add(Grid[y, x - 1].tileType == TileTypes.waterTile);
+                    }
+                    //is right in boundary, if it is, check the tileType
+                    if(x + 1 < Grid.GetLength(1))
+                    {
+                        surroundedByWater.Add(Grid[y, x + 1].tileType == TileTypes.waterTile);
+                    }
+                    //is up in boundary, if it is, check the tileType
+                    if(y - 1 >= 0)
+                    {
+                        surroundedByWater.Add(Grid[y - 1, x].tileType == TileTypes.waterTile);
+                    }
+                    //is down in boundary, if it is, check the tileType
+                    if(y + 1 < Grid.GetLength(0))
+                    {
+                        surroundedByWater.Add(Grid[y + 1, x].tileType == TileTypes.waterTile);
+                    }
+
+                    int countOfFalses = surroundedByWater.Where(b => b == false).Count();
+                    if(countOfFalses > 0)
                     {
                         edges.Add(Grid[y, x].Position);
                     }
+
+                    ////fix
+                    //if (!(Grid[y - 1, x].tileType == TileTypes.waterTile && Grid[y + 1, x].tileType == TileTypes.waterTile && Grid[y, x + 1].tileType == TileTypes.waterTile &&
+                    //    Grid[y, x - 1].tileType == TileTypes.waterTile)) //&& Grid[y + 1, x + 1].tileType == TileTypes.waterTile && Grid[y + 1, x - 1].tileType == TileTypes.waterTile &&
+                    //    //Grid[y - 1, x - 1].tileType == TileTypes.waterTile && Grid[y - 1, x + 1].tileType == TileTypes.waterTile))
+                    //{
+                    //}
                 }
             }
             graphics.PreferredBackBufferWidth = 20 * Grid.GetLength(1);
@@ -593,7 +621,7 @@ namespace RPGGame
             Texture2D boatImage = Content.Load<Texture2D>("onlyBoat");
             Texture2D paddleImage = Content.Load<Texture2D>("paddle");
             
-            boat = new Boat(boatImage, new Vector2(65, 210), Color.White, Vector2.Zero, new Vector2(0.35f, 0.35f), new Vector2(1, 1), SpriteEffects.FlipHorizontally, 0.05f, 0.03f, rocks);
+            boat = new Boat(boatImage, new Vector2(65, 230), Color.White, Vector2.Zero, new Vector2(0.35f, 0.35f), new Vector2(1, 1), SpriteEffects.FlipHorizontally, 0.05f, 0.03f, rocks);
             
             paddle = new Paddle(paddleImage, new Vector2(boat.Position.X, boat.Position.Y - 5), Color.White, Vector2.Zero, new Vector2(0.34f, 0.34f), new Vector2(1,1), SpriteEffects.FlipHorizontally);
             paddle.Origin = new Vector2(paddle.ScaledWidth / 2, paddle.ScaledHeight / 2);
@@ -622,7 +650,7 @@ namespace RPGGame
 
             // TODO: use this.Content to load your game content here
 
-         
+            //create docking point where the boat can only go and the knight can get on and off the boat
         }
 
         public void PartialFloodFill(int x, int y, Texture2D texture)
@@ -885,10 +913,10 @@ namespace RPGGame
       
             knight.Draw(spriteBatch);
             paddle.DrawWithTint(spriteBatch, boat.Tint);
-            //foreach (Vector2 edge in edges)
-            //{
-            //    spriteBatch.Draw(pixel, new Rectangle((int)edge.X, (int)edge.Y, 3, 3), Color.Red);
-            //}
+            foreach (Vector2 edge in edges)
+            {
+                spriteBatch.Draw(pixel, new Rectangle((int)edge.X, (int)edge.Y, 20, 1), Color.Red);
+            }
 
             spriteBatch.End();
 

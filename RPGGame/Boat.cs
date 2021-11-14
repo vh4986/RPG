@@ -43,7 +43,7 @@ namespace RPGGame
                 paddleRotatingSpeed = -paddleRotatingSpeed;
 
             }
-            if (ks.IsKeyDown(Keys.W))
+            if (ks.IsKeyDown(Keys.A))
             {
                 if(isIntersectingWithObstacle == false && knight.isIntersectedWithBoat == true)
                 {
@@ -52,7 +52,7 @@ namespace RPGGame
                 }
                 
             }
-            else if (ks.IsKeyDown(Keys.S))
+            else if (ks.IsKeyDown(Keys.D))
             {
                 if(isIntersectingWithObstacle == false && knight.isIntersectedWithBoat == true)
                 {
@@ -60,7 +60,7 @@ namespace RPGGame
                     knight.Rotation += TurnSpeed; 
                 }
             }
-            else if (ks.IsKeyDown(Keys.A))
+            else if (ks.IsKeyDown(Keys.W))
             {
                 isIntersectingWithObstacle = false;
                 isGoingRight = false;
@@ -89,7 +89,7 @@ namespace RPGGame
                     Paddle.Rotation += paddleRotatingSpeed;
                 }
             }
-            else if (ks.IsKeyDown(Keys.D))
+            else if (ks.IsKeyDown(Keys.S))
             {
                 isIntersectingWithObstacle = false;
                 isGoingRight = true;
