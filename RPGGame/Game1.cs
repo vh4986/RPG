@@ -13,7 +13,7 @@ namespace RPGGame
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public partial class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -53,12 +53,7 @@ namespace RPGGame
         Texture2D waterTile;
         Texture2D grassTile;
         Texture2D stoneTile;
-        public enum TileTypes
-        {
-            waterTile,
-            grassTile,
-            stoneTile,
-        };
+        Texture2D sandTile;
         class Tile
         {
             public int X { get; set; }
@@ -100,7 +95,7 @@ namespace RPGGame
 
             IsMouseVisible = true;
 
-            
+
 
             base.Initialize();
         }
@@ -176,6 +171,34 @@ namespace RPGGame
             tiles = JsonConvert.DeserializeObject<List<Tile>>(fileContents);
         }
         Dictionary<TileTypes, Texture2D> tileTypesToImage;
+        void checkForSurroundingTiles(int x, int y, TileTypes tile)
+        {
+            List<bool> tileCheck = new List<bool>();
+            if (Grid[y, x].tileType != tile) return;
+
+            if (x - 1 >= 0)
+            {
+                tileCheck.Add(Grid[y, x - 1].tileType == tile);
+            }
+            if (x + 1 < Grid.GetLength(1))
+            {
+                tileCheck.Add(Grid[y, x + 1].tileType == tile);
+            }
+            if (y - 1 >= 0)
+            {
+                tileCheck.Add(Grid[y - 1, x].tileType == tile);
+            }
+            if (y + 1 < Grid.GetLength(0))
+            {
+                tileCheck.Add(Grid[y + 1, x].tileType == tile);
+            }
+
+            int countOfFalses = tileCheck.Where(b => b == false).Count();
+            if (countOfFalses > 0)
+            {
+                edges.Add(Grid[y, x].Position);
+            }
+        }
         protected override void LoadContent()
         {
             //tileSize = (int)(255 * scale.X);
@@ -187,23 +210,26 @@ namespace RPGGame
             waterTile = Content.Load<Texture2D>("waterTile");
             grassTile = Content.Load<Texture2D>("grassTile");
             stoneTile = Content.Load<Texture2D>("stoneTile2");
+            sandTile = Content.Load<Texture2D>("SandTileV2");
+
             tileTypesToImage = new Dictionary<TileTypes, Texture2D>
             {
                 {TileTypes.grassTile, grassTile},
                 {TileTypes.waterTile, waterTile},
                 {TileTypes.stoneTile, stoneTile},
+                {TileTypes.sandTile, sandTile}
             };
 
-            
+
             int tileIndex = 0;
             float tileScale = 0.08f;
             int tileSize = (int)(255 * tileScale);
             for (int y = 0; y < Grid.GetLength(0); y++)
             {
-                for(int x = 0; x < Grid.GetLength(1); x++)
+                for (int x = 0; x < Grid.GetLength(1); x++)
                 {
                     Tile currTile = tiles[tileIndex];
-                    Grid[y, x] = new TileFromSprite(currTile.Type,tileTypesToImage[currTile.Type], new Vector2(currTile.X *tileSize, currTile.Y*tileSize), Color.White, Vector2.Zero, new Vector2(tileScale, tileScale), SpriteEffects.None);
+                    Grid[y, x] = new TileFromSprite(currTile.Type, tileTypesToImage[currTile.Type], new Vector2(currTile.X * tileSize, currTile.Y * tileSize), Color.White, Vector2.Zero, new Vector2(tileScale, tileScale), SpriteEffects.None);
                     tileIndex++;
                 }
             }
@@ -250,51 +276,14 @@ namespace RPGGame
             //}
 
             //fillingSpots();
-            
+
+
             for (int y = 0; y < Grid.GetLength(0); y++)
             {
                 for (int x = 0; x < Grid.GetLength(1); x++)
                 {
-                    TileTypes currentTile = Grid[y, x].tileType;
-                    if (currentTile != TileTypes.waterTile)
-                    {
-                        continue;
-                    }
-
-                    List<bool> surroundedByWater = new List<bool>();
-                    //is left in boundary, if it is, check the tileType
-                    if(x - 1 >= 0)
-                    {
-                        surroundedByWater.Add(Grid[y, x - 1].tileType == TileTypes.waterTile);
-                    }
-                    //is right in boundary, if it is, check the tileType
-                    if(x + 1 < Grid.GetLength(1))
-                    {
-                        surroundedByWater.Add(Grid[y, x + 1].tileType == TileTypes.waterTile);
-                    }
-                    //is up in boundary, if it is, check the tileType
-                    if(y - 1 >= 0)
-                    {
-                        surroundedByWater.Add(Grid[y - 1, x].tileType == TileTypes.waterTile);
-                    }
-                    //is down in boundary, if it is, check the tileType
-                    if(y + 1 < Grid.GetLength(0))
-                    {
-                        surroundedByWater.Add(Grid[y + 1, x].tileType == TileTypes.waterTile);
-                    }
-
-                    int countOfFalses = surroundedByWater.Where(b => b == false).Count();
-                    if(countOfFalses > 0)
-                    {
-                        edges.Add(Grid[y, x].Position);
-                    }
-
-                    ////fix
-                    //if (!(Grid[y - 1, x].tileType == TileTypes.waterTile && Grid[y + 1, x].tileType == TileTypes.waterTile && Grid[y, x + 1].tileType == TileTypes.waterTile &&
-                    //    Grid[y, x - 1].tileType == TileTypes.waterTile)) //&& Grid[y + 1, x + 1].tileType == TileTypes.waterTile && Grid[y + 1, x - 1].tileType == TileTypes.waterTile &&
-                    //    //Grid[y - 1, x - 1].tileType == TileTypes.waterTile && Grid[y - 1, x + 1].tileType == TileTypes.waterTile))
-                    //{
-                    //}
+                    checkForSurroundingTiles(x, y, TileTypes.waterTile);
+                    checkForSurroundingTiles(x, y, TileTypes.sandTile);
                 }
             }
             graphics.PreferredBackBufferWidth = 20 * Grid.GetLength(1);
@@ -586,7 +575,7 @@ namespace RPGGame
             }
             for (int i = 0; i < 1; i++)
             {
-                rocks.Add(new Sprite(rockImage, new Vector2(300, 200), Color.White, new Vector2(0,0), new Vector2(0.6f,0.6f), SpriteEffects.None, rockFrames[newRandom.Next(0,5)]));
+                rocks.Add(new Sprite(rockImage, new Vector2(300, 200), Color.White, new Vector2(0, 0), new Vector2(0.6f, 0.6f), SpriteEffects.None, rockFrames[newRandom.Next(0, 5)]));
                 rocks.Add(new Sprite(rockImage, new Vector2(100, 100), Color.White, new Vector2(0, 0), new Vector2(0.6f, 0.6f), SpriteEffects.None, rockFrames[newRandom.Next(0, 5)]));
             }
             Texture2D closedTreasureImage = Content.Load<Texture2D>("closedtreasure");
@@ -620,15 +609,15 @@ namespace RPGGame
 
             Texture2D boatImage = Content.Load<Texture2D>("onlyBoat");
             Texture2D paddleImage = Content.Load<Texture2D>("paddle");
-            
-            boat = new Boat(boatImage, new Vector2(65, 230), Color.White, Vector2.Zero, new Vector2(0.35f, 0.35f), new Vector2(1, 1), SpriteEffects.FlipHorizontally, 0.05f, 0.03f, rocks);
-            
-            paddle = new Paddle(paddleImage, new Vector2(boat.Position.X, boat.Position.Y - 5), Color.White, Vector2.Zero, new Vector2(0.34f, 0.34f), new Vector2(1,1), SpriteEffects.FlipHorizontally);
+
+            boat = new Boat(boatImage, new Vector2(65, 235), Color.White, Vector2.Zero, new Vector2(0.35f, 0.35f), new Vector2(1, 1), SpriteEffects.FlipHorizontally, 0.05f, 0.03f, rocks);
+
+            paddle = new Paddle(paddleImage, new Vector2(boat.Position.X, boat.Position.Y - 5), Color.White, Vector2.Zero, new Vector2(0.34f, 0.34f), new Vector2(1, 1), SpriteEffects.FlipHorizontally);
             paddle.Origin = new Vector2(paddle.ScaledWidth / 2, paddle.ScaledHeight / 2);
             knight = new Knight(knightSpriteSheets, position: new Vector2(100, 100), tint: Color.White, scale: new Vector2(1, 1), speed: new Vector2(4, 4), font,
                 walkingLeftFrames, walkingRightFrames, idleRightFrames, idleLeftFrames, idleUpFrames, idleDownFrames, walkingUpFrames, walkingDownFrames, knightDying,
                 fightingLeftFrames, fightingRightFrames, fightingForwardFrames, fightingBackwardFrames, SpriteEffects.None, GraphicsDevice, boat);
-           
+
 
             enemies.Add(new ForwardEnemy(enemyImage, arrowImage, new Vector2(treasure.Position.X + 10, treasure.Position.Y + 80), Color.White, new Vector2(0, 0), new Vector2(1, 1), new Vector2(3, 3), SpriteEffects.None,
             enemyWalkingRight, enemyWalkingLeft, enemyWalkingDown, enemyWalkingUp, enemyFightingRight, enemyFightingLeft, enemyFightingForward, enemyFightingBackward,
@@ -841,8 +830,8 @@ namespace RPGGame
             {
                 popUp.ClearPopup();
             }
-            knight.Update(gameTime, enemies, edges, new Rectangle(0,0,GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), paddle);
-            for(int i = 0; i < enemies.Count; i++)
+            knight.Update(gameTime, enemies, edges, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), paddle);
+            for (int i = 0; i < enemies.Count; i++)
             {
                 enemies[i].Update(gameTime, boundary);
             }
@@ -890,14 +879,14 @@ namespace RPGGame
             }
             for (int i = 0; i < rocks.Count; i++)
             {
-               //spriteBatch.Draw(pixel, new Vector2(rocks[i].HitBox.X, rocks[i].HitBox.Y), null, Color.Black, 0f, Vector2.Zero, new Vector2(rocks[i].HitBox.Width, rocks[i].HitBox.Height), SpriteEffects.None, 0);
-               rocks[i].Draw(spriteBatch);
+                //spriteBatch.Draw(pixel, new Vector2(rocks[i].HitBox.X, rocks[i].HitBox.Y), null, Color.Black, 0f, Vector2.Zero, new Vector2(rocks[i].HitBox.Width, rocks[i].HitBox.Height), SpriteEffects.None, 0);
+                rocks[i].Draw(spriteBatch);
             }
             treasure.Draw(spriteBatch);
 
-           
+
             //spriteBatch.Draw(pixel, new Vector2(knight.HitBox.X, knight.HitBox.Y), null, Color.Black, 0f, Vector2.Zero, new Vector2(knight.HitBox.Width, knight.HitBox.Height), SpriteEffects.None, 0);
-            
+
             for (int i = 0; i < enemies.Count; i++)
             {
                 //spriteBatch.Draw(pixel, new Vector2(enemies[i].HitBox.X, enemies[i].HitBox.Y), null, Color.Black, 0f, Vector2.Zero, new Vector2(enemies[i].HitBox.Width, enemies[i].HitBox.Height), SpriteEffects.None, 0);
@@ -910,12 +899,12 @@ namespace RPGGame
                 popUp.Draw(spriteBatch, graphics.GraphicsDevice);
             }
             boat.Draw(spriteBatch);
-      
+
             knight.Draw(spriteBatch);
             paddle.DrawWithTint(spriteBatch, boat.Tint);
             foreach (Vector2 edge in edges)
             {
-                spriteBatch.Draw(pixel, new Rectangle((int)edge.X, (int)edge.Y, 20, 1), Color.Red);
+                spriteBatch.Draw(pixel, new Rectangle((int)edge.X, (int)edge.Y, 20, 20), Color.Red * 0.7f);
             }
 
             spriteBatch.End();

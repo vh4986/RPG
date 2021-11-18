@@ -14,7 +14,7 @@ namespace RPGGame
     {
         Vector2 Speed;
         float TurnSpeed;
-        public bool isIntersectingWithObstacle = false;
+        public bool isIntersectingWithGrass = false;
         public Rectangle rightRectangle;
         public Rectangle leftRectangle;
         Vector2 updatePosition;
@@ -33,7 +33,7 @@ namespace RPGGame
             rocks = rock;
         }
 
-        public void Move(List<Vector2> edges, Knight knight, Paddle Paddle)
+        public void Move(List<Vector2> edges, Knight knight, Paddle Paddle)// TileTypes tile)
         {
             updatePosition = new Vector2(Speed.X * (float)Math.Cos(Rotation), Speed.Y * (float)Math.Sin(Rotation));
             KeyboardState ks = Keyboard.GetState();
@@ -41,20 +41,18 @@ namespace RPGGame
             if(Paddle.Rotation > Math.PI || Paddle.Rotation < 0)
             {
                 paddleRotatingSpeed = -paddleRotatingSpeed;
-
             }
             if (ks.IsKeyDown(Keys.A))
             {
-                if(isIntersectingWithObstacle == false && knight.isIntersectedWithBoat == true)
+                if(isIntersectingWithGrass == false && knight.isIntersectedWithBoat == true)
                 {
                     Rotation -= TurnSpeed;
                     knight.Rotation -= TurnSpeed; 
                 }
-                
             }
             else if (ks.IsKeyDown(Keys.D))
             {
-                if(isIntersectingWithObstacle == false && knight.isIntersectedWithBoat == true)
+                if(isIntersectingWithGrass == false && knight.isIntersectedWithBoat == true)
                 {
                     Rotation += TurnSpeed;
                     knight.Rotation += TurnSpeed; 
@@ -62,24 +60,26 @@ namespace RPGGame
             }
             else if (ks.IsKeyDown(Keys.W))
             {
-                isIntersectingWithObstacle = false;
+                isIntersectingWithGrass = false;
                 isGoingRight = false;
                 leftRectangle = new Rectangle((int)(Position.X + Speed.X - ScaledWidth/2) - 5, (int)(Position.Y + Speed.Y - ScaledHeight/2), 5, (int)ScaledHeight - 5);
                 foreach (Vector2 edge in edges)
                 {
+                    //??
                     if (leftRectangle.Contains(edge))
                     {
-                        isIntersectingWithObstacle = true;
+                        isIntersectingWithGrass = true;
                     }
                 }
+                //still check if tile is grassTile
                 for (int i = 0; i < rocks.Count; i++)
                 {
                     if (leftRectangle.Intersects(rocks[i].HitBox))
                     {
-                        isIntersectingWithObstacle = true;
+                        isIntersectingWithGrass = true;
                     }
             }
-                if (isIntersectingWithObstacle == false && knight.isIntersectedWithBoat == true)
+                if (isIntersectingWithGrass == false && knight.isIntersectedWithBoat == true)
                 {
                     Position -= updatePosition;
                     knight.Position -= updatePosition;
@@ -91,24 +91,24 @@ namespace RPGGame
             }
             else if (ks.IsKeyDown(Keys.S))
             {
-                isIntersectingWithObstacle = false;
+                isIntersectingWithGrass = false;
                 isGoingRight = true;
                 rightRectangle = new Rectangle((int)(Position.X + Speed.X + ScaledWidth /2) - 15, (int)(Position.Y + Speed.Y - ScaledHeight /2), 5, (int)ScaledHeight - 5);
                 foreach (Vector2 edge in edges)
                 {
                     if (rightRectangle.Contains(edge))
                     {
-                        isIntersectingWithObstacle = true;
+                        isIntersectingWithGrass = true;
                     }
                 }
                 for (int i = 0; i < rocks.Count; i++)
                 {
                     if (rightRectangle.Intersects(rocks[i].HitBox))
                     {
-                        isIntersectingWithObstacle = true;
+                        isIntersectingWithGrass = true;
                     }
                 }
-                if (isIntersectingWithObstacle == false && knight.isIntersectedWithBoat == true)
+                if (isIntersectingWithGrass == false && knight.isIntersectedWithBoat == true)
                 {
                     Position += updatePosition;
                     knight.Position += updatePosition;

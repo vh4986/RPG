@@ -20,6 +20,7 @@ namespace MapEditor
         waterTile,
         grassTile,
         stoneTile,
+        sandTile,
     };
     
     public partial class Form1 : Form
@@ -50,6 +51,7 @@ namespace MapEditor
         Image grassImage;
         Image waterImage;
         Image stoneImage;
+        Image sandImage;
 
         TileTypes selectedTileType;
 
@@ -58,12 +60,15 @@ namespace MapEditor
             ["WaterTile"] = TileTypes.waterTile,
             ["GrassTile"] = TileTypes.grassTile,
             ["StoneTile"] = TileTypes.stoneTile,
+            ["SandTile"] = TileTypes.sandTile, 
         };
         public Form1()
         {
             grassImage = Properties.Resources.grassTile;
             waterImage = Properties.Resources.waterTile;
             stoneImage = Properties.Resources.stoneTile21;
+            sandImage = Properties.Resources.sandTile;
+
             InitializeComponent();
 
             totalWidth = map.Width;
@@ -321,6 +326,11 @@ namespace MapEditor
             string textFormat = JsonConvert.SerializeObject(tiles);
 
             File.WriteAllText($"{namingFileTextBox.Text}.json", textFormat);
+        }
+
+        private void pictureBox1_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -66,6 +66,7 @@
     <Compile Include="RightEnemy.cs" />
     <Compile Include="SpeedPotion.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="TileTypes.cs" />
     <Compile Include="Treasure.cs" />
     <Compile Include="TwoDArrayIndex.cs" />
   </ItemGroup>

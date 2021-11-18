@@ -190,7 +190,7 @@ namespace RPGGame
             {
                 Boat.Tint = Color.White;
             }
-            if(Boat.isIntersectingWithObstacle == true && ks.IsKeyDown(Keys.V))
+            if(Boat.isIntersectingWithGrass == true && ks.IsKeyDown(Keys.V))
             {
 
                 if (Boat.isGoingRight == true)

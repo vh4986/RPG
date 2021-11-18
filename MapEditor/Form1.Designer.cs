@@ -42,6 +42,7 @@
             this.Save = new System.Windows.Forms.Button();
             this.namingFileTextBox = new System.Windows.Forms.TextBox();
             this.NameOfFile = new System.Windows.Forms.Label();
+            this.sandTile = new System.Windows.Forms.PictureBox();
             this.stoneTile = new System.Windows.Forms.PictureBox();
             this.grassTile = new System.Windows.Forms.PictureBox();
             this.waterTile = new System.Windows.Forms.PictureBox();
@@ -51,6 +52,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tileSizeBox)).BeginInit();
             this.ControlPanel.SuspendLayout();
             this.TilesPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sandTile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stoneTile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grassTile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.waterTile)).BeginInit();
@@ -157,6 +159,7 @@
             // 
             // TilesPanel
             // 
+            this.TilesPanel.Controls.Add(this.sandTile);
             this.TilesPanel.Controls.Add(this.stoneTile);
             this.TilesPanel.Controls.Add(this.grassTile);
             this.TilesPanel.Controls.Add(this.waterTile);
@@ -208,6 +211,17 @@
             this.NameOfFile.Size = new System.Drawing.Size(71, 13);
             this.NameOfFile.TabIndex = 15;
             this.NameOfFile.Text = "Name Of File:";
+            // 
+            // sandTile
+            // 
+            this.sandTile.Image = global::MapEditor.Properties.Resources.SandTileV2;
+            this.sandTile.Location = new System.Drawing.Point(134, 108);
+            this.sandTile.Name = "sandTile";
+            this.sandTile.Size = new System.Drawing.Size(100, 82);
+            this.sandTile.TabIndex = 13;
+            this.sandTile.TabStop = false;
+            this.sandTile.Tag = "SandTile";
+            this.sandTile.Click += new System.EventHandler(this.pictureBox1_Click_1);
             // 
             // stoneTile
             // 
@@ -275,6 +289,7 @@
             this.ControlPanel.ResumeLayout(false);
             this.ControlPanel.PerformLayout();
             this.TilesPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.sandTile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stoneTile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grassTile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.waterTile)).EndInit();
@@ -304,6 +319,7 @@
         private System.Windows.Forms.Button Save;
         private System.Windows.Forms.TextBox namingFileTextBox;
         private System.Windows.Forms.Label NameOfFile;
+        private System.Windows.Forms.PictureBox sandTile;
     }
 }
 
