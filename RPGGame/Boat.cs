@@ -33,7 +33,7 @@ namespace RPGGame
             rocks = rock;
         }
 
-        public void Move(List<Vector2> edges, Knight knight, Paddle Paddle)// TileTypes tile)
+        public void Move(List<TileFromSprite> edges, Knight knight, Paddle Paddle)// TileTypes tile)
         {
             updatePosition = new Vector2(Speed.X * (float)Math.Cos(Rotation), Speed.Y * (float)Math.Sin(Rotation));
             KeyboardState ks = Keyboard.GetState();
@@ -42,15 +42,15 @@ namespace RPGGame
             {
                 paddleRotatingSpeed = -paddleRotatingSpeed;
             }
-            if (ks.IsKeyDown(Keys.A))
+            if (ks.IsKeyDown(Keys.W))
             {
-                if(isIntersectingWithGrass == false && knight.isIntersectedWithBoat == true)
+                if(isIntersectingWithGrass == false && knight.isIntersectedWithBoat == true )
                 {
                     Rotation -= TurnSpeed;
                     knight.Rotation -= TurnSpeed; 
                 }
             }
-            else if (ks.IsKeyDown(Keys.D))
+            else if (ks.IsKeyDown(Keys.S))
             {
                 if(isIntersectingWithGrass == false && knight.isIntersectedWithBoat == true)
                 {
@@ -58,20 +58,18 @@ namespace RPGGame
                     knight.Rotation += TurnSpeed; 
                 }
             }
-            else if (ks.IsKeyDown(Keys.W))
+            else if (ks.IsKeyDown(Keys.A))
             {
                 isIntersectingWithGrass = false;
                 isGoingRight = false;
                 leftRectangle = new Rectangle((int)(Position.X + Speed.X - ScaledWidth/2) - 5, (int)(Position.Y + Speed.Y - ScaledHeight/2), 5, (int)ScaledHeight - 5);
-                foreach (Vector2 edge in edges)
+                foreach (TileFromSprite edge in edges)
                 {
-                    //??
-                    if (leftRectangle.Contains(edge))
+                    if (leftRectangle.Intersects(edge.HitBox) && edge.tileType == TileTypes.grassTile)
                     {
                         isIntersectingWithGrass = true;
                     }
                 }
-                //still check if tile is grassTile
                 for (int i = 0; i < rocks.Count; i++)
                 {
                     if (leftRectangle.Intersects(rocks[i].HitBox))
@@ -89,14 +87,16 @@ namespace RPGGame
                     Paddle.Rotation += paddleRotatingSpeed;
                 }
             }
-            else if (ks.IsKeyDown(Keys.S))
+
+            //11/21- fix boat intersection logic
+            else if (ks.IsKeyDown(Keys.D))
             {
                 isIntersectingWithGrass = false;
                 isGoingRight = true;
                 rightRectangle = new Rectangle((int)(Position.X + Speed.X + ScaledWidth /2) - 15, (int)(Position.Y + Speed.Y - ScaledHeight /2), 5, (int)ScaledHeight - 5);
-                foreach (Vector2 edge in edges)
+                foreach (TileFromSprite edge in edges)
                 {
-                    if (rightRectangle.Contains(edge))
+                    if (rightRectangle.Intersects(edge.HitBox) && edge.tileType == TileTypes.grassTile)
                     {
                         isIntersectingWithGrass = true;
                     }

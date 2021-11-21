@@ -157,7 +157,7 @@ namespace RPGGame
         KeyboardState lastKeyboardState;
 
 
-        public void Update(GameTime gameTime, List<Enemy> enemy, List<Vector2> edges, Rectangle screenBoundary, Paddle paddle)
+        public void Update(GameTime gameTime, List<Enemy> enemy, List<TileFromSprite> edges, Rectangle screenBoundary, Paddle paddle)
         {
             KeyboardState ks = Keyboard.GetState();
             if (isDead) return;
@@ -227,9 +227,11 @@ namespace RPGGame
                     isMoving = true;
 
                     rightRectangle = new Rectangle((int)(Position.X + Speed.X) + 5, (int)(Position.Y - SourceRectangle.Value.Height), 5, SourceRectangle.Value.Height - 5);
-                    foreach (Vector2 edge in edges)
+                    foreach (TileFromSprite edge in edges)
                     {
-                        if (rightRectangle.Contains(edge))
+                        //does this work?
+
+                        if (rightRectangle.Intersects(edge.HitBox) && edge.tileType == TileTypes.waterTile)
                         {
                             isMoving = false;
                         }
@@ -255,9 +257,9 @@ namespace RPGGame
                     isMoving = true;
                     leftRectangle = new Rectangle((int)(Position.X - Speed.X) - 10, (int)(Position.Y - SourceRectangle.Value.Height), 5, SourceRectangle.Value.Height - 5);
 
-                    foreach (Vector2 edge in edges)
+                    foreach (TileFromSprite edge in edges)
                     {
-                        if (leftRectangle.Contains(edge))
+                        if (leftRectangle.Intersects(edge.HitBox) && edge.tileType == TileTypes.waterTile)
                         {
                             isMoving = false;
                         }
@@ -284,9 +286,9 @@ namespace RPGGame
                     isMoving = true;
                     upRectangle = new Rectangle((int)(Position.X - Speed.X) - 10, (int)(Position.Y - SourceRectangle.Value.Height) - 5, SourceRectangle.Value.Width - 10, 3);
 
-                    foreach (Vector2 edge in edges)
+                    foreach (TileFromSprite edge in edges)
                     {
-                        if (upRectangle.Contains(edge))
+                        if (upRectangle.Intersects(edge.HitBox) && edge.tileType == TileTypes.waterTile)
                         {
                             isMoving = false;
                         }
@@ -313,9 +315,9 @@ namespace RPGGame
                     isMoving = true;
                     downRectangle = new Rectangle((int)(Position.X - Speed.X) - 15, (int)(Position.Y) - 5, SourceRectangle.Value.Width - 5, 5);
 
-                    foreach (Vector2 edge in edges)
+                    foreach (TileFromSprite edge in edges)
                     {
-                        if (downRectangle.Contains(edge))
+                        if (downRectangle.Intersects(edge.HitBox) && edge.tileType == TileTypes.waterTile)
                         {
                             isMoving = false;
                         }

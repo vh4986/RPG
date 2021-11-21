@@ -13,6 +13,16 @@ namespace RPGGame
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
+    public class TileFromSprite : Sprite
+    {
+        public TileTypes tileType;
+
+        public TileFromSprite(TileTypes type, Texture2D image, Vector2 position, Color tint, Vector2 origin, Vector2 scale, SpriteEffects effect)
+            : base(image, position, tint, origin, scale, effect)
+        {
+            tileType = type;
+        }
+    }
     public partial class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -67,16 +77,7 @@ namespace RPGGame
                 Type = type;
             }
         }
-        class TileFromSprite : Sprite
-        {
-            public TileTypes tileType;
 
-            public TileFromSprite(TileTypes type, Texture2D image, Vector2 position, Color tint, Vector2 origin, Vector2 scale, SpriteEffects effect)
-                : base(image, position, tint, origin, scale, effect)
-            {
-                tileType = type;
-            }
-        }
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -105,7 +106,7 @@ namespace RPGGame
         /// all of your content.
         /// </summary>
         /// 
-        List<Vector2> edges = new List<Vector2>();
+        List<TileFromSprite> edges = new List<TileFromSprite>();
         public void floodFill()
         {
             selectedColor = Color.DarkGreen;
@@ -159,7 +160,7 @@ namespace RPGGame
                         Grid[y, x - 1].Tint == Color.DeepSkyBlue || Grid[y + 1, x + 1].Tint == Color.DeepSkyBlue || Grid[y + 1, x - 1].Tint == Color.DeepSkyBlue ||
                         Grid[y - 1, x - 1].Tint == Color.DeepSkyBlue || Grid[y - 1, x + 1].Tint == Color.DeepSkyBlue)
                     {
-                        edges.Add(Grid[y, x].Position);
+                        edges.Add(Grid[y, x]);
                     }
                 }
             }
@@ -196,7 +197,7 @@ namespace RPGGame
             int countOfFalses = tileCheck.Where(b => b == false).Count();
             if (countOfFalses > 0)
             {
-                edges.Add(Grid[y, x].Position);
+                edges.Add(Grid[y, x]);
             }
         }
         protected override void LoadContent()
@@ -610,7 +611,7 @@ namespace RPGGame
             Texture2D boatImage = Content.Load<Texture2D>("onlyBoat");
             Texture2D paddleImage = Content.Load<Texture2D>("paddle");
 
-            boat = new Boat(boatImage, new Vector2(65, 235), Color.White, Vector2.Zero, new Vector2(0.35f, 0.35f), new Vector2(1, 1), SpriteEffects.FlipHorizontally, 0.05f, 0.03f, rocks);
+            boat = new Boat(boatImage, new Vector2(385, 370), Color.White, Vector2.Zero, new Vector2(0.35f, 0.35f), new Vector2(1, 1), SpriteEffects.FlipHorizontally, 0.05f, 0.03f, rocks);
 
             paddle = new Paddle(paddleImage, new Vector2(boat.Position.X, boat.Position.Y - 5), Color.White, Vector2.Zero, new Vector2(0.34f, 0.34f), new Vector2(1, 1), SpriteEffects.FlipHorizontally);
             paddle.Origin = new Vector2(paddle.ScaledWidth / 2, paddle.ScaledHeight / 2);
@@ -902,10 +903,10 @@ namespace RPGGame
 
             knight.Draw(spriteBatch);
             paddle.DrawWithTint(spriteBatch, boat.Tint);
-            foreach (Vector2 edge in edges)
-            {
-                spriteBatch.Draw(pixel, new Rectangle((int)edge.X, (int)edge.Y, 20, 20), Color.Red * 0.7f);
-            }
+            //foreach (TileFromSprite edge in edges)
+            //{
+            //    spriteBatch.Draw(pixel, new Rectangle(edge.HitBox.X, edge.HitBox.Y, 20, 20), Color.Red * 0.7f);
+            //}
 
             spriteBatch.End();
 
