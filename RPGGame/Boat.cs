@@ -4,9 +4,6 @@ using Microsoft.Xna.Framework.Input;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RPGGame
 {
@@ -17,13 +14,17 @@ namespace RPGGame
         public bool isIntersectingWithGrass = false;
         public Rectangle rightRectangle;
         public Rectangle leftRectangle;
+        public Vector2 circlePosition;
         Vector2 updatePosition;
         public bool isGoingRight;
         float paddleRotatingSpeed;
         List<Sprite> rocks = new List<Sprite>();
+        Texture2D pixel;
+        GraphicsDevice Graphics;
 
-        public Rectangle biggerBoatHitBox => new Rectangle((int)((Position.X - 20)- Origin.X * Scale.X), (int)(Position.Y - Origin.Y * Scale.Y), (int)(ScaledWidth + 30), (int)ScaledHeight);
-        public Boat(Texture2D image, Vector2 position, Color tint, Vector2 origin, Vector2 scale, Vector2 speed, SpriteEffects effect, float turnSpeed, float PaddleRotatingSpeed, List<Sprite> rock)
+        public Rectangle biggerBoatHitBox => new Rectangle((int)((Position.X - 20) - Origin.X * Scale.X), (int)(Position.Y - Origin.Y * Scale.Y), (int)(ScaledWidth + 30), (int)ScaledHeight);
+        public Boat(Texture2D image, Vector2 position, Color tint, Vector2 origin, Vector2 scale, Vector2 speed, SpriteEffects effect, float turnSpeed, float PaddleRotatingSpeed, List<Sprite> rock,
+                GraphicsDevice graphics)
             : base(image, position, tint, origin, scale, effect)
         {
             Speed = speed;
@@ -31,38 +32,44 @@ namespace RPGGame
             Origin = new Vector2(Image.Width / 2, Image.Height / 2);
             paddleRotatingSpeed = PaddleRotatingSpeed;
             rocks = rock;
+            Graphics = graphics;
+
+            pixel = new Texture2D(graphics, 1, 1);
+            pixel.SetData(new Color[] { Color.Black * 0.3f });
         }
 
-        public void Move(List<TileFromSprite> edges, Knight knight, Paddle Paddle)// TileTypes tile)
+        public void Move(List<TileFromSprite> edges, Knight knight, Paddle Paddle)
         {
             updatePosition = new Vector2(Speed.X * (float)Math.Cos(Rotation), Speed.Y * (float)Math.Sin(Rotation));
             KeyboardState ks = Keyboard.GetState();
-           
-            if(Paddle.Rotation > Math.PI || Paddle.Rotation < 0)
+
+            if (Paddle.Rotation > Math.PI || Paddle.Rotation < 0)
             {
                 paddleRotatingSpeed = -paddleRotatingSpeed;
             }
             if (ks.IsKeyDown(Keys.W))
             {
-                if(isIntersectingWithGrass == false && knight.isIntersectedWithBoat == true )
+                if (isIntersectingWithGrass == false && knight.isIntersectedWithBoat == true)
                 {
                     Rotation -= TurnSpeed;
-                    knight.Rotation -= TurnSpeed; 
+                    knight.Rotation -= TurnSpeed;
                 }
             }
             else if (ks.IsKeyDown(Keys.S))
             {
-                if(isIntersectingWithGrass == false && knight.isIntersectedWithBoat == true)
+                if (isIntersectingWithGrass == false && knight.isIntersectedWithBoat == true)
                 {
                     Rotation += TurnSpeed;
-                    knight.Rotation += TurnSpeed; 
+                    knight.Rotation += TurnSpeed;
                 }
             }
             else if (ks.IsKeyDown(Keys.A))
             {
                 isIntersectingWithGrass = false;
                 isGoingRight = false;
-                leftRectangle = new Rectangle((int)(Position.X + Speed.X - ScaledWidth/2) - 5, (int)(Position.Y + Speed.Y - ScaledHeight/2), 5, (int)ScaledHeight - 5);
+                leftRectangle = new Rectangle((int)(Position.X + Speed.X - ScaledWidth / 2) - 5, (int)(Position.Y + Speed.Y - ScaledHeight / 2), 5, (int)ScaledHeight - 5);
+
+                
                 foreach (TileFromSprite edge in edges)
                 {
                     if (leftRectangle.Intersects(edge.HitBox) && edge.tileType == TileTypes.grassTile)
@@ -76,7 +83,7 @@ namespace RPGGame
                     {
                         isIntersectingWithGrass = true;
                     }
-            }
+                }
                 if (isIntersectingWithGrass == false && knight.isIntersectedWithBoat == true)
                 {
                     Position -= updatePosition;
@@ -88,12 +95,12 @@ namespace RPGGame
                 }
             }
 
-            //11/21- fix boat intersection logic
             else if (ks.IsKeyDown(Keys.D))
             {
                 isIntersectingWithGrass = false;
                 isGoingRight = true;
-                rightRectangle = new Rectangle((int)(Position.X + Speed.X + ScaledWidth /2) - 15, (int)(Position.Y + Speed.Y - ScaledHeight /2), 5, (int)ScaledHeight - 5);
+                rightRectangle = new Rectangle((int)(Position.X + Speed.X + ScaledWidth / 2) - 15, (int)(Position.Y + Speed.Y - ScaledHeight / 2), 5, (int)ScaledHeight - 5);
+                
                 foreach (TileFromSprite edge in edges)
                 {
                     if (rightRectangle.Intersects(edge.HitBox) && edge.tileType == TileTypes.grassTile)
@@ -119,5 +126,6 @@ namespace RPGGame
                 }
             }
         }
+
     }
 }

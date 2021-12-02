@@ -317,7 +317,10 @@ namespace MapEditor
             {
                 for (int x = 0; x < Grid.GetLength(1); x++)
                 {
-                    tiles.Add(new Tile(x, y, (TileTypes)Grid[y, x].Tag));
+                    if(Grid[y,x].Tag != null)
+                    {
+                        tiles.Add(new Tile(x, y, (TileTypes)Grid[y, x].Tag));
+                    }
                 }
             }
 

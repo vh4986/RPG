@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Newtonsoft.Json;
+using MonoGame.Extended;
 
 namespace RPGGame
 {
@@ -96,8 +97,6 @@ namespace RPGGame
 
             IsMouseVisible = true;
 
-
-
             base.Initialize();
         }
 
@@ -166,9 +165,10 @@ namespace RPGGame
             }
 
         }
+
         public void Deserialize()
         {
-            string fileContents = File.ReadAllText(@"C:\Users\Veda.Hingarh\Documents\GitHub\RPG\MapEditor\bin\Debug\tiles.json");
+            string fileContents = File.ReadAllText("tiles.json");
             tiles = JsonConvert.DeserializeObject<List<Tile>>(fileContents);
         }
         Dictionary<TileTypes, Texture2D> tileTypesToImage;
@@ -611,7 +611,7 @@ namespace RPGGame
             Texture2D boatImage = Content.Load<Texture2D>("onlyBoat");
             Texture2D paddleImage = Content.Load<Texture2D>("paddle");
 
-            boat = new Boat(boatImage, new Vector2(385, 370), Color.White, Vector2.Zero, new Vector2(0.35f, 0.35f), new Vector2(1, 1), SpriteEffects.FlipHorizontally, 0.05f, 0.03f, rocks);
+            boat = new Boat(boatImage, new Vector2(385, 370), Color.White, Vector2.Zero, new Vector2(0.35f, 0.35f), new Vector2(1, 1), SpriteEffects.FlipHorizontally, 0.05f, 0.03f, rocks, GraphicsDevice);
 
             paddle = new Paddle(paddleImage, new Vector2(boat.Position.X, boat.Position.Y - 5), Color.White, Vector2.Zero, new Vector2(0.34f, 0.34f), new Vector2(1, 1), SpriteEffects.FlipHorizontally);
             paddle.Origin = new Vector2(paddle.ScaledWidth / 2, paddle.ScaledHeight / 2);
@@ -894,6 +894,7 @@ namespace RPGGame
                 enemies[i].Draw(spriteBatch);
             }
 
+            spriteBatch.Draw(pixel, new Vector2(boat.leftRectangle.X, boat.leftRectangle.Y), null, Color.Black, 0f, Vector2.Zero, new Vector2(boat.leftRectangle.Width, boat.leftRectangle.Height), SpriteEffects.None, 0);
             spriteBatch.Draw(pixel, new Vector2(boat.rightRectangle.X, boat.rightRectangle.Y), null, Color.Black, 0f, Vector2.Zero, new Vector2(boat.rightRectangle.Width, boat.rightRectangle.Height), SpriteEffects.None, 0);
             if (popUp.Visible == true)
             {
@@ -903,10 +904,12 @@ namespace RPGGame
 
             knight.Draw(spriteBatch);
             paddle.DrawWithTint(spriteBatch, boat.Tint);
-            //foreach (TileFromSprite edge in edges)
-            //{
-            //    spriteBatch.Draw(pixel, new Rectangle(edge.HitBox.X, edge.HitBox.Y, 20, 20), Color.Red * 0.7f);
-            //}
+            foreach (TileFromSprite edge in edges)
+            {
+                spriteBatch.Draw(pixel, new Rectangle(edge.HitBox.X, edge.HitBox.Y, 20, 20), Color.Red * 0.7f);
+            }
+
+            
 
             spriteBatch.End();
 
