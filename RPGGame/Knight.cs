@@ -171,7 +171,7 @@ namespace RPGGame
                     i--;
                 }
             }
-            if (Boat.biggerBoatHitBox.Intersects(HitBox))
+            if (Boat.leftCircle.Intersects(HitBox))
             {
                 if (ks.IsKeyDown(Keys.B))
                 {
