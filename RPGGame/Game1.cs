@@ -906,10 +906,10 @@ namespace RPGGame
             spriteBatch.DrawCircle(new Vector2(boat.leftCircle.X, boat.leftCircle.Y), boat.boatHitBoxRadius / 2, 32, Color.DarkGreen, boat.boatHitBoxRadius);
             knight.Draw(spriteBatch);
             //paddle.DrawWithTint(spriteBatch, boat.Tint);
-            foreach (TileFromSprite edge in edges)
-            {
-            //    spriteBatch.Draw(pixel, new Rectangle(edge.HitBox.X, edge.HitBox.Y, 20, 20), Color.Red * 0.7f);
-            }
+            //foreach (TileFromSprite edge in edges)
+            //{
+            //   spriteBatch.Draw(pixel, new Rectangle(edge.HitBox.X, edge.HitBox.Y, 20, 20), Color.Red * 0.7f);
+            //}
 
             //spriteBatch.DrawCircle(new Vector2(30,30), 30, 32, Color.BlueViolet, 30);
 

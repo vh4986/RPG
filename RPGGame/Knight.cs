@@ -171,7 +171,7 @@ namespace RPGGame
                     i--;
                 }
             }
-            if (Boat.leftCircle.Intersects(HitBox))
+            if (Vector2.Distance(new Vector2(Boat.leftCircle.X, Boat.leftCircle.Y), new Vector2(HitBox.X, HitBox.Y)) < 80)
             {
                 if (ks.IsKeyDown(Keys.B))
                 {
@@ -228,9 +228,7 @@ namespace RPGGame
 
                     rightRectangle = new Rectangle((int)(Position.X + Speed.X) + 5, (int)(Position.Y - SourceRectangle.Value.Height), 5, SourceRectangle.Value.Height - 5);
                     foreach (TileFromSprite edge in edges)
-                    {
-                        //does this work?
-
+                    { 
                         if (rightRectangle.Intersects(edge.HitBox) && edge.tileType == TileTypes.waterTile)
                         {
                             isMoving = false;

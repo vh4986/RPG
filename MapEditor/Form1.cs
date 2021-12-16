@@ -272,7 +272,7 @@ namespace MapEditor
         bool floodFillIn = false;
         private void Toggle(char keyPress)
         {
-            if (keyPress == 'h')
+            if (keyPress == 'h' || keyPress == 'H')
             {
                 if (shouldFillIn == true)
                 {
@@ -289,7 +289,7 @@ namespace MapEditor
 
         private void FillToggle(char keyPress)
         {
-            if(keyPress == 'f')
+            if(keyPress == 'f' || keyPress == 'F')
             {
                 if (floodFillIn == true)
                 {
@@ -332,6 +332,16 @@ namespace MapEditor
         }
 
         private void pictureBox1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void map_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
         {
 
         }
