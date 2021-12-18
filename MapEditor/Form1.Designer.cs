@@ -37,32 +37,34 @@
             this.Changes = new System.Windows.Forms.Button();
             this.ControlPanel = new System.Windows.Forms.Panel();
             this.TilesPanel = new System.Windows.Forms.Panel();
+            this.rock3 = new System.Windows.Forms.PictureBox();
+            this.rock2 = new System.Windows.Forms.PictureBox();
+            this.rock1 = new System.Windows.Forms.PictureBox();
+            this.sandTile = new System.Windows.Forms.PictureBox();
+            this.stoneTile = new System.Windows.Forms.PictureBox();
+            this.grassTile = new System.Windows.Forms.PictureBox();
+            this.waterTile = new System.Windows.Forms.PictureBox();
             this.ToggleLabel = new System.Windows.Forms.Label();
             this.FillToggleLabel = new System.Windows.Forms.Label();
             this.Save = new System.Windows.Forms.Button();
             this.namingFileTextBox = new System.Windows.Forms.TextBox();
             this.NameOfFile = new System.Windows.Forms.Label();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.sandTile = new System.Windows.Forms.PictureBox();
-            this.stoneTile = new System.Windows.Forms.PictureBox();
-            this.grassTile = new System.Windows.Forms.PictureBox();
-            this.waterTile = new System.Windows.Forms.PictureBox();
             this.map = new System.Windows.Forms.PictureBox();
+            this.savingPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.widthBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tileSizeBox)).BeginInit();
             this.ControlPanel.SuspendLayout();
             this.TilesPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rock3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rock2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rock1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sandTile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stoneTile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grassTile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.waterTile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.map)).BeginInit();
+            this.savingPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // widthBox
@@ -85,7 +87,7 @@
             // WidthLabel
             // 
             this.WidthLabel.AutoSize = true;
-            this.WidthLabel.Location = new System.Drawing.Point(23, 9);
+            this.WidthLabel.Location = new System.Drawing.Point(14, 9);
             this.WidthLabel.Name = "WidthLabel";
             this.WidthLabel.Size = new System.Drawing.Size(35, 13);
             this.WidthLabel.TabIndex = 3;
@@ -112,7 +114,7 @@
             // HeightLabel
             // 
             this.HeightLabel.AutoSize = true;
-            this.HeightLabel.Location = new System.Drawing.Point(23, 57);
+            this.HeightLabel.Location = new System.Drawing.Point(14, 57);
             this.HeightLabel.Name = "HeightLabel";
             this.HeightLabel.Size = new System.Drawing.Size(38, 13);
             this.HeightLabel.TabIndex = 5;
@@ -165,9 +167,9 @@
             // 
             // TilesPanel
             // 
-            this.TilesPanel.Controls.Add(this.pictureBox4);
-            this.TilesPanel.Controls.Add(this.pictureBox3);
-            this.TilesPanel.Controls.Add(this.pictureBox1);
+            this.TilesPanel.Controls.Add(this.rock3);
+            this.TilesPanel.Controls.Add(this.rock2);
+            this.TilesPanel.Controls.Add(this.rock1);
             this.TilesPanel.Controls.Add(this.sandTile);
             this.TilesPanel.Controls.Add(this.stoneTile);
             this.TilesPanel.Controls.Add(this.grassTile);
@@ -177,85 +179,41 @@
             this.TilesPanel.Size = new System.Drawing.Size(404, 213);
             this.TilesPanel.TabIndex = 10;
             // 
-            // ToggleLabel
+            // rock3
             // 
-            this.ToggleLabel.AutoSize = true;
-            this.ToggleLabel.Location = new System.Drawing.Point(836, 9);
-            this.ToggleLabel.Name = "ToggleLabel";
-            this.ToggleLabel.Size = new System.Drawing.Size(100, 13);
-            this.ToggleLabel.TabIndex = 11;
-            this.ToggleLabel.Text = "Toggle: Off (key: H)";
+            this.rock3.Image = global::MapEditor.Properties.Resources.rock2;
+            this.rock3.Location = new System.Drawing.Point(205, 138);
+            this.rock3.Name = "rock3";
+            this.rock3.Size = new System.Drawing.Size(145, 58);
+            this.rock3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.rock3.TabIndex = 17;
+            this.rock3.TabStop = false;
             // 
-            // FillToggleLabel
+            // rock2
             // 
-            this.FillToggleLabel.AutoSize = true;
-            this.FillToggleLabel.Location = new System.Drawing.Point(836, 62);
-            this.FillToggleLabel.Name = "FillToggleLabel";
-            this.FillToggleLabel.Size = new System.Drawing.Size(77, 13);
-            this.FillToggleLabel.TabIndex = 12;
-            this.FillToggleLabel.Text = "Fill: Off (key: F)";
+            this.rock2.Image = global::MapEditor.Properties.Resources.rock4;
+            this.rock2.Location = new System.Drawing.Point(205, 76);
+            this.rock2.Name = "rock2";
+            this.rock2.Size = new System.Drawing.Size(129, 56);
+            this.rock2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.rock2.TabIndex = 16;
+            this.rock2.TabStop = false;
+            this.rock2.Click += new System.EventHandler(this.pictureBox3_Click);
             // 
-            // Save
+            // rock1
             // 
-            this.Save.Location = new System.Drawing.Point(839, 102);
-            this.Save.Name = "Save";
-            this.Save.Size = new System.Drawing.Size(75, 23);
-            this.Save.TabIndex = 13;
-            this.Save.Text = "Save";
-            this.Save.UseVisualStyleBackColor = true;
-            this.Save.Click += new System.EventHandler(this.Save_Click);
-            // 
-            // namingFileTextBox
-            // 
-            this.namingFileTextBox.Location = new System.Drawing.Point(910, 146);
-            this.namingFileTextBox.Name = "namingFileTextBox";
-            this.namingFileTextBox.Size = new System.Drawing.Size(100, 20);
-            this.namingFileTextBox.TabIndex = 14;
-            // 
-            // NameOfFile
-            // 
-            this.NameOfFile.AutoSize = true;
-            this.NameOfFile.Location = new System.Drawing.Point(836, 149);
-            this.NameOfFile.Name = "NameOfFile";
-            this.NameOfFile.Size = new System.Drawing.Size(71, 13);
-            this.NameOfFile.TabIndex = 15;
-            this.NameOfFile.Text = "Name Of File:";
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = global::MapEditor.Properties.Resources.rock2;
-            this.pictureBox4.Location = new System.Drawing.Point(205, 138);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(145, 58);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox4.TabIndex = 17;
-            this.pictureBox4.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::MapEditor.Properties.Resources.rock4;
-            this.pictureBox3.Location = new System.Drawing.Point(205, 76);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(129, 56);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox3.TabIndex = 16;
-            this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::MapEditor.Properties.Resources.rock1;
-            this.pictureBox1.Location = new System.Drawing.Point(205, 20);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(93, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 14;
-            this.pictureBox1.TabStop = false;
+            this.rock1.Image = global::MapEditor.Properties.Resources.rock1;
+            this.rock1.Location = new System.Drawing.Point(205, 20);
+            this.rock1.Name = "rock1";
+            this.rock1.Size = new System.Drawing.Size(93, 50);
+            this.rock1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.rock1.TabIndex = 14;
+            this.rock1.TabStop = false;
             // 
             // sandTile
             // 
             this.sandTile.Image = global::MapEditor.Properties.Resources.SandTileV2;
-            this.sandTile.Location = new System.Drawing.Point(112, 108);
+            this.sandTile.Location = new System.Drawing.Point(112, 114);
             this.sandTile.Name = "sandTile";
             this.sandTile.Size = new System.Drawing.Size(87, 82);
             this.sandTile.TabIndex = 13;
@@ -278,7 +236,7 @@
             // grassTile
             // 
             this.grassTile.Image = global::MapEditor.Properties.Resources.grassTile;
-            this.grassTile.Location = new System.Drawing.Point(16, 108);
+            this.grassTile.Location = new System.Drawing.Point(16, 114);
             this.grassTile.Name = "grassTile";
             this.grassTile.Size = new System.Drawing.Size(87, 82);
             this.grassTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -298,6 +256,51 @@
             this.waterTile.Tag = "WaterTile";
             this.waterTile.Click += new System.EventHandler(this.waterTile_Click);
             // 
+            // ToggleLabel
+            // 
+            this.ToggleLabel.AutoSize = true;
+            this.ToggleLabel.Location = new System.Drawing.Point(19, 12);
+            this.ToggleLabel.Name = "ToggleLabel";
+            this.ToggleLabel.Size = new System.Drawing.Size(100, 13);
+            this.ToggleLabel.TabIndex = 11;
+            this.ToggleLabel.Text = "Toggle: Off (key: H)";
+            // 
+            // FillToggleLabel
+            // 
+            this.FillToggleLabel.AutoSize = true;
+            this.FillToggleLabel.Location = new System.Drawing.Point(19, 57);
+            this.FillToggleLabel.Name = "FillToggleLabel";
+            this.FillToggleLabel.Size = new System.Drawing.Size(77, 13);
+            this.FillToggleLabel.TabIndex = 12;
+            this.FillToggleLabel.Text = "Fill: Off (key: F)";
+            // 
+            // Save
+            // 
+            this.Save.Location = new System.Drawing.Point(70, 149);
+            this.Save.Name = "Save";
+            this.Save.Size = new System.Drawing.Size(75, 23);
+            this.Save.TabIndex = 13;
+            this.Save.Text = "Save";
+            this.Save.UseVisualStyleBackColor = true;
+            this.Save.Click += new System.EventHandler(this.Save_Click);
+            // 
+            // namingFileTextBox
+            // 
+            this.namingFileTextBox.Location = new System.Drawing.Point(93, 101);
+            this.namingFileTextBox.Name = "namingFileTextBox";
+            this.namingFileTextBox.Size = new System.Drawing.Size(100, 20);
+            this.namingFileTextBox.TabIndex = 14;
+            this.namingFileTextBox.TextChanged += new System.EventHandler(this.namingFileTextBox_TextChanged);
+            // 
+            // NameOfFile
+            // 
+            this.NameOfFile.AutoSize = true;
+            this.NameOfFile.Location = new System.Drawing.Point(19, 104);
+            this.NameOfFile.Name = "NameOfFile";
+            this.NameOfFile.Size = new System.Drawing.Size(71, 13);
+            this.NameOfFile.TabIndex = 15;
+            this.NameOfFile.Text = "Name Of File:";
+            // 
             // map
             // 
             this.map.BackColor = System.Drawing.SystemColors.Desktop;
@@ -308,16 +311,24 @@
             this.map.TabStop = false;
             this.map.Click += new System.EventHandler(this.map_Click);
             // 
+            // savingPanel
+            // 
+            this.savingPanel.Controls.Add(this.namingFileTextBox);
+            this.savingPanel.Controls.Add(this.NameOfFile);
+            this.savingPanel.Controls.Add(this.ToggleLabel);
+            this.savingPanel.Controls.Add(this.FillToggleLabel);
+            this.savingPanel.Controls.Add(this.Save);
+            this.savingPanel.Location = new System.Drawing.Point(811, 0);
+            this.savingPanel.Name = "savingPanel";
+            this.savingPanel.Size = new System.Drawing.Size(200, 256);
+            this.savingPanel.TabIndex = 16;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1033, 517);
-            this.Controls.Add(this.NameOfFile);
-            this.Controls.Add(this.namingFileTextBox);
-            this.Controls.Add(this.Save);
-            this.Controls.Add(this.FillToggleLabel);
-            this.Controls.Add(this.ToggleLabel);
+            this.Controls.Add(this.savingPanel);
             this.Controls.Add(this.TilesPanel);
             this.Controls.Add(this.ControlPanel);
             this.Controls.Add(this.map);
@@ -331,16 +342,17 @@
             this.ControlPanel.PerformLayout();
             this.TilesPanel.ResumeLayout(false);
             this.TilesPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rock3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rock2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rock1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sandTile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stoneTile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grassTile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.waterTile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.map)).EndInit();
+            this.savingPanel.ResumeLayout(false);
+            this.savingPanel.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -365,9 +377,10 @@
         private System.Windows.Forms.TextBox namingFileTextBox;
         private System.Windows.Forms.Label NameOfFile;
         private System.Windows.Forms.PictureBox sandTile;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox rock3;
+        private System.Windows.Forms.PictureBox rock2;
+        private System.Windows.Forms.PictureBox rock1;
+        private System.Windows.Forms.Panel savingPanel;
     }
 }
 

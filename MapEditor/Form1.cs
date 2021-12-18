@@ -46,7 +46,7 @@ namespace MapEditor
         int totalHeight = 400;
         int tileSize =  20;
 
-        PictureBox[,] Grid;
+        Tile[,] Grid;
 
         Image grassImage;
         Image waterImage;
@@ -78,7 +78,7 @@ namespace MapEditor
             heightBox.Value = totalHeight;
             tileSizeBox.Value = tileSize;
 
-            Grid = new PictureBox[totalHeight / tileSize, totalWidth / tileSize];
+            Grid = new Tile[totalHeight / tileSize, totalWidth / tileSize];
            
 
             this.KeyPreview = true;
@@ -100,15 +100,13 @@ namespace MapEditor
             {
                 for (int x = 0; x < Grid.GetLength(1); x++)
                 {
-                    Grid[y, x] = new PictureBox();
-                    Grid[y, x].Image = null;
-                    Grid[y, x].BackColor = Color.Blue;
-                    Grid[y, x].Location = new Point(x * tileSize, y * tileSize);
-                    Grid[y, x].Size = new Size(tileSize, tileSize);
-                    Grid[y, x].SizeMode = PictureBoxSizeMode.StretchImage;
-                    Grid[y, x].MouseEnter += Cell_Click;
-
-                    map.Controls.Add(Grid[y, x]);
+                    Grid[y, x] = new Tile(x, y, selectedTileType);
+                    //Grid[y, x]. = null;
+                    //Grid[y, x].BackColor = Color.Blue;
+                    Grid[y, x].X = x * tileSize;
+                    Grid[y, x].Y = y * tileSize;
+                    //Grid[y, x].Size = new Size(tileSize, tileSize);
+                    // Grid[y, x].SizeMode = PictureBoxSizeMode.StretchImage;
                 }
             }
         }
@@ -126,15 +124,26 @@ namespace MapEditor
 
             for (int i = 0; i < TilesPanel.Controls.Count; i++)
             {
-                TilesPanel.Controls[i].Click += Tile_Click;
+                TilesPanel.Controls[i].MouseClick += Tile_Click;
             }
             intializeGrid();
         }
 
-        private void Tile_Click(object sender, EventArgs e)
+        private void Tile_Click(object sender, MouseEventArgs e)
         {
+            //If the selected thingy is a rock (do someting else)- ??
+
             selectedImage = ((PictureBox)sender).Image;
             selectedTileType = tileTypeMapping[(string)((PictureBox)sender).Tag];
+            int mouseLocationX = e.Location.X / totalWidth;
+            int mouseLocationY = e.Location.Y / totalHeight;
+
+
+            //12/17/21: next time: make sure clicking on the tiles works
+            //if(selectedImage == rock1.Image || selectedImage == rock2.Image || selectedImage == rock3.Image)
+            //{
+
+            //}
         }
 
         private void Cell_Click(object sender, EventArgs e)
@@ -151,6 +160,8 @@ namespace MapEditor
                 floodFillIn = false;
             }
         }
+
+        
         private bool isNewSizeAvailable(int width, int height, int tileSize)
         {
             //Make a variable representing tile size
@@ -192,7 +203,7 @@ namespace MapEditor
 
         public bool checkValidtile(int x, int y)
         {
-            if (x >= 0 && x < Grid.GetLength(1) && y >= 0 && y < Grid.GetLength(0) && Grid[y, x].Image != selectedImage)
+            if (x >= 0 && x < Grid.GetLength(1) && y >= 0 && y < Grid.GetLength(0)) //&& Grid[y, x].Image != selectedImage)
             {
                 return true;
             }
@@ -202,36 +213,36 @@ namespace MapEditor
         {
             List<Point> fillBoxes = new List<Point>();
             fillBoxes.Add(new Point(x, y));
-            Grid[y, x].Image = selectedImage;
-            Grid[y, x].Tag = selectedTileType;
+            //Grid[y, x].Image = selectedImage;
+            Grid[y, x].Type = selectedTileType;
 
             while (fillBoxes.Count > 0)
             {
                 Point current = fillBoxes[0];
                 fillBoxes.Remove(current);
-                if (checkValidtile(current.X + 1, current.Y) && (Grid[current.Y, current.X + 1].Tag == null || (TileTypes)Grid[current.Y, current.X + 1].Tag != selectedTileType))
+                if (checkValidtile(current.X + 1, current.Y) || Grid[current.Y, current.X + 1].Type != selectedTileType)
                 { 
                     fillBoxes.Add(new Point(current.X + 1, current.Y));
-                    Grid[current.Y, current.X + 1].Image = selectedImage;
-                    Grid[current.Y, current.X + 1].Tag = selectedTileType;
+                    gfx.DrawImage(selectedImage, new Point(current.X + 1, current.Y));
+                    Grid[current.Y, current.X + 1].Type = selectedTileType;
                 }
-                if (checkValidtile(current.X - 1, current.Y) && (Grid[current.Y, current.X - 1].Tag == null || (TileTypes)Grid[current.Y, current.X - 1].Tag != selectedTileType))
+                if (checkValidtile(current.X - 1, current.Y) || Grid[current.Y, current.X - 1].Type != selectedTileType)
                 {
                     fillBoxes.Add(new Point(current.X - 1, current.Y));
-                    Grid[current.Y, current.X - 1].Image = selectedImage;
-                    Grid[current.Y, current.X - 1].Tag = selectedTileType;
+                    gfx.DrawImage(selectedImage, new Point(current.X - 1, current.Y));
+                    Grid[current.Y, current.X - 1].Type = selectedTileType;
                 }
-                if (checkValidtile(current.X, current.Y + 1) && (Grid[current.Y + 1, current.X].Tag == null || (TileTypes)Grid[current.Y + 1, current.X].Tag != selectedTileType))
+                if (checkValidtile(current.X, current.Y + 1) || Grid[current.Y + 1, current.X].Type != selectedTileType)
                 {
                     fillBoxes.Add(new Point(current.X, current.Y + 1));
-                    Grid[current.Y + 1, current.X].Image = selectedImage;
-                    Grid[current.Y + 1, current.X].Tag = selectedTileType;
+                    gfx.DrawImage(selectedImage, new Point(current.X, current.Y + 1));
+                    Grid[current.Y + 1, current.X].Type = selectedTileType;
                 }
-                if (checkValidtile(current.X, current.Y - 1) && (Grid[current.Y - 1, current.X].Tag == null || (TileTypes)Grid[current.Y - 1, current.X].Tag != selectedTileType))
+                if (checkValidtile(current.X, current.Y - 1) || Grid[current.Y - 1, current.X].Type != selectedTileType)
                 {
-                    fillBoxes.Add(new Point(current.X, current.Y - 1 ));
-                    Grid[current.Y - 1, current.X].Image = selectedImage;
-                    Grid[current.Y - 1, current.X].Tag = selectedTileType;
+                    fillBoxes.Add(new Point(current.X, current.Y - 1));
+                    gfx.DrawImage(selectedImage, new Point(current.X, current.Y - 1));
+                    Grid[current.Y - 1, current.X].Type = selectedTileType;
                 }
             }
 
@@ -250,11 +261,12 @@ namespace MapEditor
             {
                 ControlPanel.Location = new Point(map.Right, 0);
                 TilesPanel.Location = new Point(map.Right, TilesPanel.Location.Y);
+                savingPanel.Location =  new Point(ControlPanel.Right, 0);
 
                 totalWidth = map.Width;
                 totalHeight = map.Height;
 
-                Grid = new PictureBox[totalHeight / tileSize, totalWidth / tileSize];
+                Grid = new Tile[totalHeight / tileSize, totalWidth / tileSize];
 
                 intializeGrid();
             }
@@ -317,9 +329,9 @@ namespace MapEditor
             {
                 for (int x = 0; x < Grid.GetLength(1); x++)
                 {
-                    if(Grid[y,x].Tag != null)
+                    if(Grid[y,x] != null)
                     {
-                        tiles.Add(new Tile(x, y, (TileTypes)Grid[y, x].Tag));
+                        tiles.Add(Grid[y,x]);
                     }
                 }
             }
@@ -342,6 +354,11 @@ namespace MapEditor
         }
 
         private void pictureBox3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void namingFileTextBox_TextChanged(object sender, EventArgs e)
         {
 
         }
