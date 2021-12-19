@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.widthBox = new System.Windows.Forms.NumericUpDown();
             this.WidthLabel = new System.Windows.Forms.Label();
             this.heightBox = new System.Windows.Forms.NumericUpDown();
@@ -51,6 +52,7 @@
             this.NameOfFile = new System.Windows.Forms.Label();
             this.map = new System.Windows.Forms.PictureBox();
             this.savingPanel = new System.Windows.Forms.Panel();
+            this.mapTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.widthBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tileSizeBox)).BeginInit();
@@ -198,7 +200,6 @@
             this.rock2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.rock2.TabIndex = 16;
             this.rock2.TabStop = false;
-            this.rock2.Click += new System.EventHandler(this.pictureBox3_Click);
             // 
             // rock1
             // 
@@ -219,7 +220,6 @@
             this.sandTile.TabIndex = 13;
             this.sandTile.TabStop = false;
             this.sandTile.Tag = "SandTile";
-            this.sandTile.Click += new System.EventHandler(this.pictureBox1_Click_1);
             // 
             // stoneTile
             // 
@@ -290,7 +290,6 @@
             this.namingFileTextBox.Name = "namingFileTextBox";
             this.namingFileTextBox.Size = new System.Drawing.Size(100, 20);
             this.namingFileTextBox.TabIndex = 14;
-            this.namingFileTextBox.TextChanged += new System.EventHandler(this.namingFileTextBox_TextChanged);
             // 
             // NameOfFile
             // 
@@ -309,7 +308,7 @@
             this.map.Size = new System.Drawing.Size(600, 400);
             this.map.TabIndex = 0;
             this.map.TabStop = false;
-            this.map.Click += new System.EventHandler(this.map_Click);
+            this.map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.map_MouseMove);
             // 
             // savingPanel
             // 
@@ -322,6 +321,12 @@
             this.savingPanel.Name = "savingPanel";
             this.savingPanel.Size = new System.Drawing.Size(200, 256);
             this.savingPanel.TabIndex = 16;
+            // 
+            // mapTimer
+            // 
+            this.mapTimer.Enabled = true;
+            this.mapTimer.Interval = 50;
+            this.mapTimer.Tick += new System.EventHandler(this.mapTimer_Tick);
             // 
             // Form1
             // 
@@ -381,6 +386,7 @@
         private System.Windows.Forms.PictureBox rock2;
         private System.Windows.Forms.PictureBox rock1;
         private System.Windows.Forms.Panel savingPanel;
+        private System.Windows.Forms.Timer mapTimer;
     }
 }
 

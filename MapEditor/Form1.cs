@@ -22,7 +22,7 @@ namespace MapEditor
         stoneTile,
         sandTile,
     };
-    
+
     public partial class Form1 : Form
     {
         class Tile
@@ -44,7 +44,7 @@ namespace MapEditor
 
         int totalWidth = 600;
         int totalHeight = 400;
-        int tileSize =  20;
+        int tileSize = 20;
 
         Tile[,] Grid;
 
@@ -53,6 +53,9 @@ namespace MapEditor
         Image stoneImage;
         Image sandImage;
 
+
+        Point mouseLocation = new Point(0, 0);
+
         TileTypes selectedTileType;
 
         Dictionary<string, TileTypes> tileTypeMapping = new Dictionary<string, TileTypes>()
@@ -60,14 +63,27 @@ namespace MapEditor
             ["WaterTile"] = TileTypes.waterTile,
             ["GrassTile"] = TileTypes.grassTile,
             ["StoneTile"] = TileTypes.stoneTile,
-            ["SandTile"] = TileTypes.sandTile, 
+            ["SandTile"] = TileTypes.sandTile,
         };
+
+        Dictionary<TileTypes, Image> TileToImage;
+
         public Form1()
         {
             grassImage = Properties.Resources.grassTile;
             waterImage = Properties.Resources.waterTile;
             stoneImage = Properties.Resources.stoneTile21;
             sandImage = Properties.Resources.sandTile;
+
+
+            TileToImage = new Dictionary<TileTypes, Image>()
+            {
+                [TileTypes.grassTile] = grassImage,
+                [TileTypes.waterTile] = waterImage,
+                [TileTypes.sandTile] = sandImage,
+                [TileTypes.stoneTile] = stoneImage,
+            };
+
 
             InitializeComponent();
 
@@ -139,7 +155,6 @@ namespace MapEditor
             int mouseLocationY = e.Location.Y / totalHeight;
 
 
-            //12/17/21: next time: make sure clicking on the tiles works
             //if(selectedImage == rock1.Image || selectedImage == rock2.Image || selectedImage == rock3.Image)
             //{
 
@@ -343,24 +358,27 @@ namespace MapEditor
             File.WriteAllText($"{namingFileTextBox.Text}.json", textFormat);
         }
 
-        private void pictureBox1_Click_1(object sender, EventArgs e)
+        private void map_MouseMove(object sender, MouseEventArgs e)
         {
-
+            mouseLocation = e.Location;
         }
 
-        private void map_Click(object sender, EventArgs e)
+        private void mapTimer_Tick(object sender, EventArgs e)
         {
+            gfx.Clear(map.BackColor);
+            //display in label
+            Tile currentTile = Grid[mouseLocation.Y / tileSize, mouseLocation.X / tileSize];
+            //Loop through the grid, depending on the tile type draw a different image at that tile's location using graphics
+            for(int y = 0; y < Grid.GetLength(0); y++)
+            {
+                for(int x = 0; x < Grid.GetLength(1); x++)
+                {
+                    Image tileImage = TileToImage[Grid[y, x].Type];
+                    gfx.DrawImage(tileImage, new Rectangle(Grid[y,x].X, Grid[y,x].Y, tileSize, tileSize));
+                }
+            }
 
-        }
-
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void namingFileTextBox_TextChanged(object sender, EventArgs e)
-        {
-
+            map.Image = canvas;
         }
     }
 }
