@@ -118,7 +118,6 @@ namespace RPGGame
                     {
                         isIntersectingWithGrass = true;
                     }
-
                 }
                 for (int i = 0; i < rocks.Count; i++)
                 {

@@ -17,10 +17,14 @@ namespace MapEditor
 
     public enum TileTypes
     {
-        waterTile,
-        grassTile,
-        stoneTile,
-        sandTile,
+        None,
+        Water,
+        Grass,
+        Stone,
+        Sand,
+        Rock1,
+        Rock2,
+        Rock3,
     };
 
     public partial class Form1 : Form
@@ -52,7 +56,9 @@ namespace MapEditor
         Image waterImage;
         Image stoneImage;
         Image sandImage;
-
+        Image rock1Image;
+        Image rock2Image;
+        Image rock3Image;
 
         Point mouseLocation = new Point(0, 0);
 
@@ -60,10 +66,13 @@ namespace MapEditor
 
         Dictionary<string, TileTypes> tileTypeMapping = new Dictionary<string, TileTypes>()
         {
-            ["WaterTile"] = TileTypes.waterTile,
-            ["GrassTile"] = TileTypes.grassTile,
-            ["StoneTile"] = TileTypes.stoneTile,
-            ["SandTile"] = TileTypes.sandTile,
+            ["WaterTile"] = TileTypes.Water,
+            ["GrassTile"] = TileTypes.Grass,
+            ["StoneTile"] = TileTypes.Stone,
+            ["SandTile"] = TileTypes.Sand,
+            ["Rock1"] = TileTypes.Rock1,
+            ["Rock2"] = TileTypes.Rock2,
+            ["Rock3"] = TileTypes.Rock3,
         };
 
         Dictionary<TileTypes, Image> TileToImage;
@@ -74,14 +83,19 @@ namespace MapEditor
             waterImage = Properties.Resources.waterTile;
             stoneImage = Properties.Resources.stoneTile21;
             sandImage = Properties.Resources.sandTile;
-
+            rock1Image = Properties.Resources.rock1;
+            rock2Image = Properties.Resources.rock2;
+            rock3Image = Properties.Resources.rock3;
 
             TileToImage = new Dictionary<TileTypes, Image>()
             {
-                [TileTypes.grassTile] = grassImage,
-                [TileTypes.waterTile] = waterImage,
-                [TileTypes.sandTile] = sandImage,
-                [TileTypes.stoneTile] = stoneImage,
+                [TileTypes.Grass] = grassImage,
+                [TileTypes.Water] = waterImage,
+                [TileTypes.Sand] = sandImage,
+                [TileTypes.Stone] = stoneImage,
+                [TileTypes.Rock1] = rock1Image,
+                [TileTypes.Rock2] = rock2Image,
+                [TileTypes.Rock3] = rock3Image,
             };
 
 
@@ -147,36 +161,13 @@ namespace MapEditor
 
         private void Tile_Click(object sender, MouseEventArgs e)
         {
-            //If the selected thingy is a rock (do someting else)- ??
+            //If the selected thingy is a rock (do something else)- ??
 
             selectedImage = ((PictureBox)sender).Image;
             selectedTileType = tileTypeMapping[(string)((PictureBox)sender).Tag];
-            int mouseLocationX = e.Location.X / totalWidth;
-            int mouseLocationY = e.Location.Y / totalHeight;
-
-
-            //if(selectedImage == rock1.Image || selectedImage == rock2.Image || selectedImage == rock3.Image)
-            //{
-
-            //}
         }
 
-        private void Cell_Click(object sender, EventArgs e)
-        {
-            PictureBox pictureBox = (PictureBox)sender;
-            if (shouldFillIn == true)
-            {
-                ((PictureBox)sender).Image = selectedImage;
-                ((PictureBox)sender).Tag = selectedTileType;
-            }
-            if(floodFillIn == true)
-            {
-                partialFill(pictureBox.Location.X / tileSize, pictureBox.Location.Y / tileSize);
-                floodFillIn = false;
-            }
-        }
 
-        
         private bool isNewSizeAvailable(int width, int height, int tileSize)
         {
             //Make a variable representing tile size
@@ -218,42 +209,42 @@ namespace MapEditor
 
         public bool checkValidtile(int x, int y)
         {
-            if (x >= 0 && x < Grid.GetLength(1) && y >= 0 && y < Grid.GetLength(0)) //&& Grid[y, x].Image != selectedImage)
+            if (x >= 0 && x < Grid.GetLength(1) && y >= 0 && y < Grid.GetLength(0) && Grid[y, x].Type != selectedTileType)
             {
                 return true;
             }
             return false;
          }
+
         public void partialFill(int x, int y)
         {
             List<Point> fillBoxes = new List<Point>();
             fillBoxes.Add(new Point(x, y));
-            //Grid[y, x].Image = selectedImage;
             Grid[y, x].Type = selectedTileType;
 
             while (fillBoxes.Count > 0)
             {
                 Point current = fillBoxes[0];
                 fillBoxes.Remove(current);
-                if (checkValidtile(current.X + 1, current.Y) || Grid[current.Y, current.X + 1].Type != selectedTileType)
+                if (checkValidtile(current.X + 1, current.Y) && Grid[current.Y, current.X + 1].Type != selectedTileType)
                 { 
                     fillBoxes.Add(new Point(current.X + 1, current.Y));
                     gfx.DrawImage(selectedImage, new Point(current.X + 1, current.Y));
                     Grid[current.Y, current.X + 1].Type = selectedTileType;
                 }
-                if (checkValidtile(current.X - 1, current.Y) || Grid[current.Y, current.X - 1].Type != selectedTileType)
+                if (checkValidtile(current.X - 1, current.Y) && Grid[current.Y, current.X - 1].Type != selectedTileType)
                 {
                     fillBoxes.Add(new Point(current.X - 1, current.Y));
                     gfx.DrawImage(selectedImage, new Point(current.X - 1, current.Y));
                     Grid[current.Y, current.X - 1].Type = selectedTileType;
                 }
-                if (checkValidtile(current.X, current.Y + 1) || Grid[current.Y + 1, current.X].Type != selectedTileType)
+                if (checkValidtile(current.X, current.Y + 1) && Grid[current.Y + 1, current.X].Type != selectedTileType)
                 {
                     fillBoxes.Add(new Point(current.X, current.Y + 1));
                     gfx.DrawImage(selectedImage, new Point(current.X, current.Y + 1));
                     Grid[current.Y + 1, current.X].Type = selectedTileType;
                 }
-                if (checkValidtile(current.X, current.Y - 1) || Grid[current.Y - 1, current.X].Type != selectedTileType)
+                if (checkValidtile(current.X, current.Y - 1) && Grid[current.Y - 1, current.X].Type != selectedTileType)
                 {
                     fillBoxes.Add(new Point(current.X, current.Y - 1));
                     gfx.DrawImage(selectedImage, new Point(current.X, current.Y - 1));
@@ -263,10 +254,6 @@ namespace MapEditor
 
             
             //right, left, up, down
-
-        }
-        private void label1_Click(object sender, EventArgs e)
-        {
 
         }
 
@@ -291,10 +278,7 @@ namespace MapEditor
             }
         }
 
-        private void waterTile_Click(object sender, EventArgs e)
-        {
 
-        }
         bool shouldFillIn = false;
         bool floodFillIn = false;
         private void Toggle(char keyPress)
@@ -303,12 +287,12 @@ namespace MapEditor
             {
                 if (shouldFillIn == true)
                 {
-                    ToggleLabel.Text = "Toggle: Off";
+                    ToggleLabel.Text = "Toggle: Off (key:H)";
                     shouldFillIn = false;
                 }
                 else if (shouldFillIn == false)
                 {
-                    ToggleLabel.Text = "Toggle: On";
+                    ToggleLabel.Text = "Toggle: On (key:H)";
                     shouldFillIn = true;
                 }
             }
@@ -320,20 +304,16 @@ namespace MapEditor
             {
                 if (floodFillIn == true)
                 {
-                    FillToggleLabel.Text = "Fill: Off";
+                    FillToggleLabel.Text = "Fill: Off (key:F)";
                     floodFillIn = false;
                 }
                 else if (floodFillIn == false)
                 {
-                    FillToggleLabel.Text = "Fill: On";
+                    FillToggleLabel.Text = "Fill: On (key:F)";
                     floodFillIn = true;
                 }
             }
            
-        }
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void Save_Click(object sender, EventArgs e)
@@ -360,19 +340,37 @@ namespace MapEditor
 
         private void map_MouseMove(object sender, MouseEventArgs e)
         {
-            mouseLocation = e.Location;
+            if (selectedTileType == TileTypes.None) return;
+
+            int gridLocationX = e.Location.X / tileSize;
+            int gridLocationY = e.Location.Y / tileSize;
+
+            int gridAlignedPositionX = gridLocationX * tileSize;
+            int gridAlignedPositionY = gridLocationY * tileSize;
+
+            if (floodFillIn)
+            {
+                partialFill(gridLocationX, gridLocationY);
+            }
+            else if(shouldFillIn)
+            {
+                Grid[gridLocationY, gridLocationX] = new Tile(gridAlignedPositionX, gridAlignedPositionY, selectedTileType);
+            }
         }
 
         private void mapTimer_Tick(object sender, EventArgs e)
         {
             gfx.Clear(map.BackColor);
             //display in label
+            //??
             Tile currentTile = Grid[mouseLocation.Y / tileSize, mouseLocation.X / tileSize];
             //Loop through the grid, depending on the tile type draw a different image at that tile's location using graphics
             for(int y = 0; y < Grid.GetLength(0); y++)
             {
                 for(int x = 0; x < Grid.GetLength(1); x++)
                 {
+                    if (Grid[y, x].Type == TileTypes.None) continue;
+
                     Image tileImage = TileToImage[Grid[y, x].Type];
                     gfx.DrawImage(tileImage, new Rectangle(Grid[y,x].X, Grid[y,x].Y, tileSize, tileSize));
                 }
@@ -380,5 +378,7 @@ namespace MapEditor
 
             map.Image = canvas;
         }
+
+
     }
 }

@@ -52,6 +52,7 @@
             this.NameOfFile = new System.Windows.Forms.Label();
             this.map = new System.Windows.Forms.PictureBox();
             this.savingPanel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.mapTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.widthBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightBox)).BeginInit();
@@ -94,7 +95,6 @@
             this.WidthLabel.Size = new System.Drawing.Size(35, 13);
             this.WidthLabel.TabIndex = 3;
             this.WidthLabel.Text = "Width";
-            this.WidthLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // heightBox
             // 
@@ -164,7 +164,7 @@
             this.ControlPanel.Controls.Add(this.HeightLabel);
             this.ControlPanel.Location = new System.Drawing.Point(605, 0);
             this.ControlPanel.Name = "ControlPanel";
-            this.ControlPanel.Size = new System.Drawing.Size(200, 256);
+            this.ControlPanel.Size = new System.Drawing.Size(200, 197);
             this.ControlPanel.TabIndex = 9;
             // 
             // TilesPanel
@@ -190,6 +190,7 @@
             this.rock3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.rock3.TabIndex = 17;
             this.rock3.TabStop = false;
+            this.rock3.Tag = "Rock3";
             // 
             // rock2
             // 
@@ -200,6 +201,7 @@
             this.rock2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.rock2.TabIndex = 16;
             this.rock2.TabStop = false;
+            this.rock2.Tag = "Rock2";
             // 
             // rock1
             // 
@@ -210,6 +212,7 @@
             this.rock1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.rock1.TabIndex = 14;
             this.rock1.TabStop = false;
+            this.rock1.Tag = "Rock1";
             // 
             // sandTile
             // 
@@ -220,6 +223,7 @@
             this.sandTile.TabIndex = 13;
             this.sandTile.TabStop = false;
             this.sandTile.Tag = "SandTile";
+            this.sandTile.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Tile_Click);
             // 
             // stoneTile
             // 
@@ -231,7 +235,7 @@
             this.stoneTile.TabIndex = 12;
             this.stoneTile.TabStop = false;
             this.stoneTile.Tag = "StoneTile";
-            this.stoneTile.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.stoneTile.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Tile_Click);
             // 
             // grassTile
             // 
@@ -243,6 +247,7 @@
             this.grassTile.TabIndex = 1;
             this.grassTile.TabStop = false;
             this.grassTile.Tag = "GrassTile";
+            this.grassTile.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Tile_Click);
             // 
             // waterTile
             // 
@@ -254,7 +259,7 @@
             this.waterTile.TabIndex = 0;
             this.waterTile.TabStop = false;
             this.waterTile.Tag = "WaterTile";
-            this.waterTile.Click += new System.EventHandler(this.waterTile_Click);
+            this.waterTile.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Tile_Click);
             // 
             // ToggleLabel
             // 
@@ -319,8 +324,18 @@
             this.savingPanel.Controls.Add(this.Save);
             this.savingPanel.Location = new System.Drawing.Point(811, 0);
             this.savingPanel.Name = "savingPanel";
-            this.savingPanel.Size = new System.Drawing.Size(200, 256);
+            this.savingPanel.Size = new System.Drawing.Size(200, 197);
             this.savingPanel.TabIndex = 16;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(619, 200);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(396, 13);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "*When filling the map, make sure to press F again before exiting the area you fil" +
+    "led*";
             // 
             // mapTimer
             // 
@@ -333,6 +348,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1033, 517);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.savingPanel);
             this.Controls.Add(this.TilesPanel);
             this.Controls.Add(this.ControlPanel);
@@ -358,6 +374,7 @@
             this.savingPanel.ResumeLayout(false);
             this.savingPanel.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -387,6 +404,7 @@
         private System.Windows.Forms.PictureBox rock1;
         private System.Windows.Forms.Panel savingPanel;
         private System.Windows.Forms.Timer mapTimer;
+        private System.Windows.Forms.Label label1;
     }
 }
 
