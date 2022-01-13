@@ -187,7 +187,6 @@
             this.rock3.Location = new System.Drawing.Point(205, 138);
             this.rock3.Name = "rock3";
             this.rock3.Size = new System.Drawing.Size(145, 58);
-            this.rock3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.rock3.TabIndex = 17;
             this.rock3.TabStop = false;
             this.rock3.Tag = "Rock3";
@@ -209,7 +208,7 @@
             this.rock1.Location = new System.Drawing.Point(205, 20);
             this.rock1.Name = "rock1";
             this.rock1.Size = new System.Drawing.Size(93, 50);
-            this.rock1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.rock1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.rock1.TabIndex = 14;
             this.rock1.TabStop = false;
             this.rock1.Tag = "Rock1";
