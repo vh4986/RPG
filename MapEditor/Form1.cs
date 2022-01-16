@@ -96,6 +96,8 @@ namespace MapEditor
 
         public Form1()
         {
+            InitializeComponent(); // DO NOT MOVE
+
             Image grassImage = Properties.Resources.grassTile;
             Image waterImage = Properties.Resources.waterTile;
             Image stoneImage = Properties.Resources.stoneTile21;
@@ -114,13 +116,12 @@ namespace MapEditor
                 [TileTypes.Stone] = new Bitmap(stoneImage, new Size(tileSize, tileSize)),
             };
 
-            DecorTileToImage = new Dictionary<DecorTypes, Image>()
-            {
-                [DecorTypes.Rock1] = new Bitmap(rock1Image, new Size((int)(rock1.Width * 0.5), (int)(rock1.Height * 0.5))),
-                [DecorTypes.Rock2] = new Bitmap(rock2Image, new Size((int)(rock2.Width * 0.5), (int)(rock2.Height * 0.5))),
-                [DecorTypes.Rock3] = new Bitmap(rock3Image, new Size((int)(rock3.Width * 0.5), (int)(rock3.Height * 0.5))),
-            };
-            InitializeComponent();
+            DecorTileToImage = new Dictionary<DecorTypes, Image>();
+
+            DecorTileToImage[DecorTypes.Rock1] = new Bitmap(rock1Image, new Size((int)(rock1.Width * 0.5), (int)(rock1.Height * 0.5)));
+            DecorTileToImage[DecorTypes.Rock2] = new Bitmap(rock2Image, new Size((int)(rock2.Width * 0.5), (int)(rock2.Height * 0.5)));
+            DecorTileToImage[DecorTypes.Rock3] = new Bitmap(rock3Image, new Size((int)(rock3.Width * 0.5), (int)(rock3.Height * 0.5)));
+           
 
             totalWidth = map.Width;
             totalHeight = map.Height;
@@ -170,6 +171,10 @@ namespace MapEditor
             {
                 TilesPanel.Controls[i].MouseClick += Tile_Click;
             }
+            for(int i = 0; i < decorPanel.Controls.Count; i++)
+            {
+                decorPanel.Controls[i].MouseClick += Decor_Click;
+            }
             intializeGrid();
         }
 
@@ -179,9 +184,14 @@ namespace MapEditor
 
             selectedImage = ((PictureBox)sender).Image;
             selectedTileType = tileTypeMapping[(string)((PictureBox)sender).Tag];
-            selectedDecorType = decorTypeMapping[(string)((PictureBox)sender).Tag];
+            
         }
 
+        private void Decor_Click(object sender, MouseEventArgs e)
+        {
+            selectedImage = ((PictureBox)sender).Image;
+            selectedDecorType = decorTypeMapping[(string)((PictureBox)sender).Tag];
+        }
 
         private bool isNewSizeAvailable(int width, int height, int tileSize)
         {
@@ -262,8 +272,6 @@ namespace MapEditor
                     Grid[current.Y - 1, current.X].Type = selectedTileType;
                 }
             }
-
-
             //right, left, up, down
 
         }
@@ -274,7 +282,9 @@ namespace MapEditor
             {
                 ControlPanel.Location = new Point(map.Right, 0);
                 TilesPanel.Location = new Point(map.Right, TilesPanel.Location.Y);
+                decorPanel.Location = new Point(TilesPanel.Right, decorPanel.Location.Y);
                 savingPanel.Location = new Point(ControlPanel.Right, 0);
+
 
                 totalWidth = map.Width;
                 totalHeight = map.Height;
@@ -342,10 +352,6 @@ namespace MapEditor
                 }
             }
 
-            for(int i = 0; i < decorTypes.Count; i++)
-            {
-                decorTypes.Add(decorTypes[i]);
-            }
             MessageBox.Show("Saved!");
 
             string textFormat = JsonConvert.SerializeObject(tiles);
@@ -395,6 +401,9 @@ namespace MapEditor
             map.Image = canvas;
         }
 
+        private void map_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

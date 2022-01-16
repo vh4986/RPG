@@ -54,6 +54,8 @@
             this.savingPanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.mapTimer = new System.Windows.Forms.Timer(this.components);
+            this.decorPanel = new System.Windows.Forms.Panel();
+            this.tilePictureBox1 = new MapEditor.TilePictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.widthBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tileSizeBox)).BeginInit();
@@ -68,6 +70,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.waterTile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.map)).BeginInit();
             this.savingPanel.SuspendLayout();
+            this.decorPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tilePictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // widthBox
@@ -169,22 +173,19 @@
             // 
             // TilesPanel
             // 
-            this.TilesPanel.Controls.Add(this.rock3);
-            this.TilesPanel.Controls.Add(this.rock2);
-            this.TilesPanel.Controls.Add(this.rock1);
             this.TilesPanel.Controls.Add(this.sandTile);
             this.TilesPanel.Controls.Add(this.stoneTile);
             this.TilesPanel.Controls.Add(this.grassTile);
             this.TilesPanel.Controls.Add(this.waterTile);
             this.TilesPanel.Location = new System.Drawing.Point(606, 263);
             this.TilesPanel.Name = "TilesPanel";
-            this.TilesPanel.Size = new System.Drawing.Size(404, 213);
+            this.TilesPanel.Size = new System.Drawing.Size(199, 213);
             this.TilesPanel.TabIndex = 10;
             // 
             // rock3
             // 
             this.rock3.Image = global::MapEditor.Properties.Resources.rock2;
-            this.rock3.Location = new System.Drawing.Point(205, 138);
+            this.rock3.Location = new System.Drawing.Point(16, 126);
             this.rock3.Name = "rock3";
             this.rock3.Size = new System.Drawing.Size(145, 58);
             this.rock3.TabIndex = 17;
@@ -194,7 +195,7 @@
             // rock2
             // 
             this.rock2.Image = global::MapEditor.Properties.Resources.rock4;
-            this.rock2.Location = new System.Drawing.Point(205, 76);
+            this.rock2.Location = new System.Drawing.Point(16, 64);
             this.rock2.Name = "rock2";
             this.rock2.Size = new System.Drawing.Size(129, 56);
             this.rock2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -205,7 +206,7 @@
             // rock1
             // 
             this.rock1.Image = global::MapEditor.Properties.Resources.rock1;
-            this.rock1.Location = new System.Drawing.Point(205, 20);
+            this.rock1.Location = new System.Drawing.Point(16, 8);
             this.rock1.Name = "rock1";
             this.rock1.Size = new System.Drawing.Size(93, 50);
             this.rock1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -216,7 +217,7 @@
             // sandTile
             // 
             this.sandTile.Image = global::MapEditor.Properties.Resources.SandTileV2;
-            this.sandTile.Location = new System.Drawing.Point(112, 114);
+            this.sandTile.Location = new System.Drawing.Point(109, 114);
             this.sandTile.Name = "sandTile";
             this.sandTile.Size = new System.Drawing.Size(87, 82);
             this.sandTile.TabIndex = 13;
@@ -227,7 +228,7 @@
             // stoneTile
             // 
             this.stoneTile.Image = global::MapEditor.Properties.Resources.stoneTile21;
-            this.stoneTile.Location = new System.Drawing.Point(112, 20);
+            this.stoneTile.Location = new System.Drawing.Point(109, 8);
             this.stoneTile.Name = "stoneTile";
             this.stoneTile.Size = new System.Drawing.Size(87, 82);
             this.stoneTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -239,7 +240,7 @@
             // grassTile
             // 
             this.grassTile.Image = global::MapEditor.Properties.Resources.grassTile;
-            this.grassTile.Location = new System.Drawing.Point(16, 114);
+            this.grassTile.Location = new System.Drawing.Point(3, 114);
             this.grassTile.Name = "grassTile";
             this.grassTile.Size = new System.Drawing.Size(87, 82);
             this.grassTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -251,7 +252,7 @@
             // waterTile
             // 
             this.waterTile.Image = global::MapEditor.Properties.Resources.waterTile;
-            this.waterTile.Location = new System.Drawing.Point(16, 20);
+            this.waterTile.Location = new System.Drawing.Point(3, 8);
             this.waterTile.Name = "waterTile";
             this.waterTile.Size = new System.Drawing.Size(87, 82);
             this.waterTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -312,6 +313,7 @@
             this.map.Size = new System.Drawing.Size(600, 400);
             this.map.TabIndex = 0;
             this.map.TabStop = false;
+            this.map.Click += new System.EventHandler(this.map_Click);
             this.map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.map_MouseMove);
             // 
             // savingPanel
@@ -342,11 +344,32 @@
             this.mapTimer.Interval = 50;
             this.mapTimer.Tick += new System.EventHandler(this.mapTimer_Tick);
             // 
+            // decorPanel
+            // 
+            this.decorPanel.Controls.Add(this.rock3);
+            this.decorPanel.Controls.Add(this.rock1);
+            this.decorPanel.Controls.Add(this.rock2);
+            this.decorPanel.Location = new System.Drawing.Point(811, 263);
+            this.decorPanel.Name = "decorPanel";
+            this.decorPanel.Size = new System.Drawing.Size(200, 213);
+            this.decorPanel.TabIndex = 17;
+            // 
+            // tilePictureBox1
+            // 
+            this.tilePictureBox1.ImageType = MapEditor.ImageType.Tile;
+            this.tilePictureBox1.Location = new System.Drawing.Point(204, 424);
+            this.tilePictureBox1.Name = "tilePictureBox1";
+            this.tilePictureBox1.Size = new System.Drawing.Size(216, 51);
+            this.tilePictureBox1.TabIndex = 18;
+            this.tilePictureBox1.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1033, 517);
+            this.Controls.Add(this.tilePictureBox1);
+            this.Controls.Add(this.decorPanel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.savingPanel);
             this.Controls.Add(this.TilesPanel);
@@ -361,7 +384,6 @@
             this.ControlPanel.ResumeLayout(false);
             this.ControlPanel.PerformLayout();
             this.TilesPanel.ResumeLayout(false);
-            this.TilesPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rock3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rock2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rock1)).EndInit();
@@ -372,6 +394,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.map)).EndInit();
             this.savingPanel.ResumeLayout(false);
             this.savingPanel.PerformLayout();
+            this.decorPanel.ResumeLayout(false);
+            this.decorPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tilePictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -404,6 +429,8 @@
         private System.Windows.Forms.Panel savingPanel;
         private System.Windows.Forms.Timer mapTimer;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel decorPanel;
+        private TilePictureBox tilePictureBox1;
     }
 }
 
