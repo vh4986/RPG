@@ -17,6 +17,7 @@ namespace RPGGame
     public class TileFromSprite : Sprite
     {
         public TileTypes tileType;
+        public DecorTypes decorTypes;
 
         public TileFromSprite(TileTypes type, Texture2D image, Vector2 position, Color tint, Vector2 origin, Vector2 scale, SpriteEffects effect)
             : base(image, position, tint, origin, scale, effect)
@@ -59,7 +60,6 @@ namespace RPGGame
         Vector2 scale = new Vector2(0.1f, 0.1f);
         int tileSize = 50;
 
-        List<Tile> tiles;
 
         Texture2D waterTile;
         Texture2D grassTile;
@@ -69,16 +69,44 @@ namespace RPGGame
         {
             public int X { get; set; }
             public int Y { get; set; }
-            public TileTypes Type;
+            
 
-            public Tile(int x, int y, TileTypes type)
+            public Tile(int x, int y)
             {
                 X = x;
                 Y = y;
-                Type = type;
             }
         }
+        class Terrain : Tile
+        {
+            public TileTypes Type { get; set; }
+            public Terrain(int x, int y, TileTypes types)
+                :base(x, y)
+            {
+                Type = types;
+            }
+        }
+        class Decor : Tile
+        {
+            public DecorTypes Type { get; set; }
 
+            public Decor(int x, int y, DecorTypes types)
+                :base(x, y)
+            {
+                Type = types;
+            }
+        }
+        class MapData
+        {
+            public List<Terrain> tTiles;
+            public List<Decor> dTiles;
+
+            public MapData(List<Terrain> terrains, List<Decor> decor)
+            {
+                tTiles = terrains;
+                dTiles = decor;
+            }
+        }
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -106,6 +134,8 @@ namespace RPGGame
         /// </summary>
         /// 
         List<TileFromSprite> edges = new List<TileFromSprite>();
+
+        MapData data;
         public void floodFill()
         {
             selectedColor = Color.DarkGreen;
@@ -169,7 +199,7 @@ namespace RPGGame
         public void Deserialize()
         {
             string fileContents = File.ReadAllText("tiles.json");
-            tiles = JsonConvert.DeserializeObject<List<Tile>>(fileContents);
+            data = JsonConvert.DeserializeObject<MapData>(fileContents);
         }
         Dictionary<TileTypes, Texture2D> tileTypesToImage;
         void checkForSurroundingTiles(int x, int y, TileTypes tile)
@@ -229,7 +259,7 @@ namespace RPGGame
             {
                 for (int x = 0; x < Grid.GetLength(1); x++)
                 {
-                    Tile currTile = tiles[tileIndex];
+                    Terrain currTile = data.tTiles[tileIndex];
                     Grid[y, x] = new TileFromSprite(currTile.Type, tileTypesToImage[currTile.Type], new Vector2(currTile.X * tileSize, currTile.Y * tileSize), Color.White, Vector2.Zero, new Vector2(tileScale, tileScale), SpriteEffects.None);
                     tileIndex++;
                 }

@@ -38,13 +38,13 @@
             this.Changes = new System.Windows.Forms.Button();
             this.ControlPanel = new System.Windows.Forms.Panel();
             this.TilesPanel = new System.Windows.Forms.Panel();
-            this.rock3 = new System.Windows.Forms.PictureBox();
-            this.rock2 = new System.Windows.Forms.PictureBox();
-            this.rock1 = new System.Windows.Forms.PictureBox();
-            this.sandTile = new System.Windows.Forms.PictureBox();
-            this.stoneTile = new System.Windows.Forms.PictureBox();
-            this.grassTile = new System.Windows.Forms.PictureBox();
-            this.waterTile = new System.Windows.Forms.PictureBox();
+            this.rock2 = new MapEditor.TilePictureBox();
+            this.rock3 = new MapEditor.TilePictureBox();
+            this.sandTile = new MapEditor.TilePictureBox();
+            this.grassTile = new MapEditor.TilePictureBox();
+            this.stoneTile = new MapEditor.TilePictureBox();
+            this.rock1 = new MapEditor.TilePictureBox();
+            this.waterTile = new MapEditor.TilePictureBox();
             this.ToggleLabel = new System.Windows.Forms.Label();
             this.FillToggleLabel = new System.Windows.Forms.Label();
             this.Save = new System.Windows.Forms.Button();
@@ -54,24 +54,20 @@
             this.savingPanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.mapTimer = new System.Windows.Forms.Timer(this.components);
-            this.decorPanel = new System.Windows.Forms.Panel();
-            this.tilePictureBox1 = new MapEditor.TilePictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.widthBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tileSizeBox)).BeginInit();
             this.ControlPanel.SuspendLayout();
             this.TilesPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.rock3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rock2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rock1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rock3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sandTile)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.stoneTile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grassTile)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.stoneTile)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rock1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.waterTile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.map)).BeginInit();
             this.savingPanel.SuspendLayout();
-            this.decorPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tilePictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // widthBox
@@ -173,93 +169,100 @@
             // 
             // TilesPanel
             // 
+            this.TilesPanel.Controls.Add(this.rock2);
+            this.TilesPanel.Controls.Add(this.rock3);
             this.TilesPanel.Controls.Add(this.sandTile);
-            this.TilesPanel.Controls.Add(this.stoneTile);
             this.TilesPanel.Controls.Add(this.grassTile);
+            this.TilesPanel.Controls.Add(this.stoneTile);
+            this.TilesPanel.Controls.Add(this.rock1);
             this.TilesPanel.Controls.Add(this.waterTile);
             this.TilesPanel.Location = new System.Drawing.Point(606, 263);
             this.TilesPanel.Name = "TilesPanel";
-            this.TilesPanel.Size = new System.Drawing.Size(199, 213);
+            this.TilesPanel.Size = new System.Drawing.Size(405, 213);
             this.TilesPanel.TabIndex = 10;
-            // 
-            // rock3
-            // 
-            this.rock3.Image = global::MapEditor.Properties.Resources.rock2;
-            this.rock3.Location = new System.Drawing.Point(16, 126);
-            this.rock3.Name = "rock3";
-            this.rock3.Size = new System.Drawing.Size(145, 58);
-            this.rock3.TabIndex = 17;
-            this.rock3.TabStop = false;
-            this.rock3.Tag = "Rock3";
             // 
             // rock2
             // 
-            this.rock2.Image = global::MapEditor.Properties.Resources.rock4;
-            this.rock2.Location = new System.Drawing.Point(16, 64);
+            this.rock2.Image = global::MapEditor.Properties.Resources.rock2;
+            this.rock2.ImageType = MapEditor.ImageType.Decor;
+            this.rock2.Location = new System.Drawing.Point(209, 64);
             this.rock2.Name = "rock2";
-            this.rock2.Size = new System.Drawing.Size(129, 56);
+            this.rock2.Size = new System.Drawing.Size(145, 58);
             this.rock2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.rock2.TabIndex = 16;
+            this.rock2.TabIndex = 19;
             this.rock2.TabStop = false;
             this.rock2.Tag = "Rock2";
             // 
-            // rock1
+            // rock3
             // 
-            this.rock1.Image = global::MapEditor.Properties.Resources.rock1;
-            this.rock1.Location = new System.Drawing.Point(16, 8);
-            this.rock1.Name = "rock1";
-            this.rock1.Size = new System.Drawing.Size(93, 50);
-            this.rock1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.rock1.TabIndex = 14;
-            this.rock1.TabStop = false;
-            this.rock1.Tag = "Rock1";
+            this.rock3.Image = global::MapEditor.Properties.Resources.rock3;
+            this.rock3.ImageType = MapEditor.ImageType.Decor;
+            this.rock3.Location = new System.Drawing.Point(209, 128);
+            this.rock3.Name = "rock3";
+            this.rock3.Size = new System.Drawing.Size(188, 76);
+            this.rock3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.rock3.TabIndex = 20;
+            this.rock3.TabStop = false;
+            this.rock3.Tag = "Rock3";
             // 
             // sandTile
             // 
             this.sandTile.Image = global::MapEditor.Properties.Resources.SandTileV2;
-            this.sandTile.Location = new System.Drawing.Point(109, 114);
+            this.sandTile.ImageType = MapEditor.ImageType.Tile;
+            this.sandTile.Location = new System.Drawing.Point(109, 122);
             this.sandTile.Name = "sandTile";
             this.sandTile.Size = new System.Drawing.Size(87, 82);
-            this.sandTile.TabIndex = 13;
+            this.sandTile.TabIndex = 21;
             this.sandTile.TabStop = false;
             this.sandTile.Tag = "SandTile";
-            this.sandTile.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Tile_Click);
-            // 
-            // stoneTile
-            // 
-            this.stoneTile.Image = global::MapEditor.Properties.Resources.stoneTile21;
-            this.stoneTile.Location = new System.Drawing.Point(109, 8);
-            this.stoneTile.Name = "stoneTile";
-            this.stoneTile.Size = new System.Drawing.Size(87, 82);
-            this.stoneTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.stoneTile.TabIndex = 12;
-            this.stoneTile.TabStop = false;
-            this.stoneTile.Tag = "StoneTile";
-            this.stoneTile.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Tile_Click);
             // 
             // grassTile
             // 
             this.grassTile.Image = global::MapEditor.Properties.Resources.grassTile;
-            this.grassTile.Location = new System.Drawing.Point(3, 114);
+            this.grassTile.ImageType = MapEditor.ImageType.Tile;
+            this.grassTile.Location = new System.Drawing.Point(5, 122);
             this.grassTile.Name = "grassTile";
-            this.grassTile.Size = new System.Drawing.Size(87, 82);
+            this.grassTile.Size = new System.Drawing.Size(86, 82);
             this.grassTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.grassTile.TabIndex = 1;
+            this.grassTile.TabIndex = 20;
             this.grassTile.TabStop = false;
             this.grassTile.Tag = "GrassTile";
-            this.grassTile.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Tile_Click);
+            // 
+            // stoneTile
+            // 
+            this.stoneTile.Image = global::MapEditor.Properties.Resources.stoneTile21;
+            this.stoneTile.ImageType = MapEditor.ImageType.Tile;
+            this.stoneTile.Location = new System.Drawing.Point(109, 8);
+            this.stoneTile.Name = "stoneTile";
+            this.stoneTile.Size = new System.Drawing.Size(87, 82);
+            this.stoneTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.stoneTile.TabIndex = 19;
+            this.stoneTile.TabStop = false;
+            this.stoneTile.Tag = "StoneTile";
+            // 
+            // rock1
+            // 
+            this.rock1.Image = global::MapEditor.Properties.Resources.rock1;
+            this.rock1.ImageType = MapEditor.ImageType.Decor;
+            this.rock1.Location = new System.Drawing.Point(209, 8);
+            this.rock1.Name = "rock1";
+            this.rock1.Size = new System.Drawing.Size(93, 50);
+            this.rock1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.rock1.TabIndex = 18;
+            this.rock1.TabStop = false;
+            this.rock1.Tag = "Rock1";
             // 
             // waterTile
             // 
             this.waterTile.Image = global::MapEditor.Properties.Resources.waterTile;
-            this.waterTile.Location = new System.Drawing.Point(3, 8);
+            this.waterTile.ImageType = MapEditor.ImageType.Tile;
+            this.waterTile.Location = new System.Drawing.Point(5, 8);
             this.waterTile.Name = "waterTile";
             this.waterTile.Size = new System.Drawing.Size(87, 82);
             this.waterTile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.waterTile.TabIndex = 0;
+            this.waterTile.TabIndex = 18;
             this.waterTile.TabStop = false;
             this.waterTile.Tag = "WaterTile";
-            this.waterTile.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Tile_Click);
             // 
             // ToggleLabel
             // 
@@ -313,7 +316,7 @@
             this.map.Size = new System.Drawing.Size(600, 400);
             this.map.TabIndex = 0;
             this.map.TabStop = false;
-            this.map.Click += new System.EventHandler(this.map_Click);
+            this.map.MouseClick += new System.Windows.Forms.MouseEventHandler(this.map_MouseClick);
             this.map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.map_MouseMove);
             // 
             // savingPanel
@@ -344,32 +347,11 @@
             this.mapTimer.Interval = 50;
             this.mapTimer.Tick += new System.EventHandler(this.mapTimer_Tick);
             // 
-            // decorPanel
-            // 
-            this.decorPanel.Controls.Add(this.rock3);
-            this.decorPanel.Controls.Add(this.rock1);
-            this.decorPanel.Controls.Add(this.rock2);
-            this.decorPanel.Location = new System.Drawing.Point(811, 263);
-            this.decorPanel.Name = "decorPanel";
-            this.decorPanel.Size = new System.Drawing.Size(200, 213);
-            this.decorPanel.TabIndex = 17;
-            // 
-            // tilePictureBox1
-            // 
-            this.tilePictureBox1.ImageType = MapEditor.ImageType.Tile;
-            this.tilePictureBox1.Location = new System.Drawing.Point(204, 424);
-            this.tilePictureBox1.Name = "tilePictureBox1";
-            this.tilePictureBox1.Size = new System.Drawing.Size(216, 51);
-            this.tilePictureBox1.TabIndex = 18;
-            this.tilePictureBox1.TabStop = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1033, 517);
-            this.Controls.Add(this.tilePictureBox1);
-            this.Controls.Add(this.decorPanel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.savingPanel);
             this.Controls.Add(this.TilesPanel);
@@ -384,19 +366,17 @@
             this.ControlPanel.ResumeLayout(false);
             this.ControlPanel.PerformLayout();
             this.TilesPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.rock3)).EndInit();
+            this.TilesPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rock2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rock1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rock3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sandTile)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.stoneTile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grassTile)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.stoneTile)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rock1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.waterTile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.map)).EndInit();
             this.savingPanel.ResumeLayout(false);
             this.savingPanel.PerformLayout();
-            this.decorPanel.ResumeLayout(false);
-            this.decorPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tilePictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -414,23 +394,21 @@
         private System.Windows.Forms.Button Changes;
         private System.Windows.Forms.Panel ControlPanel;
         private System.Windows.Forms.Panel TilesPanel;
-        private System.Windows.Forms.PictureBox grassTile;
-        private System.Windows.Forms.PictureBox waterTile;
         private System.Windows.Forms.Label ToggleLabel;
-        private System.Windows.Forms.PictureBox stoneTile;
         private System.Windows.Forms.Label FillToggleLabel;
         private System.Windows.Forms.Button Save;
         private System.Windows.Forms.TextBox namingFileTextBox;
         private System.Windows.Forms.Label NameOfFile;
-        private System.Windows.Forms.PictureBox sandTile;
-        private System.Windows.Forms.PictureBox rock3;
-        private System.Windows.Forms.PictureBox rock2;
-        private System.Windows.Forms.PictureBox rock1;
         private System.Windows.Forms.Panel savingPanel;
         private System.Windows.Forms.Timer mapTimer;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel decorPanel;
-        private TilePictureBox tilePictureBox1;
+        private TilePictureBox waterTile;
+        private TilePictureBox grassTile;
+        private TilePictureBox stoneTile;
+        private TilePictureBox sandTile;
+        private TilePictureBox rock2;
+        private TilePictureBox rock1;
+        private TilePictureBox rock3;
     }
 }
 

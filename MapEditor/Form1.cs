@@ -26,6 +26,7 @@ namespace MapEditor
 
     public enum DecorTypes
     {
+        None,
         Rock1,
         Rock2,
         Rock3,
@@ -37,26 +38,31 @@ namespace MapEditor
         {
             public int X { get; set; }
             public int Y { get; set; }
-            public TileTypes Type { get; set; }
 
-            public Tile(int x, int y, TileTypes type)
+            public Tile(int x, int y)
             {
                 X = x;
                 Y = y;
+            }
+        }
+        class Terrain : Tile
+        {
+            public TileTypes Type { get; set; }
+
+            public Terrain(int x, int y, TileTypes type)
+                : base(x, y)
+            {
                 Type = type;
             }
         }
 
-        public partial class Decor
+        class Decor : Tile
         {
-            public int X { get; set; }
-            public int Y { get; set; }
             public DecorTypes Type { get; set; }
 
             public Decor(int x, int y, DecorTypes type)
+                :base(x, y)
             {
-                X = x;
-                Y = y;
                 Type = type;
             }
         }
@@ -69,9 +75,10 @@ namespace MapEditor
         int totalHeight = 400;
         int tileSize = 20;
 
-        Tile[,] Grid;
-        List<Decor> decorTypes = new List<Decor>(); 
+        Terrain[,] Grid;
+        List<Decor> decor = new List<Decor>();
 
+        TilePictureBox tilePictureBox;
         Point mouseLocation = new Point(0, 0);
 
         TileTypes selectedTileType;
@@ -116,12 +123,13 @@ namespace MapEditor
                 [TileTypes.Stone] = new Bitmap(stoneImage, new Size(tileSize, tileSize)),
             };
 
-            DecorTileToImage = new Dictionary<DecorTypes, Image>();
-
-            DecorTileToImage[DecorTypes.Rock1] = new Bitmap(rock1Image, new Size((int)(rock1.Width * 0.5), (int)(rock1.Height * 0.5)));
-            DecorTileToImage[DecorTypes.Rock2] = new Bitmap(rock2Image, new Size((int)(rock2.Width * 0.5), (int)(rock2.Height * 0.5)));
-            DecorTileToImage[DecorTypes.Rock3] = new Bitmap(rock3Image, new Size((int)(rock3.Width * 0.5), (int)(rock3.Height * 0.5)));
-           
+            DecorTileToImage = new Dictionary<DecorTypes, Image>()
+            {
+                [DecorTypes.None] = new Bitmap(black, new Size(tileSize, tileSize)),
+                [DecorTypes.Rock1] = new Bitmap(rock1Image, new Size((int)(rock1.Width * 0.3), (int)(rock1.Height * 0.3))),
+                [DecorTypes.Rock2] = new Bitmap(rock2Image, new Size((int)(rock2.Width * 0.3), (int)(rock2.Height * 0.3))),
+                [DecorTypes.Rock3] = new Bitmap(rock3Image, new Size((int)(rock3.Width * 0.3), (int)(rock3.Height * 0.3))),
+            };
 
             totalWidth = map.Width;
             totalHeight = map.Height;
@@ -130,8 +138,7 @@ namespace MapEditor
             heightBox.Value = totalHeight;
             tileSizeBox.Value = tileSize;
 
-            Grid = new Tile[totalHeight / tileSize, totalWidth / tileSize];
-
+            Grid = new Terrain[totalHeight / tileSize, totalWidth / tileSize];
 
             this.KeyPreview = true;
 
@@ -151,7 +158,7 @@ namespace MapEditor
             {
                 for (int x = 0; x < Grid.GetLength(1); x++)
                 {
-                    Grid[y, x] = new Tile(x, y, TileTypes.None)
+                    Grid[y, x] = new Terrain(x, y, TileTypes.None)
                     {
                         X = x * tileSize,
                         Y = y * tileSize
@@ -171,27 +178,29 @@ namespace MapEditor
             {
                 TilesPanel.Controls[i].MouseClick += Tile_Click;
             }
-            for(int i = 0; i < decorPanel.Controls.Count; i++)
-            {
-                decorPanel.Controls[i].MouseClick += Decor_Click;
-            }
+
             intializeGrid();
         }
 
         private void Tile_Click(object sender, MouseEventArgs e)
         {
             //If the selected thingy is a rock (do something else)- ??
-
-            selectedImage = ((PictureBox)sender).Image;
-            selectedTileType = tileTypeMapping[(string)((PictureBox)sender).Tag];
+            tilePictureBox = (TilePictureBox)sender;
+            selectedImage = tilePictureBox.Image;
+            
+            if(tilePictureBox.ImageType == ImageType.Tile)
+            { 
+                selectedTileType = tileTypeMapping[(string)((PictureBox)sender).Tag];
+            }
+            if(tilePictureBox.ImageType == ImageType.Decor)
+            {
+                selectedDecorType = decorTypeMapping[(string)((PictureBox)sender).Tag];
+            }
+            
             
         }
 
-        private void Decor_Click(object sender, MouseEventArgs e)
-        {
-            selectedImage = ((PictureBox)sender).Image;
-            selectedDecorType = decorTypeMapping[(string)((PictureBox)sender).Tag];
-        }
+
 
         private bool isNewSizeAvailable(int width, int height, int tileSize)
         {
@@ -282,14 +291,13 @@ namespace MapEditor
             {
                 ControlPanel.Location = new Point(map.Right, 0);
                 TilesPanel.Location = new Point(map.Right, TilesPanel.Location.Y);
-                decorPanel.Location = new Point(TilesPanel.Right, decorPanel.Location.Y);
                 savingPanel.Location = new Point(ControlPanel.Right, 0);
 
 
                 totalWidth = map.Width;
                 totalHeight = map.Height;
 
-                Grid = new Tile[totalHeight / tileSize, totalWidth / tileSize];
+                Grid = new Terrain[totalHeight / tileSize, totalWidth / tileSize];
 
                 intializeGrid();
             }
@@ -337,9 +345,22 @@ namespace MapEditor
 
         }
 
+        //Make a class that contains not only a List<Terrain> but also a LIst<Decor> and serialize that class
+        class MapData
+        {
+            List<Terrain> tTiles = new List<Terrain>();
+            List<Decor> dTiles = new List<Decor>();
+
+            public MapData(List<Terrain> terrains, List<Decor> decor)
+            {
+                tTiles = terrains;
+                dTiles = decor;
+            }
+        }
+
         private void Save_Click(object sender, EventArgs e)
         {
-            List<Tile> tiles = new List<Tile>();
+            List<Terrain> tTiles = new List<Terrain>();
 
             for (int y = 0; y < Grid.GetLength(0); y++)
             {
@@ -347,14 +368,16 @@ namespace MapEditor
                 {
                     if (Grid[y, x] != null)
                     {
-                        tiles.Add(Grid[y, x]);
+                        tTiles.Add(Grid[y, x]);
                     }
                 }
             }
 
+            MapData data = new MapData(tTiles, decor);
+
             MessageBox.Show("Saved!");
 
-            string textFormat = JsonConvert.SerializeObject(tiles);
+            string textFormat = JsonConvert.SerializeObject(data);
 
             File.WriteAllText($"{namingFileTextBox.Text}.json", textFormat);
         }
@@ -386,24 +409,35 @@ namespace MapEditor
                 for (int x = 0; x < Grid.GetLength(1); x++)
                 {
                     Image tileImage = TileToImage[Grid[y, x].Type];
-                    
+
                     gfx.DrawImage(tileImage, new Point(Grid[y, x].X, Grid[y, x].Y));
-                    
+
                 }
             }
-            for(int i = 0; i < decorTypes.Count; i++)
+            
+            for (int i = 0; i < decor.Count; i++)
             {
-                Image decorImage = DecorTileToImage[decorTypes[i].Type];
+                Image decorImage = DecorTileToImage[decor[i].Type];
 
-                gfx.DrawImage(decorImage, new Point(decorTypes[i].X, decorTypes[i].Y));
+                gfx.DrawImage(decorImage, new Point(decor[i].X, decor[i].Y));
             }
+           
 
             map.Image = canvas;
         }
 
-        private void map_Click(object sender, EventArgs e)
+        private void map_MouseClick(object sender, MouseEventArgs e)
         {
+            //Make sure the tilePictureBox is not null
+            if (selectedDecorType == DecorTypes.None) return;
 
+            
+            if (tilePictureBox.ImageType == ImageType.Decor)
+            {
+                //Add thingy
+                //Create a decor based on the decor type and add that to the list
+                decor.Add(new Decor(e.Location.X, e.Location.Y, selectedDecorType));
+            }
         }
     }
 }

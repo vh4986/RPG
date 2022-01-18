@@ -45,6 +45,7 @@
     <Compile Include="Arrow.cs" />
     <Compile Include="BackwardEnemy.cs" />
     <Compile Include="Boat.cs" />
+    <Compile Include="DecorTypes.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Food.cs" />
     <Compile Include="ForwardEnemy.cs" />
