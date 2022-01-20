@@ -38,6 +38,16 @@
             this.Changes = new System.Windows.Forms.Button();
             this.ControlPanel = new System.Windows.Forms.Panel();
             this.TilesPanel = new System.Windows.Forms.Panel();
+            this.ToggleLabel = new System.Windows.Forms.Label();
+            this.FillToggleLabel = new System.Windows.Forms.Label();
+            this.Save = new System.Windows.Forms.Button();
+            this.namingFileTextBox = new System.Windows.Forms.TextBox();
+            this.NameOfFile = new System.Windows.Forms.Label();
+            this.savingPanel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.mapTimer = new System.Windows.Forms.Timer(this.components);
+            this.map = new System.Windows.Forms.PictureBox();
+            this.blackCircle = new MapEditor.TilePictureBox();
             this.rock2 = new MapEditor.TilePictureBox();
             this.rock3 = new MapEditor.TilePictureBox();
             this.sandTile = new MapEditor.TilePictureBox();
@@ -45,20 +55,14 @@
             this.stoneTile = new MapEditor.TilePictureBox();
             this.rock1 = new MapEditor.TilePictureBox();
             this.waterTile = new MapEditor.TilePictureBox();
-            this.ToggleLabel = new System.Windows.Forms.Label();
-            this.FillToggleLabel = new System.Windows.Forms.Label();
-            this.Save = new System.Windows.Forms.Button();
-            this.namingFileTextBox = new System.Windows.Forms.TextBox();
-            this.NameOfFile = new System.Windows.Forms.Label();
-            this.map = new System.Windows.Forms.PictureBox();
-            this.savingPanel = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.mapTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.widthBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tileSizeBox)).BeginInit();
             this.ControlPanel.SuspendLayout();
             this.TilesPanel.SuspendLayout();
+            this.savingPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.map)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.blackCircle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rock2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rock3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sandTile)).BeginInit();
@@ -66,8 +70,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.stoneTile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rock1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.waterTile)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.map)).BeginInit();
-            this.savingPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // widthBox
@@ -169,6 +171,7 @@
             // 
             // TilesPanel
             // 
+            this.TilesPanel.Controls.Add(this.blackCircle);
             this.TilesPanel.Controls.Add(this.rock2);
             this.TilesPanel.Controls.Add(this.rock3);
             this.TilesPanel.Controls.Add(this.sandTile);
@@ -178,8 +181,103 @@
             this.TilesPanel.Controls.Add(this.waterTile);
             this.TilesPanel.Location = new System.Drawing.Point(606, 263);
             this.TilesPanel.Name = "TilesPanel";
-            this.TilesPanel.Size = new System.Drawing.Size(405, 213);
+            this.TilesPanel.Size = new System.Drawing.Size(405, 242);
             this.TilesPanel.TabIndex = 10;
+            // 
+            // ToggleLabel
+            // 
+            this.ToggleLabel.AutoSize = true;
+            this.ToggleLabel.Location = new System.Drawing.Point(19, 12);
+            this.ToggleLabel.Name = "ToggleLabel";
+            this.ToggleLabel.Size = new System.Drawing.Size(100, 13);
+            this.ToggleLabel.TabIndex = 11;
+            this.ToggleLabel.Text = "Toggle: Off (key: H)";
+            // 
+            // FillToggleLabel
+            // 
+            this.FillToggleLabel.AutoSize = true;
+            this.FillToggleLabel.Location = new System.Drawing.Point(19, 57);
+            this.FillToggleLabel.Name = "FillToggleLabel";
+            this.FillToggleLabel.Size = new System.Drawing.Size(77, 13);
+            this.FillToggleLabel.TabIndex = 12;
+            this.FillToggleLabel.Text = "Fill: Off (key: F)";
+            // 
+            // Save
+            // 
+            this.Save.Location = new System.Drawing.Point(70, 149);
+            this.Save.Name = "Save";
+            this.Save.Size = new System.Drawing.Size(75, 23);
+            this.Save.TabIndex = 13;
+            this.Save.Text = "Save";
+            this.Save.UseVisualStyleBackColor = true;
+            this.Save.Click += new System.EventHandler(this.Save_Click);
+            // 
+            // namingFileTextBox
+            // 
+            this.namingFileTextBox.Location = new System.Drawing.Point(93, 101);
+            this.namingFileTextBox.Name = "namingFileTextBox";
+            this.namingFileTextBox.Size = new System.Drawing.Size(100, 20);
+            this.namingFileTextBox.TabIndex = 14;
+            // 
+            // NameOfFile
+            // 
+            this.NameOfFile.AutoSize = true;
+            this.NameOfFile.Location = new System.Drawing.Point(19, 104);
+            this.NameOfFile.Name = "NameOfFile";
+            this.NameOfFile.Size = new System.Drawing.Size(71, 13);
+            this.NameOfFile.TabIndex = 15;
+            this.NameOfFile.Text = "Name Of File:";
+            // 
+            // savingPanel
+            // 
+            this.savingPanel.Controls.Add(this.namingFileTextBox);
+            this.savingPanel.Controls.Add(this.NameOfFile);
+            this.savingPanel.Controls.Add(this.ToggleLabel);
+            this.savingPanel.Controls.Add(this.FillToggleLabel);
+            this.savingPanel.Controls.Add(this.Save);
+            this.savingPanel.Location = new System.Drawing.Point(811, 0);
+            this.savingPanel.Name = "savingPanel";
+            this.savingPanel.Size = new System.Drawing.Size(200, 197);
+            this.savingPanel.TabIndex = 16;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(619, 200);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(396, 13);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "*When filling the map, make sure to press F again before exiting the area you fil" +
+    "led*";
+            // 
+            // mapTimer
+            // 
+            this.mapTimer.Enabled = true;
+            this.mapTimer.Interval = 50;
+            this.mapTimer.Tick += new System.EventHandler(this.mapTimer_Tick);
+            // 
+            // map
+            // 
+            this.map.BackColor = System.Drawing.SystemColors.Desktop;
+            this.map.Location = new System.Drawing.Point(-1, 0);
+            this.map.Name = "map";
+            this.map.Size = new System.Drawing.Size(600, 400);
+            this.map.TabIndex = 0;
+            this.map.TabStop = false;
+            this.map.MouseClick += new System.Windows.Forms.MouseEventHandler(this.map_MouseClick);
+            this.map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.map_MouseMove);
+            // 
+            // blackCircle
+            // 
+            this.blackCircle.Image = global::MapEditor.Properties.Resources.blackCircle;
+            this.blackCircle.ImageType = MapEditor.ImageType.Decor;
+            this.blackCircle.Location = new System.Drawing.Point(308, 8);
+            this.blackCircle.Name = "blackCircle";
+            this.blackCircle.Size = new System.Drawing.Size(89, 50);
+            this.blackCircle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.blackCircle.TabIndex = 22;
+            this.blackCircle.TabStop = false;
+            this.blackCircle.Tag = "blackCircle";
             // 
             // rock2
             // 
@@ -264,89 +362,6 @@
             this.waterTile.TabStop = false;
             this.waterTile.Tag = "WaterTile";
             // 
-            // ToggleLabel
-            // 
-            this.ToggleLabel.AutoSize = true;
-            this.ToggleLabel.Location = new System.Drawing.Point(19, 12);
-            this.ToggleLabel.Name = "ToggleLabel";
-            this.ToggleLabel.Size = new System.Drawing.Size(100, 13);
-            this.ToggleLabel.TabIndex = 11;
-            this.ToggleLabel.Text = "Toggle: Off (key: H)";
-            // 
-            // FillToggleLabel
-            // 
-            this.FillToggleLabel.AutoSize = true;
-            this.FillToggleLabel.Location = new System.Drawing.Point(19, 57);
-            this.FillToggleLabel.Name = "FillToggleLabel";
-            this.FillToggleLabel.Size = new System.Drawing.Size(77, 13);
-            this.FillToggleLabel.TabIndex = 12;
-            this.FillToggleLabel.Text = "Fill: Off (key: F)";
-            // 
-            // Save
-            // 
-            this.Save.Location = new System.Drawing.Point(70, 149);
-            this.Save.Name = "Save";
-            this.Save.Size = new System.Drawing.Size(75, 23);
-            this.Save.TabIndex = 13;
-            this.Save.Text = "Save";
-            this.Save.UseVisualStyleBackColor = true;
-            this.Save.Click += new System.EventHandler(this.Save_Click);
-            // 
-            // namingFileTextBox
-            // 
-            this.namingFileTextBox.Location = new System.Drawing.Point(93, 101);
-            this.namingFileTextBox.Name = "namingFileTextBox";
-            this.namingFileTextBox.Size = new System.Drawing.Size(100, 20);
-            this.namingFileTextBox.TabIndex = 14;
-            // 
-            // NameOfFile
-            // 
-            this.NameOfFile.AutoSize = true;
-            this.NameOfFile.Location = new System.Drawing.Point(19, 104);
-            this.NameOfFile.Name = "NameOfFile";
-            this.NameOfFile.Size = new System.Drawing.Size(71, 13);
-            this.NameOfFile.TabIndex = 15;
-            this.NameOfFile.Text = "Name Of File:";
-            // 
-            // map
-            // 
-            this.map.BackColor = System.Drawing.SystemColors.Desktop;
-            this.map.Location = new System.Drawing.Point(-1, 0);
-            this.map.Name = "map";
-            this.map.Size = new System.Drawing.Size(600, 400);
-            this.map.TabIndex = 0;
-            this.map.TabStop = false;
-            this.map.MouseClick += new System.Windows.Forms.MouseEventHandler(this.map_MouseClick);
-            this.map.MouseMove += new System.Windows.Forms.MouseEventHandler(this.map_MouseMove);
-            // 
-            // savingPanel
-            // 
-            this.savingPanel.Controls.Add(this.namingFileTextBox);
-            this.savingPanel.Controls.Add(this.NameOfFile);
-            this.savingPanel.Controls.Add(this.ToggleLabel);
-            this.savingPanel.Controls.Add(this.FillToggleLabel);
-            this.savingPanel.Controls.Add(this.Save);
-            this.savingPanel.Location = new System.Drawing.Point(811, 0);
-            this.savingPanel.Name = "savingPanel";
-            this.savingPanel.Size = new System.Drawing.Size(200, 197);
-            this.savingPanel.TabIndex = 16;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(619, 200);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(396, 13);
-            this.label1.TabIndex = 16;
-            this.label1.Text = "*When filling the map, make sure to press F again before exiting the area you fil" +
-    "led*";
-            // 
-            // mapTimer
-            // 
-            this.mapTimer.Enabled = true;
-            this.mapTimer.Interval = 50;
-            this.mapTimer.Tick += new System.EventHandler(this.mapTimer_Tick);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -367,6 +382,10 @@
             this.ControlPanel.PerformLayout();
             this.TilesPanel.ResumeLayout(false);
             this.TilesPanel.PerformLayout();
+            this.savingPanel.ResumeLayout(false);
+            this.savingPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.map)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.blackCircle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rock2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rock3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sandTile)).EndInit();
@@ -374,9 +393,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.stoneTile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rock1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.waterTile)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.map)).EndInit();
-            this.savingPanel.ResumeLayout(false);
-            this.savingPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -409,6 +425,7 @@
         private TilePictureBox rock2;
         private TilePictureBox rock1;
         private TilePictureBox rock3;
+        private TilePictureBox blackCircle;
     }
 }
 

@@ -121,40 +121,43 @@
   <data name="SandTileV2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SandTileV2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="rock3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\rock3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="waterTile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\waterTile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="rock4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\rock4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="stoneTile21" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\stoneTile21.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="stoneTileFromPaint" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\stoneTileFromPaint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="rock2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\rock2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="sandTile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sandTile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="StoneTile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\StoneTile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="stoneTile21" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stoneTile21.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="stoneTile2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\stoneTile2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="waterTile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\waterTile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="grassTile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\grassTile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="StoneTile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StoneTile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rock4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rock4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rock2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rock2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stoneTileFromPaint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stoneTileFromPaint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stoneTile2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stoneTile2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rock3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rock3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="rock1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\rock1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="black" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="blackCircle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blackCircle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

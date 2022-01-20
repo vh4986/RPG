@@ -100,7 +100,7 @@ namespace RPGGame
         {
             public List<Terrain> tTiles;
             public List<Decor> dTiles;
-
+            public Vector2 boatPosition;
             public MapData(List<Terrain> terrains, List<Decor> decor)
             {
                 tTiles = terrains;
@@ -245,6 +245,7 @@ namespace RPGGame
 
             tileTypesToImage = new Dictionary<TileTypes, Texture2D>
             {
+                { TileTypes.None, null },
                 {TileTypes.grassTile, grassTile},
                 {TileTypes.waterTile, waterTile},
                 {TileTypes.stoneTile, stoneTile},
@@ -254,13 +255,12 @@ namespace RPGGame
 
             int tileIndex = 0;
             float tileScale = 0.08f;
-            int tileSize = (int)(255 * tileScale);
             for (int y = 0; y < Grid.GetLength(0); y++)
             {
                 for (int x = 0; x < Grid.GetLength(1); x++)
                 {
                     Terrain currTile = data.tTiles[tileIndex];
-                    Grid[y, x] = new TileFromSprite(currTile.Type, tileTypesToImage[currTile.Type], new Vector2(currTile.X * tileSize, currTile.Y * tileSize), Color.White, Vector2.Zero, new Vector2(tileScale, tileScale), SpriteEffects.None);
+                    Grid[y, x] = new TileFromSprite(currTile.Type, tileTypesToImage[currTile.Type], new Vector2(currTile.X, currTile.Y), Color.White, Vector2.Zero, new Vector2(tileScale, tileScale), SpriteEffects.None);
                     tileIndex++;
                 }
             }
@@ -908,11 +908,11 @@ namespace RPGGame
             {
                 square[i].Draw(spriteBatch);
             }
-            for (int i = 0; i < rocks.Count; i++)
-            {
-                //spriteBatch.Draw(pixel, new Vector2(rocks[i].HitBox.X, rocks[i].HitBox.Y), null, Color.Black, 0f, Vector2.Zero, new Vector2(rocks[i].HitBox.Width, rocks[i].HitBox.Height), SpriteEffects.None, 0);
-                rocks[i].Draw(spriteBatch);
-            }
+            //for (int i = 0; i < rocks.Count; i++)
+            //{
+            //    //spriteBatch.Draw(pixel, new Vector2(rocks[i].HitBox.X, rocks[i].HitBox.Y), null, Color.Black, 0f, Vector2.Zero, new Vector2(rocks[i].HitBox.Width, rocks[i].HitBox.Height), SpriteEffects.None, 0);
+            //    rocks[i].Draw(spriteBatch);
+            //}
             treasure.Draw(spriteBatch);
 
 

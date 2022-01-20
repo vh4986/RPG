@@ -15,58 +15,8 @@ using System.IO;
 namespace MapEditor
 {
 
-    public enum TileTypes
-    {
-        None,
-        Water,
-        Grass,
-        Stone,
-        Sand,
-    };
-
-    public enum DecorTypes
-    {
-        None,
-        Rock1,
-        Rock2,
-        Rock3,
-    }
-
     public partial class Form1 : Form
     {
-        class Tile
-        {
-            public int X { get; set; }
-            public int Y { get; set; }
-
-            public Tile(int x, int y)
-            {
-                X = x;
-                Y = y;
-            }
-        }
-        class Terrain : Tile
-        {
-            public TileTypes Type { get; set; }
-
-            public Terrain(int x, int y, TileTypes type)
-                : base(x, y)
-            {
-                Type = type;
-            }
-        }
-
-        class Decor : Tile
-        {
-            public DecorTypes Type { get; set; }
-
-            public Decor(int x, int y, DecorTypes type)
-                :base(x, y)
-            {
-                Type = type;
-            }
-        }
-
         Bitmap canvas;
         Graphics gfx;
         Image selectedImage;
@@ -97,13 +47,14 @@ namespace MapEditor
             ["Rock1"] = DecorTypes.Rock1,
             ["Rock2"] = DecorTypes.Rock2,
             ["Rock3"] = DecorTypes.Rock3,
+            ["blackCircle"] = DecorTypes.blackCircle,
         };
         Dictionary<TileTypes, Image> TileToImage;
         Dictionary<DecorTypes, Image> DecorTileToImage;
 
         public Form1()
         {
-            InitializeComponent(); // DO NOT MOVE
+            InitializeComponent(); // DO NOT MOVE!!
 
             Image grassImage = Properties.Resources.grassTile;
             Image waterImage = Properties.Resources.waterTile;
@@ -112,6 +63,7 @@ namespace MapEditor
             Image rock1Image = Properties.Resources.rock1;
             Image rock2Image = Properties.Resources.rock2;
             Image rock3Image = Properties.Resources.rock3;
+            Image blackCircleImage = Properties.Resources.blackCircle;
             Image black = Properties.Resources.black;
 
             TileToImage = new Dictionary<TileTypes, Image>()
@@ -129,6 +81,7 @@ namespace MapEditor
                 [DecorTypes.Rock1] = new Bitmap(rock1Image, new Size((int)(rock1.Width * 0.3), (int)(rock1.Height * 0.3))),
                 [DecorTypes.Rock2] = new Bitmap(rock2Image, new Size((int)(rock2.Width * 0.3), (int)(rock2.Height * 0.3))),
                 [DecorTypes.Rock3] = new Bitmap(rock3Image, new Size((int)(rock3.Width * 0.3), (int)(rock3.Height * 0.3))),
+                [DecorTypes.blackCircle] = new Bitmap(blackCircleImage, new Size((int)(blackCircle.Width * 0.2), (int)(blackCircle.Height * 0.3))),
             };
 
             totalWidth = map.Width;
@@ -184,7 +137,6 @@ namespace MapEditor
 
         private void Tile_Click(object sender, MouseEventArgs e)
         {
-            //If the selected thingy is a rock (do something else)- ??
             tilePictureBox = (TilePictureBox)sender;
             selectedImage = tilePictureBox.Image;
             
@@ -196,22 +148,9 @@ namespace MapEditor
             {
                 selectedDecorType = decorTypeMapping[(string)((PictureBox)sender).Tag];
             }
-            
-            
         }
-
-
-
         private bool isNewSizeAvailable(int width, int height, int tileSize)
         {
-            //Make a variable representing tile size
-            //Divide the width by tilesize and draw that many vertical lines
-            //Divide the height by tilesize and draw that many horizontal lines
-            //Make sure that the width and height of the picturebox are divisible by the tilesize
-
-            //Make sure width and height are divisible
-            //if not return
-
             if (height % tileSize != 0 || width % tileSize != 0)
             {
                 MessageBox.Show("Map size is not divisible by tilesize");
@@ -345,21 +284,14 @@ namespace MapEditor
 
         }
 
-        //Make a class that contains not only a List<Terrain> but also a LIst<Decor> and serialize that class
-        class MapData
-        {
-            List<Terrain> tTiles = new List<Terrain>();
-            List<Decor> dTiles = new List<Decor>();
-
-            public MapData(List<Terrain> terrains, List<Decor> decor)
-            {
-                tTiles = terrains;
-                dTiles = decor;
-            }
-        }
-
         private void Save_Click(object sender, EventArgs e)
         {
+            if (namingFileTextBox.Text == "")
+            {
+                MessageBox.Show("Please name your file!");
+                return;
+            }
+
             List<Terrain> tTiles = new List<Terrain>();
 
             for (int y = 0; y < Grid.GetLength(0); y++)
@@ -401,9 +333,6 @@ namespace MapEditor
 
         private void mapTimer_Tick(object sender, EventArgs e)
         {
-            //display in label
-            //??
-            //Loop through the grid, depending on the tile type draw a different image at that tile's location using graphics
             for (int y = 0; y < Grid.GetLength(0); y++)
             {
                 for (int x = 0; x < Grid.GetLength(1); x++)
@@ -428,14 +357,10 @@ namespace MapEditor
 
         private void map_MouseClick(object sender, MouseEventArgs e)
         {
-            //Make sure the tilePictureBox is not null
             if (selectedDecorType == DecorTypes.None) return;
-
             
             if (tilePictureBox.ImageType == ImageType.Decor)
             {
-                //Add thingy
-                //Create a decor based on the decor type and add that to the list
                 decor.Add(new Decor(e.Location.X, e.Location.Y, selectedDecorType));
             }
         }
