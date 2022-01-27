@@ -33,6 +33,7 @@ namespace MapEditor
 
         TileTypes selectedTileType;
         DecorTypes selectedDecorType;
+        Point boatPosition;
 
         Dictionary<string, TileTypes> tileTypeMapping = new Dictionary<string, TileTypes>()
         {
@@ -47,7 +48,7 @@ namespace MapEditor
             ["Rock1"] = DecorTypes.Rock1,
             ["Rock2"] = DecorTypes.Rock2,
             ["Rock3"] = DecorTypes.Rock3,
-            ["blackCircle"] = DecorTypes.blackCircle,
+            ["redSquare"] = DecorTypes.redSquare,
         };
         Dictionary<TileTypes, Image> TileToImage;
         Dictionary<DecorTypes, Image> DecorTileToImage;
@@ -63,7 +64,7 @@ namespace MapEditor
             Image rock1Image = Properties.Resources.rock1;
             Image rock2Image = Properties.Resources.rock2;
             Image rock3Image = Properties.Resources.rock3;
-            Image blackCircleImage = Properties.Resources.blackCircle;
+            Image redSquareImage = Properties.Resources.redSquare;
             Image black = Properties.Resources.black;
 
             TileToImage = new Dictionary<TileTypes, Image>()
@@ -81,7 +82,7 @@ namespace MapEditor
                 [DecorTypes.Rock1] = new Bitmap(rock1Image, new Size((int)(rock1.Width * 0.3), (int)(rock1.Height * 0.3))),
                 [DecorTypes.Rock2] = new Bitmap(rock2Image, new Size((int)(rock2.Width * 0.3), (int)(rock2.Height * 0.3))),
                 [DecorTypes.Rock3] = new Bitmap(rock3Image, new Size((int)(rock3.Width * 0.3), (int)(rock3.Height * 0.3))),
-                [DecorTypes.blackCircle] = new Bitmap(blackCircleImage, new Size((int)(blackCircle.Width * 0.2), (int)(blackCircle.Height * 0.3))),
+                [DecorTypes.redSquare] = new Bitmap(redSquareImage, new Size((int)(redSquare.Width * 0.3), (int)(redSquare.Height * 0.3)))
             };
 
             totalWidth = map.Width;
@@ -91,6 +92,7 @@ namespace MapEditor
             heightBox.Value = totalHeight;
             tileSizeBox.Value = tileSize;
 
+            boatPosition = new Point(redSquare.Location.X, redSquare.Location.Y);
             Grid = new Terrain[totalHeight / tileSize, totalWidth / tileSize];
 
             this.KeyPreview = true;
@@ -305,7 +307,8 @@ namespace MapEditor
                 }
             }
 
-            MapData data = new MapData(tTiles, decor);
+
+            MapData data = new MapData(tTiles, decor, boatPosition);
 
             MessageBox.Show("Saved!");
 
@@ -364,5 +367,12 @@ namespace MapEditor
                 decor.Add(new Decor(e.Location.X, e.Location.Y, selectedDecorType));
             }
         }
+
+        private void TilesPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+
     }
 }

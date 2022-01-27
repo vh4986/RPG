@@ -35,7 +35,7 @@ namespace RPGGame
         List<Item> healthPotion = new List<Item>();
         List<Item> speedPotion = new List<Item>();
         List<Enemy> enemies = new List<Enemy>();
-
+       
         Treasure treasure;
         //Sprite squares;
         //Item apple;
@@ -640,8 +640,9 @@ namespace RPGGame
 
             Texture2D boatImage = Content.Load<Texture2D>("onlyBoat");
             Texture2D paddleImage = Content.Load<Texture2D>("paddle");
+            
 
-            boat = new Boat(boatImage, new Vector2(355, 380), Color.White, Vector2.Zero, new Vector2(0.35f, 0.35f), new Vector2(1, 1), SpriteEffects.FlipHorizontally, 0.05f, 0.03f, rocks, GraphicsDevice);
+            boat = new Boat(boatImage, new Vector2(data.boatPosition.X, data.boatPosition.Y), Color.White, Vector2.Zero, new Vector2(0.35f, 0.35f), new Vector2(1, 1), SpriteEffects.FlipHorizontally, 0.05f, 0.03f, rocks, GraphicsDevice);
 
             paddle = new Paddle(paddleImage, new Vector2(boat.Position.X, boat.Position.Y - 5), Color.White, Vector2.Zero, new Vector2(0.34f, 0.34f), new Vector2(1, 1), SpriteEffects.FlipHorizontally);
             paddle.Origin = new Vector2(paddle.ScaledWidth / 2, paddle.ScaledHeight / 2);

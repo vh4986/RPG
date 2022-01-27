@@ -16,12 +16,14 @@ namespace MapEditor
         [JsonProperty]
         List<Decor> dTiles = new List<Decor>();
 
-        public Point boatPosition;
+        [JsonProperty]
+        public Point BoatPosition;
 
-        public MapData(List<Terrain> terrains, List<Decor> decor)
+        public MapData(List<Terrain> terrains, List<Decor> decor, Point boatPosition)
         {
             tTiles = terrains;
             dTiles = decor;
+            BoatPosition = boatPosition;
         }
     }
 }

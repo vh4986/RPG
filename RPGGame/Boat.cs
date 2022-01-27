@@ -30,7 +30,7 @@ namespace RPGGame
                 GraphicsDevice graphics)
             : base(image, position, tint, origin, scale, effect)
         {
-            Speed = speed;
+            Speed = speed;  
             TurnSpeed = turnSpeed;
             Origin = new Vector2(Image.Width / 2, Image.Height / 2);
             paddleRotatingSpeed = PaddleRotatingSpeed;
