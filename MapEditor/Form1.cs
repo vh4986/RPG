@@ -92,7 +92,7 @@ namespace MapEditor
             heightBox.Value = totalHeight;
             tileSizeBox.Value = tileSize;
 
-            boatPosition = new Point(redSquare.Location.X, redSquare.Location.Y);
+            
             Grid = new Terrain[totalHeight / tileSize, totalWidth / tileSize];
 
             this.KeyPreview = true;
@@ -364,6 +364,10 @@ namespace MapEditor
             
             if (tilePictureBox.ImageType == ImageType.Decor)
             {
+                if(selectedDecorType == DecorTypes.redSquare)
+                { 
+                    boatPosition = new Point(e.Location.X, e.Location.Y);
+                }
                 decor.Add(new Decor(e.Location.X, e.Location.Y, selectedDecorType));
             }
         }
