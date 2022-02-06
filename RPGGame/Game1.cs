@@ -29,7 +29,6 @@ namespace RPGGame
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        //Character character;
         List<ItemHolder> square = new List<ItemHolder>();
         List<Item> apple = new List<Item>();
         List<Item> healthPotion = new List<Item>();
@@ -37,8 +36,6 @@ namespace RPGGame
         List<Enemy> enemies = new List<Enemy>();
        
         Treasure treasure;
-        //Sprite squares;
-        //Item apple;
         Knight knight;
         Popup popUp;
         Boat boat;
@@ -47,7 +44,6 @@ namespace RPGGame
         Inventory inventory;
         Rectangle boundary;
         List<Sprite> rocks = new List<Sprite>();
-        //List<Frames> frames = new List<Frames>();
         Random random;
         Random newRandom;
         Color selectedColor;
@@ -161,9 +157,6 @@ namespace RPGGame
                 Color.DeepSkyBlue,
             };
             int index = random.Next(randomColors.Count);
-            //PartialFloodFill(floodx, floody, randomColors[index]);
-            //Find empty slot, continue regenerating indexies while the tint is white
-            //bool noEmptyTiles = false;
             for (int i = 0; i < 4; i++)
             {
                 int tempX = random.Next(0, GraphicsDevice.Viewport.Width / tileSize);
@@ -232,8 +225,6 @@ namespace RPGGame
         }
         protected override void LoadContent()
         {
-            //tileSize = (int)(255 * scale.X);
-            //Grid = new Sprite[GraphicsDevice.Viewport.Height / tileSize + 1, GraphicsDevice.Viewport.Width / tileSize + 1];
             Grid = new TileFromSprite[20, 30];
 
             Deserialize();
@@ -264,49 +255,11 @@ namespace RPGGame
                     tileIndex++;
                 }
             }
-            // Create a new SpriteBatch, which can be used to draw textures.
             random = new Random(42);
             newRandom = new Random();
             spriteBatch = new SpriteBatch(GraphicsDevice);
             pixel = new Texture2D(GraphicsDevice, 1, 1);
             pixel.SetData(new Color[] { Color.White });
-            //floodFill();
-
-
-            //for (int y = 0; y < Grid.GetLength(0); y++)
-            //{
-            //    for (int x = 0; x < Grid.GetLength(1); x++)
-            //    {
-            //        Sprite currentSprite = new Sprite(null, new Vector2(x * tileSize, y * tileSize), Color.White, new Vector2(0, 0), scale, SpriteEffects.None); 
-            //        Grid[y, x] = currentSprite;
-
-            //        Spots.Add(new TwoDArrayIndex(y, x));
-            //    }
-            //}
-
-            //int floodx = random.Next(0, GraphicsDevice.Viewport.Width / tileSize);
-            //int floody = random.Next(0, GraphicsDevice.Viewport.Height / tileSize);
-
-            //List<Texture2D> randomTextures = new List<Texture2D>
-            //{
-            //    waterTile,
-            //    grassTile,
-            //};
-            //int index = random.Next(randomTextures.Count);
-            //PartialFloodFill(floodx, floody, randomTextures[index]);
-
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    int tempX = random.Next(0, GraphicsDevice.Viewport.Width / tileSize);
-            //    int tempY = random.Next(0, GraphicsDevice.Viewport.Height / tileSize);
-
-            //    if (Grid[tempY, tempX].Image == null)
-            //    {
-            //        PartialFloodFill(tempY, tempX, randomTextures[random.Next(randomTextures.Count)]);
-            //    }
-            //}
-
-            //fillingSpots();
 
 
             for (int y = 0; y < Grid.GetLength(0); y++)
@@ -576,10 +529,7 @@ namespace RPGGame
                 new Rectangle(174, 142, 53, 44), // bottom rock on the left (right one)
             };
             #endregion
-            for (int i = 0; i < 10; i++)
-            {
-                square.Add(new ItemHolder(pixel, new Vector2(45 * i + 7, GraphicsDevice.Viewport.Height - 40), Color.Black * 0.2f, new Vector2(0, 0), new Vector2(30, 30), SpriteEffects.None));
-            }
+
 
             inventory = new Inventory(square);
             Texture2D appleTexture = Content.Load<Texture2D>("transparentapple");
@@ -587,7 +537,10 @@ namespace RPGGame
             Texture2D redPotion = Content.Load<Texture2D>("redPotion");
             Texture2D rockImage = Content.Load<Texture2D>("finalrock");
 
-            //apple = new Sprite(appleTexture,new Vector2(100,100), Color.White, new Vector2(0,0), new Vector2(1,1), SpriteEffects.None);
+            for (int i = 0; i < 10; i++)
+            {
+                square.Add(new ItemHolder(pixel, new Vector2(45 * i + 7, GraphicsDevice.Viewport.Height - 40), Color.Black * 0.2f, new Vector2(0, 0), new Vector2(30, 30), SpriteEffects.None));
+            }
             for (int i = 0; i < 4; i++)
             {
                 apple.Add(new Food(appleTexture, new Vector2(random.Next(0, GraphicsDevice.Viewport.Width), random.Next(0, GraphicsDevice.Viewport.Height)),
@@ -611,13 +564,11 @@ namespace RPGGame
             }
             Texture2D closedTreasureImage = Content.Load<Texture2D>("closedtreasure");
             Texture2D openTreasureImage = Content.Load<Texture2D>("opentreasure");
-            treasure = new Treasure(closedTreasureImage, openTreasureImage, new Vector2(500, 100), Color.White, new Vector2(0, 0), new Vector2(0.26f, 0.26f), SpriteEffects.None);
-            // 400, 150, 300, 300       
+            treasure = new Treasure(closedTreasureImage, openTreasureImage, new Vector2(500, 100), Color.White, new Vector2(0, 0), new Vector2(0.26f, 0.26f), SpriteEffects.None);   
             int boundarySize = 300;
             boundary = new Rectangle((int)treasure.Position.X - 100, (int)treasure.Position.Y + 80, boundarySize, boundarySize);
 
             Texture2D arrowImage = Content.Load<Texture2D>("newCroppedArrow");
-            //arrow = new Arrow(arrowImage, new Vector2(enemies.Position.X /2, enemies.Position.Y /2), Color.White, new Vector2(0, 0), new Vector2(0.5f, 0.5f), SpriteEffects.None);
 
             var knightSpriteSheets = new Dictionary<States, Texture2D>()
             {
@@ -670,8 +621,6 @@ namespace RPGGame
             popUp = new Popup(board, Color.White, new Vector2(0, 0), new Vector2(0.30f, 0.30f), font);
 
             // TODO: use this.Content to load your game content here
-
-            //create docking point where the boat can only go and the knight can get on and off the boat
         }
 
         public void PartialFloodFill(int x, int y, Texture2D texture)
@@ -795,7 +744,6 @@ namespace RPGGame
             // TODO: Add your update logic here
             KeyboardState ks = Keyboard.GetState();
             MouseState ms = Mouse.GetState();
-            //popUp.Update(gameTime);
 
             inventory.update(knight);
 
@@ -845,7 +793,6 @@ namespace RPGGame
                     speedPotion.Remove(speedPotion[i]);
                 }
             }
-
             if (knight.HitBox.Intersects(treasure.HitBox))
             {
                 treasure.OpenOrClose(TreasureFrames.open);
@@ -909,11 +856,7 @@ namespace RPGGame
             {
                 square[i].Draw(spriteBatch);
             }
-            //for (int i = 0; i < rocks.Count; i++)
-            //{
-            //    //spriteBatch.Draw(pixel, new Vector2(rocks[i].HitBox.X, rocks[i].HitBox.Y), null, Color.Black, 0f, Vector2.Zero, new Vector2(rocks[i].HitBox.Width, rocks[i].HitBox.Height), SpriteEffects.None, 0);
-            //    rocks[i].Draw(spriteBatch);
-            //}
+   
             treasure.Draw(spriteBatch);
 
 
@@ -924,17 +867,16 @@ namespace RPGGame
                 //spriteBatch.Draw(pixel, new Vector2(enemies[i].HitBox.X, enemies[i].HitBox.Y), null, Color.Black, 0f, Vector2.Zero, new Vector2(enemies[i].HitBox.Width, enemies[i].HitBox.Height), SpriteEffects.None, 0);
                 enemies[i].Draw(spriteBatch);
             }
-
-         
             if (popUp.Visible == true)
             {
                 popUp.Draw(spriteBatch, graphics.GraphicsDevice);
             }
             boat.Draw(spriteBatch);
 
-            //spriteBatch.Draw(pixel, new Vector2(boat.leftRectangle.X, boat.leftRectangle.Y), null, Color.Black, 0f, Vector2.Zero, new Vector2(boat.leftRectangle.Width, boat.leftRectangle.Height), SpriteEffects.None, 0);
-            spriteBatch.DrawCircle(new Vector2(boat.rightCircle.X, boat.rightCircle.Y), boat.boatHitBoxRadius /2, 32, Color.Blue, boat.boatHitBoxRadius);
-            spriteBatch.DrawCircle(new Vector2(boat.leftCircle.X, boat.leftCircle.Y), boat.boatHitBoxRadius / 2, 32, Color.DarkGreen, boat.boatHitBoxRadius);
+            spriteBatch.Draw(pixel, new Vector2(boat.leftRectangle.X, boat.leftRectangle.Y), null, Color.Black, 0f, Vector2.Zero, new Vector2(boat.leftRectangle.Width, boat.leftRectangle.Height), SpriteEffects.None, 0);
+            spriteBatch.Draw(pixel, new Vector2(boat.rightRectangle.X, boat.rightRectangle.Y), null, Color.Black, 0f, Vector2.Zero, new Vector2(boat.rightRectangle.Width, boat.rightRectangle.Height), SpriteEffects.None, 0);
+            //spriteBatch.DrawCircle(new Vector2(boat.rightCircle.X, boat.rightCircle.Y), boat.boatHitBoxRadius /2, 32, Color.Blue, boat.boatHitBoxRadius);
+            //spriteBatch.DrawCircle(new Vector2(boat.leftCircle.X, boat.leftCircle.Y), boat.boatHitBoxRadius / 2, 32, Color.DarkGreen, boat.boatHitBoxRadius);
             knight.Draw(spriteBatch);
             //paddle.DrawWithTint(spriteBatch, boat.Tint);
             foreach (TileFromSprite edge in edges)

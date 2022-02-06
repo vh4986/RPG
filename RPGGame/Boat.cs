@@ -15,17 +15,16 @@ namespace RPGGame
         public int boatHitBoxRadius;
         public Rectangle rightCircle;
         public Rectangle leftCircle;
+        public Rectangle rightRectangle;
+        public Rectangle leftRectangle;
         Vector2 updatePosition;
         public bool isGoingRight;
         float paddleRotatingSpeed;
         List<Sprite> rocks = new List<Sprite>();
         Texture2D pixel;
         GraphicsDevice Graphics;
+        Vector2 centerOfBoat;
 
-        //12/8/21- fix the way the knight gets on the boat and logic with the boat intersecting the land
-        //or make the knight get on the boat if he's within a certain distance
-
-        //public Rectangle biggerBoatHitBox => new Rectangle((int)((Position.X - 20) - Origin.X * Scale.X), (int)(Position.Y - Origin.Y * Scale.Y), (int)(ScaledWidth + 30), (int)ScaledHeight);
         public Boat(Texture2D image, Vector2 position, Color tint, Vector2 origin, Vector2 scale, Vector2 speed, SpriteEffects effect, float turnSpeed, float PaddleRotatingSpeed, List<Sprite> rock,
                 GraphicsDevice graphics)
             : base(image, position, tint, origin, scale, effect)
@@ -36,7 +35,6 @@ namespace RPGGame
             paddleRotatingSpeed = PaddleRotatingSpeed;
             rocks = rock;
             Graphics = graphics;
-
 
             boatHitBoxRadius = (int)ScaledWidth / 2;
 
@@ -50,6 +48,11 @@ namespace RPGGame
             updatePosition = new Vector2(Speed.X * (float)Math.Cos(Rotation), Speed.Y * (float)Math.Sin(Rotation));
             rightCircle = new Rectangle((int)(Position.X) - 15, (int)(Position.Y), boatHitBoxRadius, boatHitBoxRadius);
             leftCircle = new Rectangle((int)(Position.X) + 10, (int)Position.Y, boatHitBoxRadius, boatHitBoxRadius);
+            double rotationAngle = Rotation;
+
+            double deltaX = (double)(boatHitBoxRadius * Math.Sin(rotationAngle));
+            double deltaY = (double)(boatHitBoxRadius * Math.Cos(rotationAngle));
+            centerOfBoat = new Vector2((int)(Position.X + ScaledWidth / 2), (int)(Position.Y + ScaledHeight / 2));
 
             KeyboardState ks = Keyboard.GetState();
 
@@ -76,23 +79,20 @@ namespace RPGGame
             else if (ks.IsKeyDown(Keys.A))
             {
                 isGoingRight = false;
-                //leftRectangle = new Rectangle((int)(Position.X + Speed.X - ScaledWidth / 2) - 5, (int)(Position.Y + Speed.Y - ScaledHeight / 2), 5, (int)ScaledHeight - 5);
+                leftRectangle = new Rectangle((int)(centerOfBoat.X + deltaX), (int)(centerOfBoat.Y + deltaY), 7, (int)ScaledHeight - 15);
 
-                leftCircle = new Rectangle((int)(Position.X) +10, (int)Position.Y, boatHitBoxRadius, boatHitBoxRadius);
-                
                 foreach (TileFromSprite edge in edges)
                 {
-                    if (leftCircle.Intersects(edge.HitBox) && edge.tileType == TileTypes.waterTile)
+                    if (leftRectangle.Intersects(edge.HitBox) && edge.tileType == TileTypes.waterTile)
                     {
                         isIntersectingWithGrass = true;
                     }
                 }
                 for (int i = 0; i < rocks.Count; i++)
                 {
-                    if (leftCircle.Intersects(rocks[i].HitBox))
+                    if (leftRectangle.Intersects(rocks[i].HitBox))
                     {
                         isIntersectingWithGrass = true;
-
                     }
                 }
                 if (isIntersectingWithGrass == false && knight.isIntersectedWithBoat == true)
@@ -109,19 +109,19 @@ namespace RPGGame
             else if (ks.IsKeyDown(Keys.D))
             {
                 isGoingRight = true;
-                //rightRectangle = new Rectangle((int)(Position.X + Speed.X + ScaledWidth / 2) - 15, (int)(Position.Y + Speed.Y - ScaledHeight / 2), 5, (int)ScaledHeight - 5);
+                rightRectangle = new Rectangle((int)(Position.X + Speed.X + ScaledWidth / 2), (int)(Position.Y + Speed.Y - ScaledHeight / 2), 7, (int)ScaledHeight - 15);
 
 
                 foreach (TileFromSprite edge in edges)
                 {
-                    if (rightCircle.Intersects(edge.HitBox) && edge.tileType == TileTypes.waterTile)
+                    if (rightRectangle.Intersects(edge.HitBox) && edge.tileType == TileTypes.waterTile)
                     {
                         isIntersectingWithGrass = true;
                     }
                 }
                 for (int i = 0; i < rocks.Count; i++)
                 {
-                    if (rightCircle.Intersects(rocks[i].HitBox))
+                    if (rightRectangle.Intersects(rocks[i].HitBox))
                     {
                         isIntersectingWithGrass = true;
                     }
