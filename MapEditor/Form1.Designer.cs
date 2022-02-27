@@ -184,7 +184,6 @@
             this.TilesPanel.Name = "TilesPanel";
             this.TilesPanel.Size = new System.Drawing.Size(405, 242);
             this.TilesPanel.TabIndex = 10;
-            this.TilesPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.TilesPanel_Paint);
             // 
             // redSquare
             // 

@@ -741,9 +741,13 @@ namespace RPGGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            
+
             // TODO: Add your update logic here
             KeyboardState ks = Keyboard.GetState();
             MouseState ms = Mouse.GetState();
+
+            Window.Title = $"x: {ms.X}, y: {ms.Y}";
 
             inventory.update(knight);
 

@@ -372,10 +372,7 @@ namespace MapEditor
             }
         }
 
-        private void TilesPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        
 
 
     }

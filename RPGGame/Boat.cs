@@ -40,6 +40,7 @@ namespace RPGGame
 
             pixel = new Texture2D(graphics, 1, 1);
             pixel.SetData(new Color[] { Color.Black * 0.3f});
+
         }
 
         public void Move(List<TileFromSprite> edges, Knight knight, Paddle Paddle)
@@ -50,9 +51,9 @@ namespace RPGGame
             leftCircle = new Rectangle((int)(Position.X) + 10, (int)Position.Y, boatHitBoxRadius, boatHitBoxRadius);
             double rotationAngle = Rotation;
 
-            double deltaX = (double)(boatHitBoxRadius * Math.Sin(rotationAngle));
-            double deltaY = (double)(boatHitBoxRadius * Math.Cos(rotationAngle));
-            centerOfBoat = new Vector2((int)(Position.X + ScaledWidth / 2), (int)(Position.Y + ScaledHeight / 2));
+            double deltaX = (double)(boatHitBoxRadius * Math.Cos(rotationAngle));
+            double deltaY = (double)(boatHitBoxRadius * Math.Sin(rotationAngle));
+            centerOfBoat = new Vector2((int)(HitBox.X + ScaledWidth / 2), (int)(HitBox.Y + ScaledHeight / 2));
 
             KeyboardState ks = Keyboard.GetState();
 
@@ -79,7 +80,7 @@ namespace RPGGame
             else if (ks.IsKeyDown(Keys.A))
             {
                 isGoingRight = false;
-                leftRectangle = new Rectangle((int)(centerOfBoat.X + deltaX), (int)(centerOfBoat.Y + deltaY), 7, (int)ScaledHeight - 15);
+                leftRectangle = new Rectangle((int)(Position.X - deltaX), (int)(Position.Y - deltaY), 7, (int)ScaledHeight - 15);
 
                 foreach (TileFromSprite edge in edges)
                 {
@@ -109,7 +110,7 @@ namespace RPGGame
             else if (ks.IsKeyDown(Keys.D))
             {
                 isGoingRight = true;
-                rightRectangle = new Rectangle((int)(Position.X + Speed.X + ScaledWidth / 2), (int)(Position.Y + Speed.Y - ScaledHeight / 2), 7, (int)ScaledHeight - 15);
+                //rightRectangle = new Rectangle((int)(Position.X + Speed.X + ScaledWidth / 2), (int)(Position.Y + Speed.Y - ScaledHeight / 2), 7, (int)ScaledHeight - 15);
 
 
                 foreach (TileFromSprite edge in edges)
