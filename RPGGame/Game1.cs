@@ -519,15 +519,15 @@ namespace RPGGame
                 new Frames(211, 1301, 30, 40, originType),
                 new Frames(274, 1308, 32, 33, originType),
             };
-            List<Rectangle> rockFrames = new List<Rectangle>
-            {
-                new Rectangle(72, 40, 93, 50), // top rock on the left
-                new Rectangle(256, 32, 147, 58), // top rock on the right
-                new Rectangle(331, 130, 70, 56), // bottom rock on the right (right one)
-                new Rectangle(270, 148, 61, 38), // bottom rock on the right (left one)
-                new Rectangle(43, 110, 131, 76), // bottom rock on the left (left one)
-                new Rectangle(174, 142, 53, 44), // bottom rock on the left (right one)
-            };
+            //List<Rectangle> rockFrames = new List<Rectangle>
+            //{
+            //    new Rectangle(72, 40, 93, 50), // top rock on the left
+            //    new Rectangle(256, 32, 147, 58), // top rock on the right
+            //    new Rectangle(331, 130, 70, 56), // bottom rock on the right (right one)
+            //    new Rectangle(270, 148, 61, 38), // bottom rock on the right (left one)
+            //    new Rectangle(43, 110, 131, 76), // bottom rock on the left (left one)
+            //    new Rectangle(174, 142, 53, 44), // bottom rock on the left (right one)
+            //};
             #endregion
 
 
@@ -557,11 +557,7 @@ namespace RPGGame
                 speedPotion.Add(new SpeedPotion(redPotion, new Vector2(random.Next(0, GraphicsDevice.Viewport.Width), random.Next(0, GraphicsDevice.Viewport.Height)),
                     Color.White, new Vector2(0, 0), new Vector2(0.75f, 0.75f), SpriteEffects.None));
             }
-            for (int i = 0; i < 1; i++)
-            {
-                rocks.Add(new Sprite(rockImage, new Vector2(300, 200), Color.White, new Vector2(0, 0), new Vector2(0.6f, 0.6f), SpriteEffects.None, rockFrames[newRandom.Next(0, 5)]));
-                rocks.Add(new Sprite(rockImage, new Vector2(100, 100), Color.White, new Vector2(0, 0), new Vector2(0.6f, 0.6f), SpriteEffects.None, rockFrames[newRandom.Next(0, 5)]));
-            }
+           
             Texture2D closedTreasureImage = Content.Load<Texture2D>("closedtreasure");
             Texture2D openTreasureImage = Content.Load<Texture2D>("opentreasure");
             treasure = new Treasure(closedTreasureImage, openTreasureImage, new Vector2(500, 100), Color.White, new Vector2(0, 0), new Vector2(0.26f, 0.26f), SpriteEffects.None);   
@@ -848,7 +844,7 @@ namespace RPGGame
             }
             for (int i = 0; i < healthPotion.Count; i++)
             {
-                //spriteBatch.Draw(pixel, potion[i].Position, null, Color.Black, 0f, Vector2.Zero, new Vector2(30, 30), SpriteEffects.None, 0);
+                //spriteBatch.Draw(pixel, healthPotion[i].Position, null, Color.Black, 0f, Vector2.Zero, new Vector2(30, 30), SpriteEffects.None, 0);
                 healthPotion[i].Draw(spriteBatch);
             }
             for (int i = 0; i < speedPotion.Count; i++)
@@ -886,6 +882,12 @@ namespace RPGGame
             foreach (TileFromSprite edge in edges)
             {
                 spriteBatch.Draw(pixel, new Rectangle(edge.HitBox.X, edge.HitBox.Y, 20, 20), Color.Red * 0.7f);
+            }
+
+            foreach(var rock in data.dTiles)
+            {
+                //add rocks
+                spriteBatch.Draw()
             }
 
             //spriteBatch.DrawCircle(new Vector2(30,30), 30, 32, Color.BlueViolet, 30);
